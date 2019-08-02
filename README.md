@@ -5,7 +5,7 @@ A mobile app that makes managing family properties and inheritance easier.
 1. `cd <project-folder> && yarn install`
 2. Make sure you have android sdk and adb installed (google it)
 3. Create `local.properties` in `Curator/android`
-4. Put `sdk.dir = '<android sdk path>'` in `local.properties`
+4. Put `sdk.dir = <android sdk path>` in `local.properties`
 5. Plugin your device (or use emulator, create it using android studio)
 6. Type `adb devices` in terminal, ensure device is connected
 7. To run, type `react-native run-android`
