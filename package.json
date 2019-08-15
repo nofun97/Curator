@@ -12,6 +12,7 @@
     "appcenter": "^2.2.0",
     "appcenter-analytics": "^2.2.0",
     "appcenter-crashes": "^2.2.0",
+    "eslint-plugin-react-hooks": "^1.7.0",
     "jetifier": "^1.6.3",
     "react": "16.8.6",
     "react-dom": "^16.9.0",

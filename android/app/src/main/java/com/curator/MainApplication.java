@@ -13,6 +13,10 @@ import com.facebook.soloader.SoLoader;
 
 import java.util.List;
 
+// Firebase
+import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.auth.RNFirebaseAuthPackage;
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -25,8 +29,15 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       @SuppressWarnings("UnnecessaryLocalVariable")
       List<ReactPackage> packages = new PackageList(this).getPackages();
-      // Packages that cannot be autolinked yet can be added manually here, for example:
+      // Packages that cannot be autolinked yet can be added manually here, for
+      // example:
       // packages.add(new MyReactNativePackage());
+
+      // Firebase packages
+      packages.add(new MainReactPackage());
+      packages.add(new RNFirebasePackage());
+      packages.add(new RNFirebaseAuthPackage());
+
       return packages;
     }
 
