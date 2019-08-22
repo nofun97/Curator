@@ -7,6 +7,7 @@ import com.facebook.react.PackageList;
 import com.facebook.hermes.reactexecutor.HermesExecutorFactory;
 import com.facebook.react.bridge.JavaScriptExecutorFactory;
 import com.facebook.react.ReactApplication;
+import io.invertase.firebase.RNFirebasePackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
@@ -14,8 +15,8 @@ import com.facebook.soloader.SoLoader;
 import java.util.List;
 
 // Firebase
-import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
+import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -34,10 +35,9 @@ public class MainApplication extends Application implements ReactApplication {
       // packages.add(new MyReactNativePackage());
 
       // Firebase packages
-      packages.add(new MainReactPackage());
-      packages.add(new RNFirebasePackage());
+      // packages.add(new RNFirebasePackage());
       packages.add(new RNFirebaseAuthPackage());
-
+      packages.add(new RNFirebaseFirestorePackage());
       return packages;
     }
 
