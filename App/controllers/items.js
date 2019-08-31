@@ -22,29 +22,25 @@ const registerItem = item => {
   };
 };
 
-const viewItem = itemId => {
-  let data = null;
-  collection
+export const viewItem = itemId => {
+  return collection
     .doc(itemId)
     .get()
     .then(d => {
       if (d.exists) {
-        data = d;
-      } else {
-        console.log('Data not found');
-        data = {
-          err: 'Data not found',
-        };
+        return d;
       }
+      console.log('Data not found');
+      return {
+        err: 'Data not found',
+      };
     })
     .catch(err => {
-      data = {
+      console.log(err);
+      return {
         err: err,
       };
-      console.log(err);
     });
-
-  return data;
 };
 
 // function viewAllItems();
@@ -52,4 +48,4 @@ const viewItem = itemId => {
 // function getItemData(item); // To view item in more detail
 // function editItem(itemID, updated);
 
-console.log(viewItem('jmRD0gUvkB7XAOiY7wr1'));
+// console.log(viewItem('jmRD0gUvkB7XAOiY7wr1'));
