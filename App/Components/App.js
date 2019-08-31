@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React, {Fragment} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -24,52 +24,22 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import {viewItem} from '../controllers/items';
+
 const App = () => {
-  return (
-    <Fragment>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </Fragment>
-  );
+  const [user, setUser] = useState('hello there');
+
+  useEffect(() => {
+    // useeffect can not use async function, this is a workaround
+    const getItemData = async () => {
+      var data = await viewItem('jmRD0gUvkB7XAOiY7wr1');
+      console.log(data.data());
+      setUser(Object.keys(data.data().owners)[0]);
+    };
+    getItemData();
+  }, []); // this is so that it does not call fetch all the time, research on this
+
+  return <Text>{user}</Text>;
 };
 
 const styles = StyleSheet.create({
