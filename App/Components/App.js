@@ -31,9 +31,10 @@ const navigator = createStackNavigator(
       Home: HomeScreen
     },
     {
-      initialRouteName: 'Home', //the initial route name will determine the screen that gets the prop with navigator (makes sense?)
+      initialRouteName: 'Home',
       defaultNavigationOptions: {
         title: 'Curator',
+        // change the navigation bar's styling here
         headerStyle: {
           backgroundColor: '#509682',
         },
