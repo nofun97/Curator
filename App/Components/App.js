@@ -24,14 +24,22 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import {createAppContainer, createStackNavigator} from "react-navigation";
-import HomeScreen from "./HomeScreen";
+import LoginScreen from "./screens/LoginScreen";
+import RegisterScreen from "./screens/RegisterScreen";
+import AccountDetailScreen from "./screens/AccountDetailScreen";
+import InventoryScreen from "./screens/InventoryScreen";
+import ItemDescriptionScreen from "./screens/ItemDescriptionScreen";
 
 const navigator = createStackNavigator(
     {
-      Home: HomeScreen
+      Login: LoginScreen,
+      Register: RegisterScreen,
+      Account: AccountDetailScreen,
+      Inventory: InventoryScreen,
+      Item: ItemDescriptionScreen
     },
     {
-      initialRouteName: 'Home',
+      initialRouteName: 'Login',
       defaultNavigationOptions: {
         title: 'Curator',
         // change the navigation bar's styling here
