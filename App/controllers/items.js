@@ -2,7 +2,7 @@ import firebase from 'react-native-firebase';
 
 const collection = firebase.firestore().collection('items');
 
-const registerItem = item => {
+export const registerItem = item => {
   var owners = {};
   for (const owner in item.owners) {
     owners[owner] = true;
@@ -46,6 +46,6 @@ export const viewItem = itemId => {
 // function viewAllItems();
 // This is to view specific item, only plan
 // function getItemData(item); // To view item in more detail
-// function editItem(itemID, updated);
-
-// console.log(viewItem('jmRD0gUvkB7XAOiY7wr1'));
+export const editItem = (itemID, updated) => {
+  return collection.doc(itemID).udpate(updated);
+}
