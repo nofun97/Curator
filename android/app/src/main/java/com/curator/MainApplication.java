@@ -19,6 +19,7 @@ import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
 import com.google.firebase.database.FirebaseDatabase;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.storage.RNFirebaseStoragePackage;
+import io.invertase.firebase.functions.RNFirebaseFunctionsPackage;
 
 // react native worker
 // import co.apptailor.Worker.WorkerPackage;
@@ -44,7 +45,7 @@ public class MainApplication extends Application implements ReactApplication {
       packages.add(new RNFirebaseAuthPackage());
       packages.add(new RNFirebaseFirestorePackage());
       packages.add(new RNFirebaseStoragePackage());
-      // packages.add(new RNFirebaseDatabasePackage());
+      packages.add(new RNFirebaseFunctionsPackage());
 
       // react native worker
       // packages.add(new WorkerPackage());
