@@ -5296,11 +5296,6 @@ react-native-tab-view@^1.2.0, react-native-tab-view@^1.4.1:
   dependencies:
     prop-types "^15.6.1"
 
-react-native-workers@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/react-native-workers/-/react-native-workers-0.3.1.tgz#2ac4365da727567239e806c081016f59f3d0199e"
-  integrity sha1-KsQ2XacnVnI56AbAgQFvWfPQGZ4=
-
 react-native@0.60.4:
   version "0.60.4"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.60.4.tgz#4378171e63dd5310497e15e54ec9185cb470752d"
