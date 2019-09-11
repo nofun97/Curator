@@ -17,6 +17,10 @@ import java.util.List;
 // Firebase
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
+import com.google.firebase.database.FirebaseDatabase;
+
+// react native worker
+import co.apptailor.Worker.WorkerPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -38,6 +42,10 @@ public class MainApplication extends Application implements ReactApplication {
       // packages.add(new RNFirebasePackage());
       packages.add(new RNFirebaseAuthPackage());
       packages.add(new RNFirebaseFirestorePackage());
+      packages.add(new RNFirebaseDatabasePackage());
+
+      // react native worker
+      packages.add(new WorkerPackage());
       return packages;
     }
 
@@ -56,5 +64,6 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    FirebaseDatabase.getInstance().setPersistenceEnabled(true);
   }
 }
