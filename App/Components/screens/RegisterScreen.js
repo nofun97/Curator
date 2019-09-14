@@ -16,4 +16,4 @@ const RegisterScreen = ({navigation}) => {
     )
 };
 
-export default RegisterScreen
+export default RegisterScreen;

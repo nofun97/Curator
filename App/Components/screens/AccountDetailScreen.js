@@ -16,4 +16,4 @@ const AccountDetailScreen = ({navigation}) => {
     )
 };
 
-export default AccountDetailScreen
+export default AccountDetailScreen;

@@ -16,4 +16,4 @@ const InventoryScreen = ({navigation}) => {
     )
 };
 
-export default InventoryScreen
+export default InventoryScreen;

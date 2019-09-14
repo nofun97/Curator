@@ -16,4 +16,4 @@ const ItemDescriptionScreen = ({navigation}) => {
     )
 };
 
-export default ItemDescriptionScreen
+export default ItemDescriptionScreen;
