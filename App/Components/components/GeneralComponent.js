@@ -38,6 +38,7 @@ const GeneralComponent = (props) => {
 
 const TextStyle = styled.Text`
     color: white;
+    fontFamily: Montserrat;
     top: ${props => props.top};
     left: ${props => props.left};
 `;
@@ -58,4 +59,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default GeneralComponent
+export default GeneralComponent;

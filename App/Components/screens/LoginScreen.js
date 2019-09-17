@@ -42,11 +42,11 @@ const LoginScreen = ({navigation}) => {
                 <GeneralComponent type = 'text'
                                   top = '80'
                                   left = '-120'
-                                  text = {'Username'}/>
+                                  text = {'Username:'}/>
                 <GeneralComponent type = 'text'
                                   top = '130'
                                   left = '-120'
-                                  text = {'Password'}/>
+                                  text = {'Password:'}/>
                 <GeneralComponent type = 'input'
                                   top = '25'
                                   left = '0'/>
