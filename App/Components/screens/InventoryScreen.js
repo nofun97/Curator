@@ -1,7 +1,6 @@
 import React from 'react';
 import {Text, StyleSheet, View, Button, TouchableOpacity} from 'react-native';
 import styled from 'styled-components/native';
-import GeneralComponent from "../components/GeneralComponent";
 
 // styled components
 const ScreenBox = styled.View`
@@ -28,15 +27,13 @@ const InventoryScreen = ({navigation}) => {
                 <Text> Image goes here </Text>
             </ImageBox>
             <LoginBox>
-                <GeneralComponent navigation={navigation}
-                                  type = 'button'
-                                  top = '0'
-                                  left = '0'
-                                  path = 'Item'
-                                  text = {'Register Artifact'}/>
+                <ButtonStyle title = 'Register Artifact'/>
             </LoginBox>
         </ScreenBox>
     );
 };
+
+const ButtonStyle = styled.Button`
+`;
 
 export default InventoryScreen;

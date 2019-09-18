@@ -1,7 +1,6 @@
 import React from 'react';
-import {Text, StyleSheet, View, Button, TouchableOpacity} from 'react-native';
+import {Text, StyleSheet, View, Button, TouchableOpacity, TextInput} from 'react-native';
 import styled from 'styled-components/native';
-import GeneralComponent from "../components/GeneralComponent";
 
 const ScreenBox = styled.View`
 	flex: 1;
@@ -11,67 +10,81 @@ const ScreenBox = styled.View`
 const RegisterScreen = ({navigation}) => {
     return (
         <ScreenBox>
-            <GeneralComponent navigation={navigation}
-                              type = 'text'
-                              top = '15'
-                              left = '0'
-                              text = {'Email Address:'}/>
-            <GeneralComponent navigation={navigation}
-                              type = 'input'
-                              top = '15'
-                              left = '0'/>
-            <GeneralComponent navigation={navigation}
-                              type = 'text'
-                              top = '10'
-                              left = '0'
-                              text = {'First Name:'}/>
-            <GeneralComponent navigation={navigation}
-                              type = 'input'
-                              top = '10'
-                              left = '0'/>
-            <GeneralComponent navigation={navigation}
-                              type = 'text'
-                              top = '10'
-                              left = '0'
-                              text = {'Last Name:'}/>
-            <GeneralComponent navigation={navigation}
-                              type = 'input'
-                              top = '10'
-                              left = '0'/>
-            <GeneralComponent navigation={navigation}
-                              type = 'text'
-                              top = '10'
-                              left = '0'
-                              text = {'Username:'}/>
-            <GeneralComponent navigation={navigation}
-                              type = 'input'
-                              top = '10'
-                              left = '0'/>
-            <GeneralComponent navigation={navigation}
-                              type = 'text'
-                              top = '10'
-                              left = '0'
-                              text = {'Password:'}/>
-            <GeneralComponent navigation={navigation}
-                              type = 'input'
-                              top = '10'
-                              left = '0'/>
-            <GeneralComponent navigation={navigation}
-                              type = 'text'
-                              top = '10'
-                              left = '0'
-                              text = {'Re-confirm Password:'}/>
-            <GeneralComponent navigation={navigation}
-                              type = 'input'
-                              top = '10'
-                              left = '0'/>
-            <GeneralComponent type = 'button'
-                              path = 'Register'
-                              top = '60'
-                              left = '0'
-                              text = {'Submit'}/>
+                <TextStyle top = '15'>
+                        Email Address:
+                </TextStyle>
+                <ViewStyle top = '15' left = '0'>
+                        <TextInput
+                            style={styles.inputStyle1}
+                            underlineColorAndroid = 'transparent'
+                        />
+                </ViewStyle>
+                <TextStyle top = '15'>
+                        First Name:
+                </TextStyle>
+                <ViewStyle top = '15' left = '0'>
+                        <TextInput
+                            style={styles.inputStyle1}
+                            underlineColorAndroid = 'transparent'
+                        />
+                </ViewStyle>
+                <TextStyle top = '15'>
+                        Last Name:
+                </TextStyle>
+                <ViewStyle top = '15' left = '0'>
+                        <TextInput
+                            style={styles.inputStyle1}
+                            underlineColorAndroid = 'transparent'
+                        />
+                </ViewStyle>
+                <TextStyle top = '15'>
+                        Password:
+                </TextStyle>
+                <ViewStyle top = '15' left = '0'>
+                        <TextInput
+                            style={styles.inputStyle1}
+                            underlineColorAndroid = 'transparent'
+                            secureTextEntry={true}
+                        />
+                </ViewStyle>
+                <TextStyle top = '15'>
+                        Confirm Password:
+                </TextStyle>
+                <ViewStyle top = '15' left = '0'>
+                        <TextInput
+                            style={styles.inputStyle1}
+                            underlineColorAndroid = 'transparent'
+                            secureTextEntry={true}
+                        />
+                </ViewStyle>
+                <ViewStyle top = '80' left = '0'>
+                        <ButtonStyle
+                            title = {'Register'}/>
+                </ViewStyle>
         </ScreenBox>
     );
 };
+
+const styles = StyleSheet.create({
+        inputStyle1: {
+                color: '#d4d4d4',
+                borderColor: 'gray',
+                borderWidth: 1
+        }
+});
+
+const TextStyle = styled.Text`
+    color: white;
+    fontFamily: Montserrat;
+    top: ${props => props.top};
+`;
+
+const ButtonStyle = styled.Button`
+`;
+
+const ViewStyle = styled.View`
+    top: ${props => props.top};
+    left: ${props => props.left};
+`;
 
 export default RegisterScreen;
