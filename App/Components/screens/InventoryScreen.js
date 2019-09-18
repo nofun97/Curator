@@ -2,6 +2,21 @@ import React from 'react';
 import {Text, StyleSheet, View, Button, TouchableOpacity} from 'react-native';
 import styled from 'styled-components/native';
 
+const InventoryScreen = ({navigation}) => {
+    return (
+        <ScreenBox>
+            <ImageBox>
+                <Text> Image goes here </Text>
+            </ImageBox>
+            <LoginBox>
+                <Button title = 'Register Artifact'
+                        color='#349e77'
+                        onPress={() => navigation.navigate('RegisterItem')}/>
+            </LoginBox>
+        </ScreenBox>
+    );
+};
+
 // styled components
 const ScreenBox = styled.View`
 	flex: 1;
@@ -18,22 +33,6 @@ const LoginBox = styled.View`
 	background-color: #333333;
 	borderColor = black;
 	alignItems: center
-`;
-
-const InventoryScreen = ({navigation}) => {
-    return (
-        <ScreenBox>
-            <ImageBox>
-                <Text> Image goes here </Text>
-            </ImageBox>
-            <LoginBox>
-                <ButtonStyle title = 'Register Artifact'/>
-            </LoginBox>
-        </ScreenBox>
-    );
-};
-
-const ButtonStyle = styled.Button`
 `;
 
 export default InventoryScreen;

@@ -10,12 +10,16 @@ const LoginScreen = ({navigation}) => {
             </ImageBox>
             <LoginBox>
                 <ViewStyle top = '305' left = '-90'>
-                    <ButtonStyle
-                        title = {'Register'}/>
+                    <Button
+                        title='Register'
+                        color='#349e77'
+                        onPress={() => navigation.navigate('Register')}/>
                 </ViewStyle>
                 <ViewStyle top = '270' left = '90'>
-                    <ButtonStyle
-                        title = {'Login'}/>
+                    <Button
+                        title='Login'
+                        color='#349e77'
+                        onPress={() => navigation.navigate('Inventory')}/>
                 </ViewStyle>
                 <TextStyle top = '80' left = '-120'>
                     Username:
@@ -23,16 +27,16 @@ const LoginScreen = ({navigation}) => {
                 <TextStyle top = '130' left = '-120'>
                     Password:
                 </TextStyle>
-                <ViewStyle top = '25' left = '0'>
+                <ViewStyle top = '25' left = '40'>
                     <TextInput
                         style={styles.inputStyle1}
-                        underlineColorAndroid = 'transparent'
+                        underlineColorAndroid='transparent'
                     />
                 </ViewStyle>
-                <ViewStyle top = '45' left = '0'>
+                <ViewStyle top = '45' left = '40'>
                     <TextInput
                         style={styles.inputStyle1}
-                        underlineColorAndroid = 'transparent'
+                        underlineColorAndroid='transparent'
                         secureTextEntry={true}
                     />
                 </ViewStyle>
@@ -48,9 +52,6 @@ const TextStyle = styled.Text`
     left: ${props => props.left};
 `;
 
-const ButtonStyle = styled.Button`
-`;
-
 const ViewStyle = styled.View`
     top: ${props => props.top};
     left: ${props => props.left};
@@ -60,7 +61,8 @@ const styles = StyleSheet.create({
     inputStyle1: {
         color: '#d4d4d4',
         borderColor: 'gray',
-        borderWidth: 1
+        borderWidth: 1,
+        width: 225
     }
 });
 

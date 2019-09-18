@@ -5,8 +5,6 @@ import styled from 'styled-components/native';
 const RegisterItemScreen = ({navigation}) => {
     return (
         <ScreenBox>
-            <Text> First Name: </Text>
-            <Text> Submit Photo </Text>
         </ScreenBox>
     )
 };

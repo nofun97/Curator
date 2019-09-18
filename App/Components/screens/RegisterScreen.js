@@ -48,14 +48,16 @@ const RegisterScreen = ({navigation}) => {
                 <ViewStyle top = '15' left = '0'>
                         <TextInput
                             style={styles.inputStyle1}
-                            underlineColorAndroid = 'transparent'
+                            underlineColorAndroid='transparent'
                             secureTextEntry={true}
                         />
                 </ViewStyle>
-                <ViewStyle top = '80' left = '0'>
-                        <ButtonStyle
-                            title = {'Register'}/>
-                </ViewStyle>
+                <ViewButtonStyle top = '100' left = '0'>
+                        <Button
+                            title='Submit'
+                            color='#349e77'
+                            onPress={() => navigation.navigate('Login')}/>
+                </ViewButtonStyle>
         </ScreenBox>
     );
 };
@@ -67,7 +69,7 @@ const ScreenBox = styled.View`
 
 const styles = StyleSheet.create({
         inputStyle1: {
-                color: '#d4d4d4',
+                color: 'white',
                 borderColor: 'gray',
                 borderWidth: 1
         }
@@ -79,12 +81,15 @@ const TextStyle = styled.Text`
     top: ${props => props.top};
 `;
 
-const ButtonStyle = styled.Button`
-`;
-
 const ViewStyle = styled.View`
     top: ${props => props.top};
     left: ${props => props.left};
+`;
+
+const ViewButtonStyle = styled.View`
+    top: ${props => props.top};
+    left: ${props => props.left};
+    alignItems: center;
 `;
 
 export default RegisterScreen;

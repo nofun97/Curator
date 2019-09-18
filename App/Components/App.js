@@ -29,14 +29,16 @@ import RegisterScreen from "./screens/RegisterScreen";
 import AccountDetailScreen from "./screens/AccountDetailScreen";
 import InventoryScreen from "./screens/InventoryScreen";
 import ItemDescriptionScreen from "./screens/ItemDescriptionScreen";
+import RegisterItemScreen from "./screens/RegisterItemScreen";
 
 const navigator = createStackNavigator(
     {
-      Login: LoginScreen,
-      Register: RegisterScreen,
-      Account: AccountDetailScreen,
-      Inventory: InventoryScreen,
-      Item: ItemDescriptionScreen
+        Login: LoginScreen,
+        Register: RegisterScreen,
+        RegisterItem: RegisterItemScreen,
+        Account: AccountDetailScreen,
+        Inventory: InventoryScreen,
+        Item: ItemDescriptionScreen
     },
     {
       initialRouteName: 'Login',
@@ -44,7 +46,7 @@ const navigator = createStackNavigator(
         title: 'Curator',
         // change the navigation bar's styling here
         headerStyle: {
-          backgroundColor: '#509682',
+          backgroundColor: '#349e77',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
