@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 import { signUp, uploadProfile } from '../../controllers/authentications';
 import styled from 'styled-components/native';
@@ -18,32 +18,85 @@ const WarningComponent = ({ warning, top, left }) => {
   );
 };
 
-const AdditionalDetails = props => {
+const RegisterScreen = props => {
+  const [warning, setWarning] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [warning, setWarning] = useState('');
 
-  useEffect(() => {
-    console.log(props.user);
-  });
+  const onRegister = () => {
+    if (password.length < 5) {
+      setWarning('Password must be at least 5 characters');
+      return;
+    }
+    if (password !== confirmPassword) {
+      setWarning('Confirm Password is not correct');
+      return;
+    }
 
-  const onSubmit = () => {
+    if (password === '' || email === '') {
+      setWarning('Password and Email must be filled');
+      return;
+    }
+
     if (firstName === '') {
       setWarning('First Name is required');
       return;
     }
-    var user = {
-      firstName: firstName,
-      lastName: lastName,
-      user: props.user,
+
+    var signUpPromise = signUp(email, password);
+    var profilePromise = signUpPromise.then(credentials => {
+      console.log(credentials);
+      return uploadProfile({
+        firstName: firstName,
+        lastName: lastName,
+        id: credentials.user.uid,
+      });
+    });
+
+    const nextAction = data => {
+      props.loggedIn(data.user);
+      props.navigation.navigate('Inventory');
     };
 
-    uploadProfile(user)
-      .then(() => props.navigation.push('Inventory'))
-      .catch(err => setWarning(err));
+    Promise.all([signUpPromise, profilePromise])
+      .then(data => nextAction(data))
+      .catch(err => console.log(err));
   };
+
   return (
     <ScreenBox>
+      <TextStyle top="15">Email Address:</TextStyle>
+      <ViewStyle top="15" left="0">
+        <TextInput
+          style={styles.inputStyle1}
+          underlineColorAndroid="transparent"
+          onChangeText={text => setEmail(text)}
+          value={email}
+        />
+      </ViewStyle>
+      <TextStyle top="15">Password:</TextStyle>
+      <ViewStyle top="15" left="0">
+        <TextInput
+          style={styles.inputStyle1}
+          underlineColorAndroid="transparent"
+          secureTextEntry={true}
+          onChangeText={text => setPassword(text)}
+          value={password}
+        />
+      </ViewStyle>
+      <TextStyle top="15">Confirm Password:</TextStyle>
+      <ViewStyle top="15" left="0">
+        <TextInput
+          style={styles.inputStyle1}
+          underlineColorAndroid="transparent"
+          secureTextEntry={true}
+          onChangeText={text => setConfirmPassword(text)}
+          value={confirmPassword}
+        />
+      </ViewStyle>
       <TextStyle top="15">First Name:</TextStyle>
       <ViewStyle top="15" left="0">
         <TextInput
@@ -63,84 +116,12 @@ const AdditionalDetails = props => {
         />
       </ViewStyle>
       <ViewStyle top="80" left="0">
-        <ButtonStyle title={'Submit'} onPress={() => onSubmit()} />
+        <ButtonStyle title={'Register'} onPress={() => onRegister()} />
       </ViewStyle>
+
       <WarningComponent warning={warning} top="90" />
     </ScreenBox>
   );
-};
-
-const RegisterScreen = props => {
-  const additionalDetails = AdditionalDetails(props);
-  const [warning, setWarning] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [toggleForm, setToggleForm] = useState(true);
-
-  const onRegister = () => {
-    if (password.length < 8) {
-      setWarning('Password must be at least 8 characters');
-      return;
-    }
-    if (password !== confirmPassword) {
-      setWarning('Confirm Password is not correct');
-      return;
-    }
-
-    if (password === '' || email === '') {
-      setWarning('Password and Email must be filled');
-      return;
-    }
-
-    signUp(email, password)
-      .then(credential => {
-        loggedIn(credential);
-        setToggleForm(false);
-      })
-      .catch(err => setWarning(err));
-  };
-
-  if (toggleForm) {
-    return (
-      <ScreenBox>
-        <TextStyle top="15">Email Address:</TextStyle>
-        <ViewStyle top="15" left="0">
-          <TextInput
-            style={styles.inputStyle1}
-            underlineColorAndroid="transparent"
-            onChangeText={text => setEmail(text)}
-            value={email}
-          />
-        </ViewStyle>
-        <TextStyle top="15">Password:</TextStyle>
-        <ViewStyle top="15" left="0">
-          <TextInput
-            style={styles.inputStyle1}
-            underlineColorAndroid="transparent"
-            secureTextEntry={true}
-            onChangeText={text => setPassword(text)}
-            value={password}
-          />
-        </ViewStyle>
-        <TextStyle top="15">Confirm Password:</TextStyle>
-        <ViewStyle top="15" left="0">
-          <TextInput
-            style={styles.inputStyle1}
-            underlineColorAndroid="transparent"
-            secureTextEntry={true}
-            onChangeText={text => setConfirmPassword(text)}
-            value={confirmPassword}
-          />
-        </ViewStyle>
-        <ViewStyle top="80" left="0">
-          <ButtonStyle title={'Register'} onPress={() => onRegister()} />
-        </ViewStyle>
-        <WarningComponent warning={warning} top="90" />
-      </ScreenBox>
-    );
-  }
-  return additionalDetails;
 };
 
 const ScreenBox = styled.View`
@@ -156,15 +137,10 @@ const styles = StyleSheet.create({
   },
 });
 
-connect(
+export default connect(
   state => {
     const { user } = state;
     return { user: user };
   },
-  null
-)(AdditionalDetails);
-
-export default connect(
-  null,
   { loggedIn }
 )(RegisterScreen);

@@ -8,11 +8,10 @@ export const userReducer = createReducer(
   { user: null },
   {
     [loggedIn]: (state, action) => {
-      state.user = action.payload;
-      console.log('User Reducer called');
+      return action.payload;
     },
     [loggedOut]: state => {
-      state.user = null;
+      return null;
     },
   }
 );
