@@ -1,76 +1,114 @@
-import React from 'react';
-import {Text, StyleSheet, View, Button, TouchableOpacity, TextInput} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, StyleSheet, TextInput } from 'react-native';
 import styled from 'styled-components/native';
+import { login } from '../../controllers/authentications';
+import { loggedIn } from '../../redux/reducers';
+import { connect } from 'react-redux';
 
-const LoginScreen = ({navigation}) => {
-    return (
-        <ScreenBox>
-            <ImageBox>
-                <Text> Image goes here </Text>
-            </ImageBox>
-            <LoginBox>
-                <ViewStyle top = '305' left = '-90'>
-                    <ButtonStyle
-                        title = {'Register'}/>
-                </ViewStyle>
-                <ViewStyle top = '270' left = '90'>
-                    <ButtonStyle
-                        title = {'Login'}/>
-                </ViewStyle>
-                <TextStyle top = '80' left = '-120'>
-                    Username:
-                </TextStyle>
-                <TextStyle top = '130' left = '-120'>
-                    Password:
-                </TextStyle>
-                <ViewStyle top = '25' left = '0'>
-                    <TextInput
-                        style={styles.inputStyle1}
-                        underlineColorAndroid = 'transparent'
-                    />
-                </ViewStyle>
-                <ViewStyle top = '45' left = '0'>
-                    <TextInput
-                        style={styles.inputStyle1}
-                        underlineColorAndroid = 'transparent'
-                        secureTextEntry={true}
-                    />
-                </ViewStyle>
-            </LoginBox>
-        </ScreenBox>
-    );
+const LoginScreen = ({ navigation }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [warning, setWarning] = useState('');
+
+  const onLogin = () => {
+    if (email === '' || password === '') {
+      setWarning('Email and Password field can not be empty');
+      return;
+    }
+    login(email, password)
+      .then(credential => {
+        loggedIn(credential);
+        navigation.push('Inventory');
+      })
+      .catch(() => {
+        setWarning('Email or Password are incorrect');
+      });
+  };
+
+  const onRegister = () => {
+    navigation.push('Register');
+  };
+
+  return (
+    <ScreenBox>
+      <ImageBox>
+        <Text> Image goes here </Text>
+      </ImageBox>
+      <LoginBox>
+        {warning !== '' && (
+          <WarningStyle top="50" left="0">
+            {warning}
+          </WarningStyle>
+        )}
+        <ViewStyle top="305" left="-90">
+          <ButtonStyle title={'Register'} onPress={() => onRegister()} />
+        </ViewStyle>
+        <ViewStyle top="270" left="90">
+          <ButtonStyle title={'Login'} onPress={() => onLogin()} />
+        </ViewStyle>
+        <TextStyle top="80" left="-120">
+          Email:
+        </TextStyle>
+        <TextStyle top="130" left="-120">
+          Password:
+        </TextStyle>
+        <ViewStyle top="25" left="0">
+          <TextInput
+            style={styles.inputStyle1}
+            underlineColorAndroid="transparent"
+            placeholder="Put your email here please :)"
+            onChangeText={text => setEmail(text)}
+            value={email}
+          />
+        </ViewStyle>
+        <ViewStyle top="45" left="0">
+          <TextInput
+            style={styles.inputStyle1}
+            underlineColorAndroid="transparent"
+            secureTextEntry={true}
+            placeholder="And your password too :)"
+            onChangeText={text => setPassword(text)}
+            value={password}
+          />
+        </ViewStyle>
+      </LoginBox>
+    </ScreenBox>
+  );
 };
 
 const TextStyle = styled.Text`
-    color: white;
-    fontFamily: Montserrat;
-    top: ${props => props.top};
-    left: ${props => props.left};
+  color: white;
+  font-family: Montserrat;
+  top: ${props => props.top};
+  left: ${props => props.left};
 `;
 
-const ButtonStyle = styled.Button`
+const WarningStyle = styled(TextStyle)`
+  color: tomato;
 `;
+
+const ButtonStyle = styled.Button``;
 
 const ViewStyle = styled.View`
-    top: ${props => props.top};
-    left: ${props => props.left};
+  top: ${props => props.top};
+  left: ${props => props.left};
 `;
 
 const styles = StyleSheet.create({
-    inputStyle1: {
-        color: '#d4d4d4',
-        borderColor: 'gray',
-        borderWidth: 1
-    }
+  inputStyle1: {
+    color: '#d4d4d4',
+    borderColor: 'gray',
+    borderWidth: 1,
+  },
 });
 
 const ScreenBox = styled.View`
-	flex: 1
+  flex: 1;
 `;
 
 const ImageBox = styled.View`
-	flex: 0.35;
-	background-color: #f0f0f0
+  flex: 0.35;
+  background-color: #f0f0f0;
 `;
 
 const LoginBox = styled.View`
@@ -80,4 +118,7 @@ const LoginBox = styled.View`
 	alignItems: center
 `;
 
-export default LoginScreen;
+export default connect(
+  null,
+  { loggedIn }
+)(LoginScreen);
