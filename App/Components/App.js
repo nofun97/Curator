@@ -39,7 +39,7 @@ const navigator = createStackNavigator(
       Item: ItemDescriptionScreen
     },
     {
-      initialRouteName: 'Inventory',
+      initialRouteName: 'Login',
       defaultNavigationOptions: {
         title: 'Curator',
         // change the navigation bar's styling here

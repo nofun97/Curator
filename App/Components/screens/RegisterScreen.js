@@ -2,11 +2,6 @@ import React from 'react';
 import {Text, StyleSheet, View, Button, TouchableOpacity, TextInput} from 'react-native';
 import styled from 'styled-components/native';
 
-const ScreenBox = styled.View`
-	flex: 1;
-	background-color: #333333;
-`;
-
 const RegisterScreen = ({navigation}) => {
     return (
         <ScreenBox>
@@ -64,6 +59,11 @@ const RegisterScreen = ({navigation}) => {
         </ScreenBox>
     );
 };
+
+const ScreenBox = styled.View`
+	flex: 1;
+	background-color: #333333;
+`;
 
 const styles = StyleSheet.create({
         inputStyle1: {
