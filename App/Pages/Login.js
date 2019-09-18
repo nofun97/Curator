@@ -1,53 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import firebase from 'react-native-firebase';
-import { View, TextInput, Text, Button } from 'react-native';
+import React, {Component} from ‘react’;
+import {Stylesheet, View, Image, KeyboardAvoidingView} from ‘react-native’;
+import Loginform from ‘./LoginForm’;
 
-const Login = () => {
-  const [status, setStatus] = useState('Not Logged In');
-  const [user, setUser] = useState(null);
-  const [error, setError] = useState(null);
-  const onLogin = (email, password) => {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(credentials => {
-        setUser(credentials);
-        setStatus('Logged In!');
-      })
-      .catch(err => {
-        setError(err);
-        setStatus("There's an error my dude");
-      });
-  };
-  const [email, setEmail] = useState('username');
-  const [password, setPassword] = useState('password');
+export default class Login extends Component{
+	render(){
+		return(
+			<KeyboardAvoidingView behavior=”padding” style={styles.container}>
+				<View style= {styles.logoContainer}>
+					<Image
+						style={styles.logo}
+						source ={require['../../images/Something.png']}/>
+					<Text	style={styles.title}>
+						Curator
+					</Text>
+				</View>
+				<View style={styles.formContainer}>
+					<Loginform/>
+				</View>
+			</KeyboardAvoidingView>
+		)
+	}
+}
 
-  useEffect(() => {
-    console.log('User', user);
-    console.log('Error', error);
-  });
-
-  return (
-    <View>
-      <TextInput
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-        onChangeText={text => setEmail(text)}
-        value={email}
-      />
-      <TextInput
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-        onChangeText={text => setPassword(text)}
-        value={password}
-      />
-      <Button
-        onPress={async () => await onLogin(email, password)}
-        title="Login"
-        color="#841584"
-        accessibilityLabel="Login"
-      />
-      <Text>{status}</Text>
-    </View>
-  );
-};
-
-export default Login;
+const styles = StyleSheet.create({
+	Container:{
+		flex:1,
+		backgroundColor: 'blue'
+	},
+	logoContainer:{
+		alignItemsL:‘center’,
+		flexGrow: 1,
+		justifyContent: ‘center’
+	},
+	Logo:{
+		width:100,
+		height:100
+	}
+	Title:{
+		Color: “blue”,
+		marginTop: 10,
+		width: 160,
+		textAlign: ‘center’,
+		opacity: 0.9
+	}
+});
