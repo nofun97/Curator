@@ -1,15 +1,15 @@
 import React,{Component} from 'react';
-import {AppRegistry, View, Button, KeyboardAvoidingView} from 'react-native';
-import RegistryForm from './RegistryForm';
+import {StyleSheet, AppRegistry, View, Button, KeyboardAvoidingView} from 'react-native';
+import RegisterForm from '../PageComp/RegisterForm';
 
 export default class RegisterPage extends Component{
   render(){
     return(
-      <KeyboardAvoidingView behavior=”padding” style={styles.container}>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
 				<View style= {styles.logoContainer}>
 					<Image
 						style={styles.logo}
-						source ={require[“../../images/Something.png”]}/>
+						source ={require['../Assets/Logo/Logo.png']}/>
 					<Text	style={styles.title}>
 						Curator
 					</Text>
@@ -25,10 +25,10 @@ export default class RegisterPage extends Component{
 const styles = StyleSheet.create({
 	Container : {
 		flex : 1 ,
-		backgroundColor : 'blue'
+		backgroundColor : '#5f9ea0'
 	},
 	logoContainer : {
-		alignItemsL : 'center',
+		alignItems : 'center',
 		flexGrow : 1 ,
 		justifyContent : 'center'
 	},
@@ -37,10 +37,10 @@ const styles = StyleSheet.create({
 		height : 100
 	},
 	Title : {
-		Color : 'blue',
+		color : '#5f9ea0',
 		marginTop : 10,
 		width : 160,
 		textAlign : 'center',
 		opacity : 0.9
 	}
-);
+});

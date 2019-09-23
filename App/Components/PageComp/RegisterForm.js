@@ -56,22 +56,21 @@ export default class RegisterForm extends Component{
   }
 }
 
-const styles= Stylesheet.create({
+const styles= StyleSheet.create({
   Container : {
     padding : 10
   },
 
   Input : {
-    Height : 1,
-    Backgroundcolor : "white",
+    height : 30,
+    backgroundColor : "#ffffff",
     marginBottom : 10,
-    Color : "blue",
+    color : "#5f9ea0",
     paddingHorizontal : 10,
   },
 
   button:{
-    Height : 1,
-    backgroundColor : "blue",
-    Weight : 4,
+    height : 30,
+    backgroundColor : "#5f9ea0",
   }
 })

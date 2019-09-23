@@ -24,21 +24,21 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import {createAppContainer, createStackNavigator} from "react-navigation";
-import LoginScreen from "./screens/LoginScreen";
-import RegisterScreen from "./screens/RegisterScreen";
-import AccountDetailScreen from "./screens/AccountDetailScreen";
-import InventoryScreen from "./screens/InventoryScreen";
-import ItemDescriptionScreen from "./screens/ItemDescriptionScreen";
-import RegisterItemScreen from "./screens/RegisterItemScreen";
+import LoginPage from "./Pages/LoginPage";
+ import RegisterPage from "./Pages/RegisterPage";
+// import AccountDetailScreen from "./screens/AccountDetailScreen";
+// import InventoryScreen from "./screens/InventoryScreen";
+// import ItemDescriptionScreen from "./screens/ItemDescriptionScreen";
+// import RegisterItemScreen from "./screens/RegisterItemScreen";
 
 const navigator = createStackNavigator(
     {
-        Login: LoginScreen,
-        Register: RegisterScreen,
-        RegisterItem: RegisterItemScreen,
-        Account: AccountDetailScreen,
-        Inventory: InventoryScreen,
-        Item: ItemDescriptionScreen
+        Login: LoginPage,
+        Register: RegisterPage,
+        // RegisterItem: RegisterItemScreen,
+        // Account: AccountDetailScreen,
+        // Inventory: InventoryScreen,
+        // Item: ItemDescriptionScreen
     },
     {
       initialRouteName: 'Login',
