@@ -170,8 +170,8 @@ export const editItemWithPhotosUpload = (
 
 export const editItemWithPhotosDelete = (itemID, updated) => {
   var editItemPromise = editItemWithoutPhotosModification(itemID, updated);
-  var deletePhotos = []
-  if (updated.photos !== []){
+  var deletePhotos = [];
+  if (updated.photos !== []) {
     deletePhotos = deleteImageAsPromise(itemID, updated.photos);
   }
   return Promise.all([editItemPromise, ...deletePhotos]);
