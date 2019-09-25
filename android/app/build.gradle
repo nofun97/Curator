@@ -190,6 +190,11 @@ dependencies {
     implementation "com.google.firebase:firebase-core:16.0.9"
     implementation "com.google.firebase:firebase-auth:17.0.0"
     implementation "com.google.firebase:firebase-firestore:19.0.0"
+    implementation "com.google.firebase:firebase-storage:17.0.0"
+    implementation 'com.google.firebase:firebase-database:19.1.0'
+    implementation "com.google.firebase:firebase-functions:17.0.0"
+
+    // compile project(':react-native-workers')
 
     if (enableHermes) {
       def hermesPath = "../../node_modules/hermesvm/android/";

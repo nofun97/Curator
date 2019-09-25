@@ -7,7 +7,6 @@ import com.facebook.react.PackageList;
 import com.facebook.hermes.reactexecutor.HermesExecutorFactory;
 import com.facebook.react.bridge.JavaScriptExecutorFactory;
 import com.facebook.react.ReactApplication;
-import io.invertase.firebase.RNFirebasePackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
@@ -17,6 +16,13 @@ import java.util.List;
 // Firebase
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
+import com.google.firebase.database.FirebaseDatabase;
+import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.storage.RNFirebaseStoragePackage;
+import io.invertase.firebase.functions.RNFirebaseFunctionsPackage;
+
+// react native worker
+// import co.apptailor.Worker.WorkerPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -38,6 +44,11 @@ public class MainApplication extends Application implements ReactApplication {
       // packages.add(new RNFirebasePackage());
       packages.add(new RNFirebaseAuthPackage());
       packages.add(new RNFirebaseFirestorePackage());
+      packages.add(new RNFirebaseStoragePackage());
+      packages.add(new RNFirebaseFunctionsPackage());
+
+      // react native worker
+      // packages.add(new WorkerPackage());
       return packages;
     }
 
@@ -56,5 +67,6 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    FirebaseDatabase.getInstance().setPersistenceEnabled(true);
   }
 }
