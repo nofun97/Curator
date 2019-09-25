@@ -1,26 +1,113 @@
 import firebase from 'react-native-firebase';
 
 const collection = firebase.firestore().collection('items');
+const storage = firebase.storage();
+// export var uploadTasks = [];
+/**
+ *{
+  owners: {string: Boolean},
+  description: string,
+  photos: [urls], // need to check cloud storage
+  dateRegistered: Date,
+  dateOwned: Date,
+  categories: {string: Boolean}, // maybe for organizing features
+}
+ */
 
-export const registerItem = item => {
+export const registerItem = (
+  item,
+  progressStorage,
+  errorStorage,
+  completeStorage
+) => {
+  if (!item.owners) {
+    return {
+      error: 'No owner is assigned',
+    };
+  }
+
   var owners = {};
-  for (const owner in item.owners) {
-    owners[owner] = true;
+  for (let o of item.owners) {
+    owners[o] = true;
+  }
+
+  if (!item.categories) {
+    return {
+      error: 'Item must belong in a category',
+    };
   }
 
   var categories = {};
-  for (const category in item.categories) {
-    categories[category] = true;
+  for (let c of item.categories) {
+    categories[c] = true;
   }
 
-  var toSave = {
-    dateOwned: item.dateOwned,
-    dateRegistered: Date.now(),
-    description: item.description,
+  if (!item.dateOwned) {
+    return {
+      error: 'Date must be assigned',
+    };
+  }
+
+  const toUpload = {
     owners: owners,
+    dateOwned: item.dateOwned,
+    description: item.description,
+    dateRegistered: Date.now(),
+    dateUpdated: Date.now(),
     categories: categories,
   };
+  var uploadToFirestore = collection.add(toUpload);
+  var uploadImages = [];
+  if (item.photos !== []) {
+    for (let i = 0; i < item.photos.length; i++) {
+      var promise = uploadToFirestore.then(data => {
+        uploadImageAsPromise(
+          data.id,
+          item.photos[i],
+          progressStorage,
+          errorStorage,
+          completeStorage
+        );
+      });
+      uploadImages.push(promise);
+    }
+  }
+
+  return Promise.all([uploadToFirestore, ...uploadImages]);
 };
+
+function uploadImageAsPromise(itemID, filepath, progress, error, complete) {
+  return new Promise(function(resolve, reject) {
+    var storageRef = firebase.storage().ref(`${itemID}/${Date.now()}`);
+
+    //Upload file
+    var task = storageRef.putFile(filepath);
+
+    //Update progress bar
+    task.on(
+      'state_changed',
+      progress
+        ? progress
+        : snapshot => {
+            console.log(
+              snapshot.downloadURL +
+                ': ' +
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+          },
+      error
+        ? error
+        : err => {
+            console.log(err);
+          },
+      complete
+        ? complete
+        : () => {
+            console.log(task.shapshot.downloadURL + ' is complete!');
+          }
+    );
+  });
+}
 
 export const viewItem = itemId => {
   return collection
@@ -46,6 +133,44 @@ export const viewItem = itemId => {
 // function viewAllItems();
 // This is to view specific item, only plan
 // function getItemData(item); // To view item in more detail
-export const editItem = (itemID, updated) => {
-  return collection.doc(itemID).udpate(updated);
-}
+export const editItem = (
+  itemID,
+  updated,
+  progressStorage,
+  errorStorage,
+  completeStorage
+) => {
+  const toUpload = { dateUpdated: Date.now() };
+
+  if (updated.owners !== []) {
+    var owners = {};
+    for (let o of updated.owners) {
+      owners[o] = true;
+    }
+  }
+
+  if (updated.dateOwned) {
+    toUpload.dateOwned = updated.dateOwned;
+  }
+
+  if (updated.description) {
+    toUpload.description = updated.description;
+  }
+
+  if (updated.dateRegistered) {
+    return {
+      error:
+        "Hello there, you're not supposed to be able to do this but here you are, if you could create a github issue telling me how you did it, please do that, I'll appreciate you so much",
+    };
+  }
+
+  if (updated.categories) {
+    toUpload.categories = updated.categories;
+  }
+
+  if (updated.photos) {
+
+  }
+
+  return collection.doc(itemID).udpate(toUpload);
+};
