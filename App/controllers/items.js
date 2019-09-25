@@ -76,9 +76,9 @@ export const registerItem = (
   return Promise.all([uploadToFirestore, ...uploadImages]);
 };
 
-function uploadImageAsPromise(itemID, filepath, progress, error, complete) {
+const uploadImageAsPromise = (itemID, filepath, progress, error, complete) => {
   return new Promise(function(resolve, reject) {
-    var storageRef = firebase.storage().ref(`${itemID}/${Date.now()}`);
+    var storageRef = storage.ref(`${itemID}/${Date.now()}`);
 
     //Upload file
     var task = storageRef.putFile(filepath);
@@ -107,7 +107,15 @@ function uploadImageAsPromise(itemID, filepath, progress, error, complete) {
           }
     );
   });
-}
+};
+
+const deleteImageAsPromise = (itemID, photosNames) => {
+  var deletionPromise = [];
+  for (let i = 0; i < photosNames.length; i++) {
+    deletionPromise.push(storage.ref(`${itemID}/${photosNames[i]}`).delete());
+  }
+  return Promise.all(deletionPromise);
+};
 
 export const viewItem = itemId => {
   return collection
@@ -133,13 +141,43 @@ export const viewItem = itemId => {
 // function viewAllItems();
 // This is to view specific item, only plan
 // function getItemData(item); // To view item in more detail
-export const editItem = (
+export const editItemWithPhotosUpload = (
   itemID,
   updated,
   progressStorage,
   errorStorage,
   completeStorage
 ) => {
+  var editItemPromise = editItemWithoutPhotosModification(itemID, updated);
+  var addedPhotosPromise = [];
+  if (updated.photos !== []) {
+    for (let i = 0; i < updated.photos.length; i++) {
+      var promise = editItemPromise.then(data => {
+        uploadImageAsPromise(
+          data.id,
+          updated.photos[i],
+          progressStorage,
+          errorStorage,
+          completeStorage
+        );
+      });
+      addedPhotosPromise.push(promise);
+    }
+  }
+
+  return Promise.all([editItemPromise, ...addedPhotosPromise]);
+};
+
+export const editItemWithPhotosDelete = (itemID, updated) => {
+  var editItemPromise = editItemWithoutPhotosModification(itemID, updated);
+  var deletePhotos = []
+  if (updated.photos !== []){
+    deletePhotos = deleteImageAsPromise(itemID, updated.photos);
+  }
+  return Promise.all([editItemPromise, ...deletePhotos]);
+};
+
+export const editItemWithoutPhotosModification = (itemID, updated) => {
   const toUpload = { dateUpdated: Date.now() };
 
   if (updated.owners !== []) {
@@ -166,10 +204,6 @@ export const editItem = (
 
   if (updated.categories) {
     toUpload.categories = updated.categories;
-  }
-
-  if (updated.photos) {
-
   }
 
   return collection.doc(itemID).udpate(toUpload);
