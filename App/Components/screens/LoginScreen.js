@@ -17,7 +17,7 @@ const LoginScreen = props => {
     }
 
     const nextStep = credential => {
-      props.loggedIn(credential.uid);
+      props.loggedIn(credential.user.uid);
       props.navigation.push('Inventory');
     };
 
