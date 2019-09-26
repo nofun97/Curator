@@ -36,7 +36,7 @@ export const ImagePickerTest = props => {
     });
   };
 
-  useEffect(() => {
+  const onTest = () => {
     if (filePath === {}) {
       return;
     }
@@ -51,7 +51,7 @@ export const ImagePickerTest = props => {
     registerItem(item, null, null, null)
       .then(() => setDone("It's done my dude"))
       .catch(err => setDone(err));
-  });
+  };
 
   return (
     <View style={styles.container}>
@@ -71,6 +71,7 @@ export const ImagePickerTest = props => {
         />
         <Text style={{ alignItems: 'center' }}>{filePath.uri}</Text>
         <Button title="Choose File" onPress={chooseFile} />
+        <Button title="Test it dud" onPress={onTest} />
         {done !== '' && <Text>{done}</Text>}
       </View>
     </View>
