@@ -41,7 +41,7 @@ const ButtonStyle = styled.Button``;
 export default connect(
   state => {
     const { user } = state;
-    return { user: user.id };
+    return { user: user };
   },
   null
 )(InventoryScreen);
