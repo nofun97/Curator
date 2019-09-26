@@ -1,16 +1,18 @@
 import React from 'react';
-import {Text, StyleSheet, View, Button, TouchableOpacity} from 'react-native';
+import { Text, StyleSheet, View, Button, TouchableOpacity } from 'react-native';
+import { ImagePickerTest } from '../ImagePickerTest';
 import styled from 'styled-components/native';
+import { connect } from 'react-redux';
 
 // styled components
 const ScreenBox = styled.View`
-	flex: 1;
-	alignContent: stretch
+  flex: 1;
+  alignContent: stretch;
 `;
 
 const ImageBox = styled.View`
-	flex: 0.35;
-	background-color: #f0f0f0
+  flex: 0.35;
+  background-color: #f0f0f0;
 `;
 
 const LoginBox = styled.View`
@@ -20,20 +22,26 @@ const LoginBox = styled.View`
 	alignItems: center
 `;
 
-const InventoryScreen = ({navigation}) => {
-    return (
-        <ScreenBox>
-            <ImageBox>
+const InventoryScreen = props => {
+  return (
+    <ScreenBox>
+      {/* <ImageBox>
                 <Text> Image goes here </Text>
             </ImageBox>
             <LoginBox>
                 <ButtonStyle title = 'Register Artifact'/>
-            </LoginBox>
-        </ScreenBox>
-    );
+            </LoginBox> */}
+      <ImagePickerTest user={props.user} />
+    </ScreenBox>
+  );
 };
 
-const ButtonStyle = styled.Button`
-`;
+const ButtonStyle = styled.Button``;
 
-export default InventoryScreen;
+export default connect(
+  state => {
+    const { user } = state;
+    return { user: user.id };
+  },
+  null
+)(InventoryScreen);
