@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, Image, TextInput } from 'react-native';
 import { registerItem } from '../controllers/items';
 import ImagePicker from 'react-native-image-picker';
 
 export const ImagePickerTest = props => {
   const [filePath, setFilePath] = useState({});
+  const [done, setDone] = useState('');
   const chooseFile = () => {
     var options = {
       title: 'Select Image',
@@ -35,6 +36,23 @@ export const ImagePickerTest = props => {
     });
   };
 
+  useEffect(() => {
+    if (filePath === {}) {
+      return;
+    }
+    const item = {
+      owners: [props.user],
+      description: 'this is a test you dummy dum dum',
+      photos: [filePath.uri],
+      dateOwned: Date.now(),
+      categories: ['dummy', 'dum'],
+    };
+
+    registerItem(item, null, null, null)
+      .then(() => setDone("It's done my dude"))
+      .catch(err => setDone(err));
+  });
+
   return (
     <View style={styles.container}>
       <View style={styles.container}>
@@ -48,11 +66,12 @@ export const ImagePickerTest = props => {
           style={{ width: 100, height: 100 }}
         />
         <Image
-          source={{ uri: this.state.filePath.uri }}
+          source={{ uri: filePath.uri }}
           style={{ width: 250, height: 250 }}
         />
         <Text style={{ alignItems: 'center' }}>{filePath.uri}</Text>
         <Button title="Choose File" onPress={chooseFile} />
+        {done !== '' && <Text>{done}</Text>}
       </View>
     </View>
   );
