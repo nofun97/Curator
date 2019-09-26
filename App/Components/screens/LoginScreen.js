@@ -5,7 +5,7 @@ import { login } from '../../controllers/authentications';
 import { loggedIn } from '../../redux/reducers';
 import { connect } from 'react-redux';
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [warning, setWarning] = useState('');
@@ -15,18 +15,22 @@ const LoginScreen = ({ navigation }) => {
       setWarning('Email and Password field can not be empty');
       return;
     }
+
+    const nextStep = credential => {
+      props.loggedIn(credential.uid);
+      props.navigation.push('Inventory');
+    };
+
     login(email, password)
-      .then(credential => {
-        loggedIn(credential);
-        navigation.push('Inventory');
-      })
-      .catch(() => {
+      .then(nextStep)
+      .catch(err => {
+        console.log(err);
         setWarning('Email or Password are incorrect');
       });
   };
 
   const onRegister = () => {
-    navigation.push('Register');
+    props.navigation.push('Register');
   };
 
   return (
