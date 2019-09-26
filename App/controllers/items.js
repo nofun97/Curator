@@ -103,7 +103,7 @@ const uploadImageAsPromise = (itemID, filepath, progress, error, complete) => {
       complete
         ? complete
         : () => {
-            console.log(task.shapshot.downloadURL + ' is complete!');
+            console.log('upload is complete!');
           }
     );
   });
