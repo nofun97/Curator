@@ -9,7 +9,7 @@ export default class Login extends Component{
 				<View style= {styles.LogoContainer}>
 					<Image
 						style={styles.Logo}
-						source ={require['../Assets/Logo/Logo.png']}/>
+						source ={require['../../Assets/Logo/Logo.png']}/>
 					<Text	style={styles.Title}>
 						Curator
 					</Text>

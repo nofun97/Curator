@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar} from 'react-native';
+import {StyleSheet, View, TextInput, TouchableOpacity, Text, Button} from 'react-native';
+//import styled from 'styled-components/native';
+import Montserrat-Regular from '../../Assets/Fonts/Montserrat-Regular.ttf'
 
 export default class LoginForm extends Component{
   constructor(props){
@@ -9,75 +11,47 @@ export default class LoginForm extends Component{
       password : "",
     }
   }
-  // isValid(){
-  //   const {email, password} = this.state;
-  //   let valid = false;
-  //
-  //   if (email.length  "" && password.length === ""){
-  //     valid = true;
-  //   }
-  //   return valid;
-  // }
-  // onSignIn(){
-  //   const {username, password} = this.state;
-  //   if(this.state.username === "" && this.state.password === ""){
-  //
-  //   }
-  // }
   render(){
-    const {navigate} = this.props.navigation;
     return(
       <View style = {styles.Container}>
-        <StatusBar barSTyle = "light-content"/>
+        <Text style = {styles.textStyle}>Username</Text>
         <TextInput
-          placeholder = "Username"
-          returnKeyType = "next"
-          onChangeText = {(text)=>this.setState({username : text})}
-          autoCorrect = {false}
-          style = {styles.Input}
-        />
+          style = {styles.inputTextStyles}
+          onChangeText = {(input)=>this.setState({userName : input})}
+          />
+        <Text style = {styles.textStyle}>Password</Text>
         <TextInput
-          placeholder = "Password"
-          secureTextEntry = {true}
-          returnKeyType = "next"
-          style = {styles.Input}
-          onSubmitEditing = {(text)=>this.setState({password : text})}
-        />
-        <TouchableOpacity style={styles.ButtonContainer}>
-          <Text style = {styles.ButtonText}>
-          Login
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.ButtonContainer}
-          onPress={() => navigation.navigate("RegisterPage")}>
-          <Text style = {styles.ButtonText}>
-          Register
-          </Text>
-        </TouchableOpacity>
+          style = {styles.inputTextStyles}
+          onChangeText = {(input)=>this.setState({password : input})}
+          />
+        <Button style = {styles.buttonStyle}/>
+        <Button style = {styles.buttonStyle}/>
       </View>
     )
   }
 }
 
-const styles = StyleSheet.create({
-  Container : {
+const styles= StyleSheet.create({
+  container:{
+    flex: 0.65,
+    alignItems : 'center',
+  	backgroundColor : '#333333',
+  	borderColor : 'black',
+  	alignItems: 'center'
   },
-  Input : {
-    height : 40,
-
-    backgroundColor : "#5f9ea0",
-    margin : 5,
-    color : "#ffffff",
+  inputTextStyles:{
+    color: '#d4d4d4',
+    borderColor: 'gray',
+    alignItems : 'center',
+    borderWidth: 1,
+    width: 225,
+    paddingBottom: 10,
   },
-  ButtonContainer : {
-    height : 40,
-    backgroundColor : "#5f9ea0",
-    margin : 5,
-  },
-  ButtonText : {
-    textAlign : "center",
-    color : "#ffffff",
-    fontWeight : "700",
+  textStyle:{
+    color: 'white',
+    fontFamily: 'Montserrat'
+},
+  buttonStyle: {
+    paddingBottom : 10,
   }
 })
