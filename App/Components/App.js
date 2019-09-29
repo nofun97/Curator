@@ -24,8 +24,8 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import {createAppContainer, createStackNavigator} from "react-navigation";
-import LoginPage from "./Screens/LoginScreen";
-import RegisterPage from "./Screens/RegisterScreen";
+import LoginPage from "./Pages/LoginPage";
+import RegisterPage from "./Pages/RegisterPage";
 // import AccountDetailScreen from "./Screens/AccountDetailScreen";
 // import InventoryScreen from "./Screens/InventoryScreen";
 // import ItemDescriptionScreen from "./Screens/ItemDescriptionScreen";

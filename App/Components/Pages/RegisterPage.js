@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {StyleSheet, AppRegistry, View, Button, KeyboardAvoidingView} from 'react-native';
+import {StyleSheet, AppRegistry, View, Button, Image,Text, KeyboardAvoidingView} from 'react-native';
 import RegisterForm from '../PageComp/RegisterForm';
 
 export default class RegisterPage extends Component{
@@ -9,13 +9,13 @@ export default class RegisterPage extends Component{
 				<View style= {styles.logoContainer}>
 					<Image
 						style={styles.logo}
-						source ={require['../Assets/Logo/Logo.png']}/>
+						source ={require['../../Assets/Logo/Logo.png']}/>
 					<Text	style={styles.title}>
 						Curator
 					</Text>
 				</View>
 				<View style={styles.formContainer}>
-					<RegistryForm/>
+					<RegisterForm/>
 				</View>
 			</KeyboardAvoidingView>
     )

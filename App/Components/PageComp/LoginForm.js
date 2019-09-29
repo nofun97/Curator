@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, TextInput, TouchableOpacity, Text, Button} from 'react-native';
 //import styled from 'styled-components/native';
-import Montserrat-Regular from '../../Assets/Fonts/Montserrat-Regular.ttf'
 
 export default class LoginForm extends Component{
   constructor(props){
@@ -24,8 +23,16 @@ export default class LoginForm extends Component{
           style = {styles.inputTextStyles}
           onChangeText = {(input)=>this.setState({password : input})}
           />
-        <Button style = {styles.buttonStyle}/>
-        <Button style = {styles.buttonStyle}/>
+        <Button
+          title = "Login"
+          style = {styles.buttonStyle}
+//          onPress = {()=>{this.props.navigate('Inventory')}}
+        />
+        <Button
+          title = "Register"
+          style = {styles.buttonStyle}
+          onPress = {()=>{this.props.navigation.navigate('Register')}}
+        />
       </View>
     )
   }
