@@ -1,9 +1,10 @@
-import {Component}, from 'react';
-import {StyleSheet, View, ScrollView, TouchableOpacity} from 'react-native';
+import React, {Component} from 'react';
+import {StyleSheet, View, ScrollView, TouchableOpacity, Dimensions} from 'react-native';
 import InventoryItems from '../PageComp/InventoryItems';
 
+const { height } = Dimensions.get('window');
+
 export default class InventoryScroll extends Component{
-  const {height} = 12//'gib me height';
   constructor(props){
     super(props);
     this.state = {
@@ -19,7 +20,7 @@ export default class InventoryScroll extends Component{
     const scrollEnabled = this.state.screenHeight > height ;
     return (
       <ScrollView
-        style = styles.ScrollContainer
+        style = {styles.ScrollContainer}
         contentContainerStyle = {styles.scrollview}
         scrollEnabled={scrollEnabled}
         onContentSizeChange = {this.onContentSizeChange}
@@ -32,8 +33,12 @@ export default class InventoryScroll extends Component{
   }
 }
 
-const styles = styleSheet.create({
+const styles = StyleSheet.create({
   scrollContainer:{
 
   }
 })
+
+//place your functions here
+//function to update height
+//function to update the 'children'

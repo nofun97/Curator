@@ -1,15 +1,17 @@
-import {Component}, from 'react';
-import {View, Image, Text`, TouchableOpacity} from 'react-native';
+import React, {Component} from 'react';
+import {StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native';
 
 export default class InventoryItems extends Component {
   render(){
     return(
-      <View style= styles.container>
-        <TouchableOpacity>
+      <View style= {styles.container}>
+        <TouchableOpacity
+          style = {styles.buttonsTyle}
+          onPress = {()=>navigate}>
           <Image
             style={styles.itemImage}
-            source ={require['../../someplace]'}/>
-          <Text style=styles.textStyle>input some text here
+            source ={require['../../someplace']}/>
+          <Text style={styles.textStyle}>input some text here
           </Text>
         </TouchableOpacity>
       </View>
@@ -28,3 +30,8 @@ const styles=StyleSheet.create({
 
   }
 })
+
+//place your functions here
+//function to move to the individual items page
+//function to update Image
+//function to update texts

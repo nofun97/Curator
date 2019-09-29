@@ -1,5 +1,5 @@
-import {Component}, from 'react',
-import {StyleSheet, View} from 'react-native',
+import React, {Component} from 'react';
+import {StyleSheet, View} from 'react-native';
 import InventoryScroll from '../PageComp/InventoryScroll';
 
 export default class InventoryPage extends Component{
@@ -7,7 +7,7 @@ export default class InventoryPage extends Component{
   render(){
     return(
       <View>
-        <InventoryScroll style=styles.scrollContainer/>
+        <InventoryScroll style={styles.scrollContainer}/>
       </View>
     )
   }
@@ -16,9 +16,11 @@ export default class InventoryPage extends Component{
 const styles = StyleSheet.create({
   container:{
 
-  }.
+  },
   scrollContainer: {
 
   },
 
 })
+
+//place your functions here
