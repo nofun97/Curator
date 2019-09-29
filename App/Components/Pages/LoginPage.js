@@ -46,6 +46,6 @@ const styles = StyleSheet.create({
 		margin : 5,
 		alignSelf : "stretch",
 		justifyContent : "center",
-		backgroundColor : "#2f4f4f"
+		backgroundColor : "#2a4545"
 	},
 });

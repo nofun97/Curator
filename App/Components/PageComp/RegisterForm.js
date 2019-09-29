@@ -15,41 +15,47 @@ export default class RegisterForm extends Component{
   }
   render(){
     return(
-      <View style>
-        <TextInput style ={styles.Input}
-          placeholder = "Email"
-          keyboardType = "email-address"
-          autoCorrect = {false}
-          onSubmitEditing={(input)=>this.setState({emailInput: input})}
-          />
-        <TextInput style ={styles.Input}
-          placeholder = "First Name"
-          autoCorrect = {false}
-          onChangeText={(input)=>this.setState({firstName: input})}
-          />
-        <TextInput style ={styles.Input}
-          placeholder = "Last Name"
-          autoCorrect = {false}
-          onChangeText = {(input)=>this.setState({lastName: input})}
-          />
-        <TextInput style = {styles.Input}
-          placeholder = "Username"
-          autoCorrect = {false}
-          onChangeText={(input)=>this.setState({username: input})}
-          />
-        <TextInput style ={styles.Input}
-          placeholder = "Password"
-          secureTextEntry= {true}
-          autoCorrect = {false}
-          onChangeText={(input)=>this.setState({password: input})}
-          />
-        <TextInput style = {styles.Input}
-          placeholder = "Reconfirm Password"
-          secureTextEntry = {true}
-          autoCorrect = {false}
-          onChangeText={(input)=>this.setState({reconfirmPass: input})}
-          />
-        <TouchableOpacity style = {styles.button}
+      <View>
+        <TextInput style ={styles.StartInputStyle}
+                   placeholderTextColor = "#89abab"
+                   placeholder = "Email"
+                   keyboardType = "email-address"
+                   autoCorrect = {false}
+                   onSubmitEditing={(input)=>this.setState({emailInput: input})}
+        />
+        <TextInput style ={styles.InputStyle}
+                   placeholderTextColor = "#89abab"
+                   placeholder = "First Name"
+                   autoCorrect = {false}
+                   onChangeText={(input)=>this.setState({firstName: input})}
+        />
+        <TextInput style ={styles.InputStyle}
+                   placeholderTextColor = "#89abab"
+                   placeholder = "Last Name"
+                   autoCorrect = {false}
+                   onChangeText = {(input)=>this.setState({lastName: input})}
+        />
+        <TextInput style = {styles.InputStyle}
+                   placeholderTextColor = "#89abab"
+                   placeholder = "Username"
+                   autoCorrect = {false}
+                   onChangeText={(input)=>this.setState({username: input})}
+        />
+        <TextInput style ={styles.InputStyle}
+                   placeholderTextColor = "#89abab"
+                   placeholder = "Password"
+                   secureTextEntry= {true}
+                   autoCorrect = {false}
+                   onChangeText={(input)=>this.setState({password: input})}
+        />
+        <TextInput style = {styles.InputStyle}
+                   placeholderTextColor = "#89abab"
+                   placeholder = "Reconfirm Password"
+                   secureTextEntry = {true}
+                   autoCorrect = {false}
+                   onChangeText={(input)=>this.setState({reconfirmPass: input})}
+        />
+        <TouchableOpacity style = {styles.ButtonStyle}
           title = "submit"/>
       </View>
     )
@@ -57,20 +63,25 @@ export default class RegisterForm extends Component{
 }
 
 const styles= StyleSheet.create({
-  Container : {
-    padding : 10
-  },
-
-  Input : {
-    height : 30,
-    backgroundColor : "#ffffff",
-    marginBottom : 10,
-    color : "#5f9ea0",
+  StartInputStyle : {
+    height : 50,
+    marginTop : 30,
     paddingHorizontal : 10,
+    color: "#c8dede",
+    borderColor: 'gray',
+    borderWidth: 1,
   },
-
-  button:{
-    height : 30,
-    backgroundColor : "#5f9ea0",
+  InputStyle : {
+    height : 50,
+    marginTop : 20,
+    paddingHorizontal : 10,
+    color: "#c8dede",
+    borderColor: 'gray',
+    borderWidth: 1,
+  },
+  ButtonStyle : {
+    height : 35,
+    marginTop: 80,
+    backgroundColor : "#537f80",
   }
-})
+});

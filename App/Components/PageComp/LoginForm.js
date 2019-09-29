@@ -42,7 +42,7 @@ const styles= StyleSheet.create({
   container:{
     flex: 0.65,
     alignItems : 'center',
-  	backgroundColor : '#333333',
+  	backgroundColor : '#2f4f4f',
   	borderColor : 'black',
   },
   inputTextStyles:{
