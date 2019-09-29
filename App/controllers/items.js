@@ -1,18 +1,9 @@
-import firebase from 'react-native-firebase';
+import firebase from '@react-native-firebase/app';
+import '@react-native-firebase/firestore';
+import '@react-native-firebase/storage';
 
 const collection = firebase.firestore().collection('items');
 const storage = firebase.storage();
-// export var uploadTasks = [];
-/**
- *{
-  owners: {string: Boolean},
-  description: string,
-  photos: [urls], // need to check cloud storage
-  dateRegistered: Date,
-  dateOwned: Date,
-  categories: {string: Boolean}, // maybe for organizing features
-}
- */
 
 export const registerItem = (
   item,
@@ -114,33 +105,95 @@ const deleteImageAsPromise = (itemID, photosNames) => {
   for (let i = 0; i < photosNames.length; i++) {
     deletionPromise.push(storage.ref(`${itemID}/${photosNames[i]}`).delete());
   }
-  return Promise.all(deletionPromise);
+  return deletionPromise;
 };
 
-export const viewItem = itemId => {
-  return collection
-    .doc(itemId)
-    .get()
-    .then(d => {
-      if (d.exists) {
-        return d;
-      }
-      console.log('Data not found');
-      return {
-        err: 'Data not found',
-      };
-    })
-    .catch(err => {
-      console.log(err);
-      return {
-        err: err,
-      };
-    });
+// view item detail
+export const viewItem = async itemId => {
+  const itemDetails = await collection.doc(itemId).get();
+  const picturesReferences = await storage.ref(`${itemId}/`).listAll();
+  var downloadURLs = [];
+  for (let i = 0; i < picturesReferences.items.length; i++) {
+    downloadURLs.push(picturesReferences.items[i].getDownloadURL());
+  }
+  return {
+    ...itemDetails.data(),
+    photos: downloadURLs,
+  };
 };
 
-// function viewAllItems();
-// This is to view specific item, only plan
-// function getItemData(item); // To view item in more detail
+export const getDataList = async (
+  owner,
+  pageStart,
+  limit,
+  order,
+  categories
+) => {
+  if (!owner) {
+    return {
+      error: 'Owner must be defined',
+    };
+  }
+
+  if (!pageStart) {
+    pageStart = 0;
+  }
+
+  if (!order || !order.field) {
+    order = {
+      field: 'dateOwned',
+      direction: 'desc',
+    };
+  }
+  if (
+    !order.direction ||
+    order.direction !== 'desc' ||
+    order.direction !== 'asc'
+  ) {
+    order.direction = 'desc';
+  }
+
+  if (!limit) {
+    limit = 10; // Set this on env
+  }
+
+  var query = collection.where(`owners.${owner}`, '==', 'true');
+
+  if (categories !== []) {
+    for (let i = 0; i < categories.length; i++) {
+      query = query.where(`categories.${categories[i]}`, '==', 'true');
+    }
+  }
+
+  const querySnapshot = await query
+    .orderBy(order.field, order.direction)
+    .startAt(pageStart)
+    .limit(limit)
+    .get();
+
+  const items = querySnapshot.docs();
+
+  const dataTransform = async data => {
+    var item = data.data();
+    const thumbnailList = await storage
+      .ref(`${data.id}/`)
+      .list({ maxResults: 1 });
+    if (thumbnailList.items !== []) {
+      item.thumbnail = await thumbnailList.items[0].getDownloadURL();
+    } else {
+      item.thumbnail = undefined;
+    }
+    return item;
+  };
+
+  var listOfItems = [];
+  for (let i = 0; i < items.length; i++) {
+    listOfItems.push(await dataTransform(items[i]));
+  }
+
+  return listOfItems;
+};
+
 export const editItemWithPhotosUpload = (
   itemID,
   updated,
