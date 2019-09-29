@@ -27,7 +27,7 @@ import {createAppContainer, createStackNavigator} from "react-navigation";
 import LoginPage from "./Pages/LoginPage";
 import RegisterPage from "./Pages/RegisterPage";
 // import AccountDetailScreen from "./Screens/AccountDetailScreen";
-// import InventoryScreen from "./Screens/InventoryScreen";
+ import InventoryPage from "./Pages/InventoryPage";
 // import ItemDescriptionScreen from "./Screens/ItemDescriptionScreen";
 // import RegisterItemScreen from "./Screens/RegisterItemScreen";
 
@@ -37,7 +37,7 @@ const navigator = createStackNavigator(
         Register: RegisterPage,
         // RegisterItem: RegisterItemScreen,
         // Account: AccountDetailScreen,
-        // Inventory: InventoryScreen,
+         Inventory: InventoryPage,
         // Item: ItemDescriptionScreen
     },
     {
