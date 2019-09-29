@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {AppRegistry, View, TextInput, Button, StyleSheet} from 'react-native';
+import {AppRegistry, View, TextInput, Button, StyleSheet, TouchableOpacity} from 'react-native';
 
 export default class RegisterForm extends Component{
   constructor(props){
@@ -15,7 +15,7 @@ export default class RegisterForm extends Component{
   }
   render(){
     return(
-      <View style = {styles.Container}>
+      <View style>
         <TextInput style ={styles.Input}
           placeholder = "Email"
           keyboardType = "email-address"
@@ -49,7 +49,7 @@ export default class RegisterForm extends Component{
           autoCorrect = {false}
           onChangeText={(input)=>this.setState({reconfirmPass: input})}
           />
-        <Button style = {styles.button}
+        <TouchableOpacity style = {styles.button}
           title = "submit"/>
       </View>
     )

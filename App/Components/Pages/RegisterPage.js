@@ -6,18 +6,15 @@ export default class RegisterPage extends Component{
   render(){
     return(
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
-				<View style= {styles.logoContainer}>
-					<Image
-						style={styles.logo}
-						source ={require['../../Assets/Logo/Logo.png']}/>
-					<Text	style={styles.title}>
-						Curator
-					</Text>
-				</View>
-				<View style={styles.formContainer}>
-					<RegisterForm/>
-				</View>
-			</KeyboardAvoidingView>
+		  <View style= {styles.logoContainer}>
+			  <Image
+				  style={styles.logo}
+				  source ={require['../../Assets/Logo/Logo.png']}/>
+		  </View>
+		  <View>
+			  <RegisterForm/>
+		  </View>
+      </KeyboardAvoidingView>
     )
   }
 }

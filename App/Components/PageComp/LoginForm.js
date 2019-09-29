@@ -23,12 +23,12 @@ export default class LoginForm extends Component{
           style = {styles.inputTextStyles}
           onChangeText = {(input)=>this.setState({password : input})}
           />
-        <Button
+        <TouchableOpacity
           title = "Login"
           style = {styles.buttonStyle}
 //          onPress = {()=>{this.props.navigate('Inventory')}}
         />
-        <Button
+        <TouchableOpacity
           title = "Register"
           style = {styles.buttonStyle}
           onPress = {()=>{this.props.navigation.navigate('Register')}}
@@ -44,7 +44,6 @@ const styles= StyleSheet.create({
     alignItems : 'center',
   	backgroundColor : '#333333',
   	borderColor : 'black',
-  	alignItems: 'center'
   },
   inputTextStyles:{
     color: '#d4d4d4',
@@ -59,6 +58,8 @@ const styles= StyleSheet.create({
     fontFamily: 'Montserrat'
 },
   buttonStyle: {
-    paddingBottom : 10,
+      height : 30,
+      backgroundColor : "#5f9ea0",
+      paddingBottom : 10,
   }
 })
