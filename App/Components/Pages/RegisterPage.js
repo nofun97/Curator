@@ -6,6 +6,9 @@ export default class RegisterPage extends Component{
   render(){
     return(
 		  <View style={styles.ViewStyle}>
+			  <Text style={styles.Title}>
+			 	 Enter your information below
+		  	  </Text>
 			  <RegisterForm/>
 		  </View>
     )
@@ -15,6 +18,13 @@ export default class RegisterPage extends Component{
 const styles = StyleSheet.create({
 	ViewStyle: {
 		flex : 1 ,
-		backgroundColor : '#233838'
-	}
+		backgroundColor : '#233838',
+	},
+	Title: {
+		fontSize: 24,
+		color: 'white',
+		marginTop: 10,
+		marginLeft: 10,
+		fontFamily: 'proxima_nova_semibold',
+	},
 });
