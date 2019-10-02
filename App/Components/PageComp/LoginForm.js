@@ -12,25 +12,29 @@ export default class LoginForm extends Component{
   }
   render(){
     return(
-      <View style = {styles.Container}>
-        <Text style = {styles.textStyle}>Username</Text>
+      <View>
+        <Text style = {styles.textStyle}>Username: </Text>
         <TextInput
           style = {styles.inputTextStyles}
+          autoCorrect = {false}
           onChangeText = {(input)=>this.setState({userName : input})}
           />
-        <Text style = {styles.textStyle}>Password</Text>
+        <Text style = {styles.textStyle}>Password: </Text>
         <TextInput
           style = {styles.inputTextStyles}
+          autoCorrect = {false}
+          secureTextEntry= {true}
           onChangeText = {(input)=>this.setState({password : input})}
           />
         <TouchableOpacity
           title = "Login"
-          style = {styles.buttonStyle}
+          style = {styles.loginButtonStyle}
           onPress = {()=>{this.props.navigation.navigate('Inventory')}}
         />
+        <Text style = {styles.registerTextStyle}> Don't have an account? </Text>
         <TouchableOpacity
-          title = "Register"
-          style = {styles.buttonStyle}
+          title = "Register Now"
+          style = {styles.registerButtonStyle}
           onPress = {()=>{this.props.navigation.navigate('Register')}}
         />
       </View>
@@ -39,27 +43,31 @@ export default class LoginForm extends Component{
 }
 
 const styles= StyleSheet.create({
-  container:{
-    flex: 0.65,
-    alignItems : 'center',
-  	backgroundColor : '#2f4f4f',
-  	borderColor : 'black',
-  },
-  inputTextStyles:{
+    inputTextStyles:{
+    marginBottom: 10,
     color: '#d4d4d4',
     borderColor: 'gray',
     alignItems : 'center',
     borderWidth: 1,
     width: 225,
-    paddingBottom: 10,
   },
   textStyle:{
-    color: 'white',
+    color: '#89abab',
     fontFamily: 'Montserrat'
-},
-  buttonStyle: {
+  },
+  loginButtonStyle: {
+      marginTop: 25,
+      marginBottom: 40,
       height : 30,
-      backgroundColor : "#5f9ea0",
-      paddingBottom : 10,
-  }
+      backgroundColor : "#5f9999",
+  },
+  registerButtonStyle: {
+      marginTop: 10,
+      height : 30,
+      backgroundColor : "#5f9999",
+  },
+    registerTextStyle:{
+        color: '#596e6c',
+        fontFamily: 'Montserrat'
+    },
 })

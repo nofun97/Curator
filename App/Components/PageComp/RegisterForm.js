@@ -82,6 +82,6 @@ const styles= StyleSheet.create({
   ButtonStyle : {
     height : 35,
     marginTop: 80,
-    backgroundColor : "#537f80",
+    backgroundColor : "#5f9999",
   }
 });

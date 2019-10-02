@@ -14,7 +14,7 @@ export default class RegisterPage extends Component{
 
 const styles = StyleSheet.create({
 	ViewStyle: {
-		flex : 1 ,
-		backgroundColor : '#233838'
+		flex : 1,
+		backgroundColor : '#264242'
 	}
 });

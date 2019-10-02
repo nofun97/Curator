@@ -5,37 +5,37 @@ import LoginForm from "../PageComp/LoginForm";
 export default class Login extends Component{
 	render(){
 		return(
-			<KeyboardAvoidingView behavior="padding" style={styles.container}>
-				<View style= {styles.LogoContainer}>
+			<View style={styles.ScreensBox}>
+				<View style={styles.LogoContainer}>
 					<Image
-						style={styles.Logo}
+						style={styles.LogoStyle}
 						source ={require['../../Assets/Logo/Logo.png']}/>
-					<Text	style={styles.Title}>
+					<Text style={styles.TitleStyle}>
 						Curator
 					</Text>
 				</View>
 				<View style={styles.FormContainer}>
 					<LoginForm navigation={this.props.navigation}/>
 				</View>
-			</KeyboardAvoidingView>
+			</View>
 		)
 	}
 }
 
 const styles = StyleSheet.create({
-	Container : {
-		flex : 1,
-		backgroundColor : "#5f9ea0"
+	ScreensBox: {
+		flex: 1
 	},
 	LogoContainer : {
+		flex: 0.35,
 		alignItems : "center",
 		justifyContent: "center"
 	},
-	Logo : {
+	LogoStyle : {
 		height : 100,
 	},
-	Title : {
-		color : "#5f9ea0",
+	TitleStyle : {
+		color : "#233838",
 		marginTop : 10,
 		textAlign : "center",
 		fontSize : 40,
@@ -43,9 +43,9 @@ const styles = StyleSheet.create({
 		paddingBottom : 15
 	},
 	FormContainer : {
-		margin : 5,
-		alignSelf : "stretch",
+		flex: 0.65,
+		alignItems : "center",
 		justifyContent : "center",
-		backgroundColor : "#2a4545"
+		backgroundColor : "#264242"
 	},
 });
