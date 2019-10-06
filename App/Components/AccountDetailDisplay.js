@@ -12,7 +12,7 @@ export default class AccountDetailsDisplay extends Component{
           My Account
         </Text>
         <Text style = {styles.Username}>
-          //get user Username
+          {/* TODO: get user Username */}
         </Text>
       </View>
     )
