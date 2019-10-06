@@ -23,37 +23,37 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import {createAppContainer, createStackNavigator} from "react-navigation";
-import LoginPage from "./Pages/LoginPage";
-import RegisterPage from "./Pages/RegisterPage";
+import {createAppContainer, createStackNavigator} from 'react-navigation';
+import LoginPage from '../Pages/LoginPage';
+import RegisterPage from '../Pages/RegisterPage';
 // import AccountDetailScreen from "./Screens/AccountDetailScreen";
- import InventoryPage from "./Pages/InventoryPage";
+import InventoryPage from '../Pages/InventoryPage';
 // import ItemDescriptionScreen from "./Screens/ItemDescriptionScreen";
 // import RegisterItemScreen from "./Screens/RegisterItemScreen";
 
 const navigator = createStackNavigator(
-    {
-        Login: LoginPage,
-        Register: RegisterPage,
-        // RegisterItem: RegisterItemScreen,
-        // Account: AccountDetailScreen,
-         Inventory: InventoryPage,
-        // Item: ItemDescriptionScreen
+  {
+    Login: LoginPage,
+    Register: RegisterPage,
+    // RegisterItem: RegisterItemScreen,
+    // Account: AccountDetailScreen,
+    Inventory: InventoryPage,
+    // Item: ItemDescriptionScreen
+  },
+  {
+    initialRouteName: 'Login',
+    defaultNavigationOptions: {
+      title: 'Curator',
+      // change the navigation bar's styling here
+      headerStyle: {
+        backgroundColor: '#349e77',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
     },
-    {
-      initialRouteName: 'Login',
-      defaultNavigationOptions: {
-        title: 'Curator',
-        // change the navigation bar's styling here
-        headerStyle: {
-          backgroundColor: '#349e77',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        }
-      }
-    }
+  },
 );
 
 export default createAppContainer(navigator);
