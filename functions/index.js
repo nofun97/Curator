@@ -18,24 +18,22 @@ exports.compressImages = functions.storage.object().onFinalize(async object => {
   }
   const bucket = admin.storage().bucket(fileBucket);
   const tempFilePath = path.join(os.tmpdir(), fileName);
-  const metadata = {
-    contentType: contentType,
-  };
   await bucket.file(filePath).download({ destination: tempFilePath });
   console.log("Image downloaded locally to", tempFilePath);
 
   // compression command line
-  await spawn("convert", [
-    "-strip",
-    "-interlace",
-    "Plane",
-    "-gaussian-blur",
-    "0.05",
-    "-quality",
-    "85%",
-    tempFilePath,
-    tempFilePath,
-  ]);
+  // await spawn("convert", [
+  //   "-strip",
+  //   "-interlace",
+  //   "Plane",
+  //   "-gaussian-blur",
+  //   "0.05",
+  //   "-quality",
+  //   "85%",
+  //   tempFilePath,
+  //   tempFilePath,
+  // ]);
+  await spawn("convert", ["-quality", "50", "-define" ,"webp:lossless=true", tempFilePath, tempFilePath])
 
   console.log("Image is compressed");
   const compressedFileName = `compressed_${fileName}`;
@@ -46,11 +44,13 @@ exports.compressImages = functions.storage.object().onFinalize(async object => {
   // Uploading the thumbnail.
   await bucket.upload(tempFilePath, {
     destination: compressedFilePath,
-    metadata: metadata,
+    metadata: {
+      contentType: 'image/webp'
+    },
   });
   console.log("Image is uploaded back to storage");
   await bucket.file(filePath).delete();
   console.log("Original image is deleted");
-  
+
   return fs.unlinkSync(tempFilePath);
 });
