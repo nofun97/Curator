@@ -83,8 +83,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat',
   },
   loginButtonStyle: {
-    marginTop: 25,
-    marginBottom: 40,
+    marginTop: 30,
+    marginBottom: 35,
     height: 50,
     backgroundColor: '#5f9999',
     justifyContent: 'center',

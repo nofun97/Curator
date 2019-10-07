@@ -28,7 +28,8 @@ export default class RegisterForm extends Component {
 
   render() {
     return (
-      <View>
+      <View style = {styles.ViewStyle}>
+        <Text style={styles.TextStyle}>Enter your information below:</Text>
         <TextInput
           style={styles.StartInputStyle}
           placeholderTextColor="#89abab"
@@ -88,23 +89,30 @@ export default class RegisterForm extends Component {
 
 const styles = StyleSheet.create({
   StartInputStyle: {
-    height: 50,
+    width: 375,
+    height: 45,
     marginTop: 30,
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
     color: '#c8dede',
     borderColor: 'gray',
     borderWidth: 1,
   },
   InputStyle: {
-    height: 50,
+    width: 375,
+    height: 45,
     marginTop: 20,
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
     color: '#c8dede',
     borderColor: 'gray',
     borderWidth: 1,
   },
+  ViewStyle: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   ButtonStyle: {
-    marginTop: 50,
+    width: 250,
+    marginTop: 60,
     height: 50,
     backgroundColor: '#5f9999',
     justifyContent: 'center',

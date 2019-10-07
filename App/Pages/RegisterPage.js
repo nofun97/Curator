@@ -14,7 +14,6 @@ export default class RegisterPage extends Component {
   render() {
     return (
       <View style={styles.ViewStyle}>
-        <Text style={styles.TextStyle}>Enter your information below:</Text>
         <RegisterForm navigation={this.props.navigation} />
       </View>
     );
