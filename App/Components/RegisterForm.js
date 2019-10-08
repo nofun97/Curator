@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {ScrollView} from 'react-native';
+
 import {
   View,
   TextInput,
@@ -28,51 +30,63 @@ export default class RegisterForm extends Component {
 
   render() {
     return (
-      <View style = {styles.ViewStyle}>
+      <ScrollView contentContainerStyle={styles.ViewStyle}>
         <Text style={styles.TextStyle}>Enter your information below:</Text>
+        <Text style={styles.registerStartTextStyle}> EMAIL ADDRESS </Text>
         <TextInput
-          style={styles.StartInputStyle}
-          placeholderTextColor="#89abab"
-          placeholder="Email"
+          style={styles.InputStyle}
           keyboardType="email-address"
           autoCorrect={false}
+          underlineColorAndroid={'#65807d'}
+          placeholderTextColor="#6f8c89"
+          placeholder="Enter your email address"
           onSubmitEditing={input => this.setState({ emailInput: input })}
         />
+        <Text style={styles.registerTextStyle}> FIRST NAME </Text>
         <TextInput
           style={styles.InputStyle}
-          placeholderTextColor="#89abab"
-          placeholder="First Name"
           autoCorrect={false}
+          underlineColorAndroid={'#65807d'}
+          placeholderTextColor="#6f8c89"
+          placeholder="Enter your first name"
           onChangeText={input => this.setState({ firstName: input })}
         />
+        <Text style={styles.registerTextStyle}> LAST NAME </Text>
         <TextInput
           style={styles.InputStyle}
-          placeholderTextColor="#89abab"
-          placeholder="Last Name"
           autoCorrect={false}
+          underlineColorAndroid={'#65807d'}
+          placeholderTextColor="#6f8c89"
+          placeholder="Enter your last name"
           onChangeText={input => this.setState({ lastName: input })}
         />
+        <Text style={styles.registerTextStyle}> USERNAME </Text>
         <TextInput
           style={styles.InputStyle}
-          placeholderTextColor="#89abab"
-          placeholder="Username"
           autoCorrect={false}
+          underlineColorAndroid={'#65807d'}
+          placeholderTextColor="#6f8c89"
+          placeholder="Enter your username"
           onChangeText={input => this.setState({ username: input })}
         />
+        <Text style={styles.registerTextStyle}> PASSWORD </Text>
         <TextInput
           style={styles.InputStyle}
-          placeholderTextColor="#89abab"
-          placeholder="Password"
           secureTextEntry={true}
           autoCorrect={false}
+          underlineColorAndroid={'#65807d'}
+          placeholderTextColor="#6f8c89"
+          placeholder="Enter your password"
           onChangeText={input => this.setState({ password: input })}
         />
+        <Text style={styles.registerTextStyle}> RECONFIRM </Text>
         <TextInput
           style={styles.InputStyle}
-          placeholderTextColor="#89abab"
-          placeholder="Reconfirm Password"
           secureTextEntry={true}
           autoCorrect={false}
+          underlineColorAndroid={'#65807d'}
+          placeholderTextColor="#6f8c89"
+          placeholder="Re-confirm your password"
           onChangeText={input => this.setState({ reconfirmPass: input })}
         />
         <TouchableOpacity
@@ -82,44 +96,41 @@ export default class RegisterForm extends Component {
         >
           <Text style={styles.TextStyle}>Submit</Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  StartInputStyle: {
-    width: 375,
-    height: 45,
-    marginTop: 30,
-    paddingHorizontal: 15,
-    color: '#c8dede',
-    borderColor: 'gray',
-    borderWidth: 1,
-  },
   InputStyle: {
     width: 375,
     height: 45,
-    marginTop: 20,
-    paddingHorizontal: 15,
+    marginTop: 10,
+    paddingHorizontal: 10,
     color: '#c8dede',
-    borderColor: 'gray',
-    borderWidth: 1,
   },
   ViewStyle: {
     alignItems: 'center',
     justifyContent: 'center',
   },
   ButtonStyle: {
-    width: 250,
-    marginTop: 60,
+    width: 225,
+    marginTop: 30,
     height: 50,
     backgroundColor: '#5f9999',
     justifyContent: 'center',
     alignItems: 'center',
   },
   TextStyle: {
-    color: '#ffffff',
+    color: '#c8dede',
     fontFamily: 'Montserrat',
+  },
+  registerStartTextStyle: {
+    color: '#ffffff',
+    marginTop: 30,
+  },
+  registerTextStyle: {
+    color: '#ffffff',
+    marginTop: 10,
   },
 });
