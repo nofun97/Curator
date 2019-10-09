@@ -2,24 +2,24 @@ import React, {Component} from 'react';
 import {View} from 'react-native';
 import {
   Text,
-  TextInpu,
-  StyleSheet
+  TextInput,
+  StyleSheet,
 } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 
 export default class ItemRegistrationForm extends Component{
   constructor(props){
     super(props);
-    this.state{
-      name: "",
-      owner: "",
-      dateAdded: "",
-      origin: "",
-      description: "",
-    }
+    this.state = {
+      name: '',
+      owner: '',
+      dateAdded: '',
+      origin: '',
+      description: '',
+    };
   }
   render(){
-    return(
+    return (
       <View style = {styles.viewContainer}>
         <Text style = {styles.textStyle}>
         Name:
@@ -28,7 +28,7 @@ export default class ItemRegistrationForm extends Component{
           style = {styles.inputTextStyles}
           autoCorrect={false}
           onChangeText={input => this.setState({ name: input })}
-          value={thist.state.name}
+          value={this.state.name}
         />
         <Text style = {styles.textStyle}>
         Owner:
@@ -37,7 +37,7 @@ export default class ItemRegistrationForm extends Component{
           style = {styles.inputTextStyles}
           autoCorrect={false}
           onChangeText={input => this.setState({ owner: input })}
-          value={thist.state.owner}
+          value={this.state.owner}
         />
         <Text style = {styles.textStyle}>
         Date Added:
@@ -55,38 +55,38 @@ export default class ItemRegistrationForm extends Component{
               position: 'absolute',
               left: 0,
               top: 4,
-              marginLeft: 0
+              marginLeft: 0,
             },
             dateInput: {
-              marginLeft: 36
-            }
+              marginLeft: 36,
+            },
           }}
-          onDateChange={(date) => {this.setState({dateAdded: date})}}
+          onDateChange={(date) => {this.setState({dateAdded: date});}}
         />
-        <Text style = styles.textStyle>
+        <Text style ={styles.textStyle}>
         Origin:
         </Text>
         <TextInput
-          style = styles.inputTextStyles
+          style = {styles.inputTextStyles}
           autoCorrect={false}
           onChangeText={input => this.setState({ origin: input })}
-          value={thist.state.origin}
+          value={this.state.origin}
         />
-        <Text style = styles.textStyle>
+        <Text style = {styles.textStyle}>
         Description:
         </Text>
         <TextInput
-          style = styles.inputTextStyles
+          style = {styles.inputTextStyles}
           autoCorrect={false}
           onChangeText={input => this.setState({ description: input })}
-          value={thist.state.description}
+          value={this.state.description}
         />
       </View>
     );
   }
 }
 
-const styles= StyleSheet.create({
+const styles = StyleSheet.create({
   viewContainer:{
 
   },
@@ -97,6 +97,6 @@ const styles= StyleSheet.create({
 
   },
   datePickerStyle:{
-    width: 200
-  }
-})
+    width: 200,
+  },
+});
