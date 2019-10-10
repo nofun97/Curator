@@ -3,11 +3,7 @@ import {View} from 'react-native';
 import {
   Text,
   TextInput,
-<<<<<<< HEAD
-  StyleSheet
-=======
   StyleSheet,
->>>>>>> c118e5a22e0823a997e3d895201c6bd9b8a71dde
 } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 
