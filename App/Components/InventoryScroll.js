@@ -15,13 +15,34 @@ export default class InventoryScroll extends Component {
     super(props);
     this.state = {
       screenHeight: 0,
-      children: 'yo wuts up', //change this to function for list of InventoryItems
+      children: [
+        // {
+        //   id: 'string',
+        //   owners: 'list of owners', // user ids
+        //   name: 'string',
+        //   description: 'string',
+        //   dateRegistered: 'Date', // milliseconds since unix epoch
+        //   dateOwned: 'Date', // milliseconds since unix epoch
+        //   categories: '[string]', // categories name
+        //   thumbnail: 'url string',
+        // },
+      ], //change this to function for list of InventoryItems
     };
     this.onContentSizeChange = this.onContentSizeChange.bind(this);
+    this.renderItems = this.renderItems.bind(this);
   }
+
   onContentSizeChange = (contentWidth, contentHeight) => {
     this.setState({ screenHeight: contentHeight });
   };
+
+  renderItems = () => {
+    var render = [];
+    // for (let i = 0; i < this.children.length; i++){
+    //   render.push(<InventoryItems item={this.children[i]}/>);
+    // }
+    return render;
+  }
 
   render() {
     const scrollEnabled = this.state.screenHeight > height;
@@ -32,7 +53,9 @@ export default class InventoryScroll extends Component {
         scrollEnabled={scrollEnabled}
         onContentSizeChange={this.onContentSizeChange}
       >
-        <View style={styles.content}>{this.props.children}</View>
+        <View style={styles.content}>
+        {this.render()}
+        </View>
       </ScrollView>
     );
   }
