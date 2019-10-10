@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View} from 'react-native';
 import {
   Text,
-  TextInpu,
+  TextInput,
   StyleSheet
 } from 'react-native';
 import DatePicker from 'react-native-datepicker';
