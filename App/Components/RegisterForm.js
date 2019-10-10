@@ -32,7 +32,7 @@ export default class RegisterForm extends Component {
     return (
       <ScrollView contentContainerStyle={styles.ViewStyle}>
         <Text style={styles.TextStyle}>Enter your information below:</Text>
-        <Text style={styles.registerStartTextStyle}> EMAIL ADDRESS </Text>
+        <Text style={styles.registerTextStyle}> Email Address: </Text>
         <TextInput
           style={styles.InputStyle}
           keyboardType="email-address"
@@ -42,7 +42,7 @@ export default class RegisterForm extends Component {
           placeholder="Enter your email address"
           onSubmitEditing={input => this.setState({ emailInput: input })}
         />
-        <Text style={styles.registerTextStyle}> FIRST NAME </Text>
+        <Text style={styles.registerTextStyle}> First Name: </Text>
         <TextInput
           style={styles.InputStyle}
           autoCorrect={false}
@@ -51,7 +51,7 @@ export default class RegisterForm extends Component {
           placeholder="Enter your first name"
           onChangeText={input => this.setState({ firstName: input })}
         />
-        <Text style={styles.registerTextStyle}> LAST NAME </Text>
+        <Text style={styles.registerTextStyle}> Last Name: </Text>
         <TextInput
           style={styles.InputStyle}
           autoCorrect={false}
@@ -60,7 +60,7 @@ export default class RegisterForm extends Component {
           placeholder="Enter your last name"
           onChangeText={input => this.setState({ lastName: input })}
         />
-        <Text style={styles.registerTextStyle}> USERNAME </Text>
+        <Text style={styles.registerTextStyle}> Username: </Text>
         <TextInput
           style={styles.InputStyle}
           autoCorrect={false}
@@ -69,7 +69,7 @@ export default class RegisterForm extends Component {
           placeholder="Enter your username"
           onChangeText={input => this.setState({ username: input })}
         />
-        <Text style={styles.registerTextStyle}> PASSWORD </Text>
+        <Text style={styles.registerTextStyle}> Password: </Text>
         <TextInput
           style={styles.InputStyle}
           secureTextEntry={true}
@@ -79,7 +79,7 @@ export default class RegisterForm extends Component {
           placeholder="Enter your password"
           onChangeText={input => this.setState({ password: input })}
         />
-        <Text style={styles.registerTextStyle}> RECONFIRM </Text>
+        <Text style={styles.registerTextStyle}> Re-confirm Password: </Text>
         <TextInput
           style={styles.InputStyle}
           secureTextEntry={true}
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   ButtonStyle: {
-    width: 225,
+    width: 165,
     marginTop: 30,
     height: 50,
     backgroundColor: '#5f9999',
@@ -124,12 +124,10 @@ const styles = StyleSheet.create({
   TextStyle: {
     color: '#c8dede',
     fontFamily: 'Montserrat',
-  },
-  registerStartTextStyle: {
-    color: '#ffffff',
-    marginTop: 30,
+    marginBottom: 10,
   },
   registerTextStyle: {
+    marginLeft: 10,
     color: '#ffffff',
     marginTop: 10,
   },

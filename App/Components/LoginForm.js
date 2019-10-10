@@ -34,7 +34,7 @@ export default class LoginForm extends Component {
     return (
         <ScrollView>
           <View style={styles.viewStyle}>
-            <Text style={styles.textStyle}>USERNAME </Text>
+            <Text style={styles.textStyle}>Username: </Text>
           </View>
           <TextInput
               style={styles.inputTextStyles}
@@ -45,7 +45,7 @@ export default class LoginForm extends Component {
               placeholder="Enter your username"
               value={this.state.userName}
           />
-          <Text style={styles.textStyle}>PASSWORD </Text>
+          <Text style={styles.textStyle}>Password: </Text>
           <TextInput
               style={styles.inputTextStyles}
               autoCorrect={false}
@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
   textStyle: {
     color: '#ffffff',
     fontFamily: 'Montserrat',
+    marginLeft: 3,
   },
   registerViewStyle: {
     justifyContent: 'center',
