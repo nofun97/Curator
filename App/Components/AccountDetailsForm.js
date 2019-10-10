@@ -1,18 +1,18 @@
 import React, {Component} from 'react';
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
 
 export default class AccountDetailsForm{
   constructor(props){
     super(props);
     this.state = {
-      emailAddress : "",
-      firstName : "",
-      lastName : "",
-      userName: "",
+      emailAddress : '',
+      firstName : '',
+      lastName : '',
+      userName: '',
     };
   }
   render(){
-    return(
+    return (
       <View style = {styles.viewStyle}>
         <Text style = {styles.textStyle}> Email Address </Text>
         <TextInput
@@ -61,5 +61,5 @@ const styles = StyleSheet.create({
   viewStyle: {
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
 });

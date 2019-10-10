@@ -28,7 +28,7 @@ import LoginPage from '../Pages/LoginPage';
 import RegisterPage from '../Pages/RegisterPage';
 // import AccountDetailScreen from "./Screens/AccountDetailScreen"; -- done not tested
 import InventoryPage from '../Pages/InventoryPage';
-// import ItemDescriptionScreen from "./Screens/ItemDescriptionScreen"; 
+// import ItemDescriptionScreen from "./Screens/ItemDescriptionScreen";
 // import RegisterItemScreen from "./Screens/RegisterItemScreen";
 
 const navigator = createStackNavigator(
