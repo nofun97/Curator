@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, DatePicker, StyleSheet} from 'react-native';
+import {View, Text, DatePicker, StyleSheet, TouchableOpacity} from 'react-native';
 
 export default class ItemDetailsForm extends Component{
   var dateReg = "";//get date
@@ -14,7 +14,13 @@ export default class ItemDetailsForm extends Component{
       dateOwned: dateOwn, // milliseconds since unix epoch
       categories: "",
     }
+    this.onItemSavePress = this.onSavePress.bind(this);
   }
+
+  onItemSavePress = () => {
+    this.props.navigation.navigate('Inventory');
+  };
+
   render(){
     return(
       <View style= {styles.viewStyle}>
@@ -39,6 +45,11 @@ export default class ItemDetailsForm extends Component{
         <Text style = {styles.textStyle}>
           Categories: {this.props.categories}
         </Text>
+        <TouchableOpacity
+          style=styles.buttonStyle
+          onPress={this.onItemSavePress}>
+          <Text> Save </Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -49,6 +60,9 @@ const styles = StyleSheet.create({
 
   },
   textStyle: {
+
+  },
+  buttonStyle: {
 
   }
 })

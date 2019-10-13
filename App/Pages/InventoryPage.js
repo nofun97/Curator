@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View ,Text} from 'react-native';
 import InventoryScroll from '../Components/InventoryScroll';
 
 export default class InventoryPage extends Component {
   render() {
     return (
-      <View>
-        <InventoryScroll style={styles.scrollContainer} />
+      <View style={styles.viewContainer}>
+        <InventoryScroll navigation={this.props.navigation}/>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {},
-  scrollContainer: {},
+  viewContainer: {}
 });
 
 //place your functions here

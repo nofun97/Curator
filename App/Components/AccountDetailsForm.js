@@ -10,7 +10,13 @@ export default class AccountDetailsForm{
       lastName : '',
       userName: '',
     };
+    this.onAccountSavePress = this.onSavePress.bind(this);
   }
+
+  onAccountSavePress = () => {
+    this.props.navigation.navigate('Inventory');
+  };
+
   render(){
     return (
       <View style = {styles.viewStyle}>
@@ -42,6 +48,11 @@ export default class AccountDetailsForm{
             onChangeText={input => this.setState({ userName: input })}
             value={this.state.userName}
         />
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          onPress={this.onAccountSavePress}>
+          <Text> Save </Text>
+        </TouchableOpacity>
       </View>
     );
   }

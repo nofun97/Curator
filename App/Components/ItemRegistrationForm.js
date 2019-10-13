@@ -4,6 +4,7 @@ import {
   Text,
   TextInput,
   StyleSheet,
+  TouchableOpacity
 } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 
@@ -17,7 +18,13 @@ export default class ItemRegistrationForm extends Component{
       origin: '',
       description: '',
     };
+    this.onPressHandler = this.onPressHandler.bind(this);
   }
+
+  onPressHandler(){
+    this.props.navigation.navigate('Inventory');
+  }
+
   render(){
     return (
       <View style = {styles.viewContainer}>
@@ -81,6 +88,16 @@ export default class ItemRegistrationForm extends Component{
           onChangeText={input => this.setState({ description: input })}
           value={this.state.description}
         />
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          onPress={this.onPressHandler}>
+          <Text> Add Item </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          onPress={this.onPressHandler}>
+          <Text> Cancel </Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -99,4 +116,7 @@ const styles = StyleSheet.create({
   datePickerStyle:{
     width: 200,
   },
+  buttonStyle:{
+    
+  }
 });
