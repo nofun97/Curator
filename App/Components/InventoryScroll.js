@@ -17,18 +17,18 @@ export default class InventoryScroll extends Component {
     super(props);
     this.state = {
       screenHeight: 0,
-      children: "why"//[
-        // {
-        //   id: 'string',
-        //   owners: 'list of owners', // user ids
-        //   name: 'string',
-        //   description: 'string',
-        //   dateRegistered: 'Date', // milliseconds since unix epoch
-        //   dateOwned: 'Date', // milliseconds since unix epoch
-        //   categories: '[string]', // categories name
-        //   thumbnail: 'url string',
-        // },
-//      ] //change this to function for list of InventoryItems
+      children: [
+        {
+          id: 'string',
+          owners: 'list of owners', // user ids
+          name: 'string',
+          description: 'string',
+          dateRegistered: 'Date', // milliseconds since unix epoch
+          dateOwned: 'Date', // milliseconds since unix epoch
+          categories: '[string]', // categories name
+          thumbnail: 'url string',
+        },
+     ] //change this to function for list of InventoryItems
     };
     this.onContentSizeChange = this.onContentSizeChange.bind(this);
     this.renderItems = this.renderItems.bind(this);
@@ -41,8 +41,8 @@ export default class InventoryScroll extends Component {
 
   renderItems = () => {
     var render = [];
-    for (let i = 0; i < this.children.length; i++){
-      render.push(<InventoryItems item={this.children[i]}/>);
+    for (let i = 0; i < this.state.children.length; i++){
+      render.push(<InventoryItems item={this.state.children[i]}/>);
     }
     return render;
   }
@@ -62,7 +62,7 @@ export default class InventoryScroll extends Component {
           onContentSizeChange={this.onContentSizeChange}
         >
           <View style={styles.content}>
-            {this.render()}
+            {this.renderItems()}
           </View>
         </ScrollView>
       </SafeAreaView>

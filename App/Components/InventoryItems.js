@@ -4,7 +4,7 @@ import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
 export default class InventoryItems extends Component {
   constructor(props){
     super(props);
-    this.state:{
+    this.state = {
       id: '',
       owners: '', // user ids
       name: '',
