@@ -28,21 +28,30 @@ export default class InventoryScroll extends Component {
           categories: '[string]', // categories name
           thumbnail: 'url string',
         },
-     ] //change this to function for list of InventoryItems
+        {
+          id: 'yeet',
+          owners: 'list of owners', // user ids
+          name: 'string',
+          description: 'string',
+          dateRegistered: 'Date', // milliseconds since unix epoch
+          dateOwned: 'Date', // milliseconds since unix epoch
+          categories: '[string]', // categories name
+          thumbnail: 'url string',
+        },
+     ]
     };
     this.onContentSizeChange = this.onContentSizeChange.bind(this);
     this.renderItems = this.renderItems.bind(this);
-    this.onItemPress = this.onItemPress.bind(this);
   }
 
-  onItemPress = () => {
-    this.props.navigation.navigate("Inventory");
-  };
 
   renderItems = () => {
     var render = [];
     for (let i = 0; i < this.state.children.length; i++){
-      render.push(<InventoryItems item={this.state.children[i]} key={this.state.children[i].id}/>);
+      render.push(<InventoryItems
+        item={this.state.children[i]}
+        key={this.state.children[i].id}
+        navigation={this.props.navigation}/>);
     }
     return render;
   }

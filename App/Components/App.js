@@ -28,7 +28,7 @@ import LoginPage from '../Pages/LoginPage';
 import RegisterPage from '../Pages/RegisterPage';
 // import AccountDetailScreen from "./Screens/AccountDetailScreen"; -- done not tested
 import InventoryPage from '../Pages/InventoryPage';
-// import ItemDescriptionScreen from "./Screens/ItemDescriptionScreen";
+ import ItemDetailsPage from '../Pages/ItemDetailsPage';
 // import RegisterItemScreen from "./Screens/RegisterItemScreen";
 
 const navigator = createStackNavigator(
@@ -38,7 +38,7 @@ const navigator = createStackNavigator(
     // RegisterItem: RegisterItemScreen,
     // Account: AccountDetailScreen,
     Inventory: InventoryPage,
-    // Item: ItemDescriptionScreen
+    ItemDetails: ItemDetailsPage
   },
   {
     initialRouteName: 'Login',

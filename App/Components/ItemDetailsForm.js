@@ -1,20 +1,21 @@
 import React, {Component} from 'react';
 import {View, Text, DatePicker, StyleSheet, TouchableOpacity} from 'react-native';
 
+var dateReg = "";//get date
+var dateOwn = "";//date
+
 export default class ItemDetailsForm extends Component{
-  var dateReg = "";//get date
-  var dateOwn = "";//date
   constructor(props){
     super(props);
     this.state = {
-      owners: "", // user ids
-      name: "",
-      description: "",
-      dateRegistered: dateReg, // milliseconds since unix epoch
-      dateOwned: dateOwn, // milliseconds since unix epoch
-      categories: "",
+      owners: this.props.item.owners, // user ids
+      name: this.props.item.name,
+      description: this.props.item.description,
+      dateRegistered: this.props.item.dateRegistered, // milliseconds since unix epoch
+      dateOwned: this.props.item.dateOwned, // milliseconds since unix epoch
+      categories: this.props.item.categories,
     }
-    this.onItemSavePress = this.onSavePress.bind(this);
+    this.onItemSavePress = this.onItemSavePress.bind(this);
   }
 
   onItemSavePress = () => {
@@ -46,9 +47,14 @@ export default class ItemDetailsForm extends Component{
           Categories: {this.props.categories}
         </Text>
         <TouchableOpacity
-          style=styles.buttonStyle
+          style={styles.buttonStyle}
           onPress={this.onItemSavePress}>
           <Text> Save </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          onPress={this.onItemSavePress}>
+          <Text> Cancel </Text>
         </TouchableOpacity>
       </View>
     );
