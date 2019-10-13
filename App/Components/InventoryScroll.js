@@ -42,7 +42,7 @@ export default class InventoryScroll extends Component {
   renderItems = () => {
     var render = [];
     for (let i = 0; i < this.state.children.length; i++){
-      render.push(<InventoryItems item={this.state.children[i]}/>);
+      render.push(<InventoryItems item={this.state.children[i]} key={this.state.children[i].id}/>);
     }
     return render;
   }
