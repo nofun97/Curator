@@ -1,28 +1,4 @@
 import {createAppContainer, createStackNavigator} from 'react-navigation';
-import LoginScreen from './screens/LoginScreen';
-import RegisterScreen from './screens/RegisterScreen';
-import AccountDetailScreen from './screens/AccountDetailScreen';
-import InventoryScreen from './screens/InventoryScreen';
-import ItemDescriptionScreen from './screens/ItemDescriptionScreen';
-
-import React, {Fragment} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
-
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-import {createAppContainer, createStackNavigator} from 'react-navigation';
 import LoginPage from '../Pages/LoginPage';
 import RegisterPage from '../Pages/RegisterPage';
 // import AccountDetailScreen from "./Screens/AccountDetailScreen"; -- done not tested
@@ -37,7 +13,7 @@ const navigator = createStackNavigator(
     // RegisterItem: RegisterItemScreen,
     // Account: AccountDetailScreen,
     Inventory: InventoryPage,
-    ItemDetails: ItemDetailsPage
+    ItemDetails: ItemDetailsPage,
   },
   {
     initialRouteName: 'Login',
