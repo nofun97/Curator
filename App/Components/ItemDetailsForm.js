@@ -29,22 +29,22 @@ export default class ItemDetailsForm extends Component{
           Details
         </Text>
         <Text style = {styles.textStyle}>
-          Name: {this.props.name}
+          Name: {this.state.name}
         </Text>
         <Text style = {styles.textStyle}>
-          Owner: {this.props.owners}
+          Owner: {this.state.owners}
         </Text>
         <Text style = {styles.textStyle}>
-          Description: {this.props.description}
+          Description: {this.state.description}
         </Text>
         <Text style = {styles.textStyle}>
-          Date Registered: {this.props.dateRegistered}
+          Date Registered: {this.state.dateRegistered}
         </Text>
         <Text style = {styles.textStyle}>
-          Date Owned: {this.props.dateOwned}
+          Date Owned: {this.state.dateOwned}
         </Text>
         <Text style = {styles.textStyle}>
-          Categories: {this.props.categories}
+          Categories: {this.state.categories}
         </Text>
         <TouchableOpacity
           style={styles.buttonStyle}

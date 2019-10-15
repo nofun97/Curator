@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import ItemDetailsForm from '../Components/ItemDetailsForm';
 
 export default class ItemDetailsPage extends Component {
@@ -11,14 +11,17 @@ export default class ItemDetailsPage extends Component {
     const tdateRegistered = navigation.getParam('dateRegistered', '');
     const tdateOwned = navigation.getParam('dateOwned', '');
     const tcategories = navigation.getParam('categories', '');
-    const data={owners: towners, name: tname, description:tdescription, dateRegistered:tdateRegistered, dateOwned:tdateOwned, categories: tcategories}
-    return(
+    const id = navigation.getParam('id', '');
+    const data = {owners: towners, name: tname, description:tdescription, dateRegistered:tdateRegistered, dateOwned:tdateOwned, categories: tcategories};
+    console.log(data);
+    return (
       <View style = {styles.viewContainer}>
         <ItemDetailsForm
           style = {styles.itemDetailsForm}
           navigation={this.props.navigation}
           item= {data}
         />
+        <Text>{id}</Text>
       </View>
     );
   }
@@ -30,5 +33,5 @@ const styles = StyleSheet.create({
   },
   itemDetailsForm:{
 
-  }
-})
+  },
+});
