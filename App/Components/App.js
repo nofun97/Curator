@@ -5,13 +5,39 @@ import AccountDetailScreen from './screens/AccountDetailScreen';
 import InventoryScreen from './screens/InventoryScreen';
 import ItemDescriptionScreen from './screens/ItemDescriptionScreen';
 
+import React, {Fragment} from 'react';
+import {
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  StatusBar,
+} from 'react-native';
+
+import {
+  Header,
+  LearnMoreLinks,
+  Colors,
+  DebugInstructions,
+  ReloadInstructions,
+} from 'react-native/Libraries/NewAppScreen';
+import {createAppContainer, createStackNavigator} from 'react-navigation';
+import LoginPage from '../Pages/LoginPage';
+import RegisterPage from '../Pages/RegisterPage';
+// import AccountDetailScreen from "./Screens/AccountDetailScreen"; -- done not tested
+import InventoryPage from '../Pages/InventoryPage';
+ import ItemDetailsPage from '../Pages/ItemDetailsPage';
+// import RegisterItemScreen from "./Screens/RegisterItemScreen";
+
 const navigator = createStackNavigator(
   {
-    Login: LoginScreen,
-    Register: RegisterScreen,
-    Account: AccountDetailScreen,
-    Inventory: InventoryScreen,
-    Item: ItemDescriptionScreen,
+    Login: LoginPage,
+    Register: RegisterPage,
+    // RegisterItem: RegisterItemScreen,
+    // Account: AccountDetailScreen,
+    Inventory: InventoryPage,
+    ItemDetails: ItemDetailsPage
   },
   {
     initialRouteName: 'Login',
@@ -19,7 +45,7 @@ const navigator = createStackNavigator(
       title: 'Curator',
       // change the navigation bar's styling here
       headerStyle: {
-        backgroundColor: '#509682',
+        backgroundColor: '#349e77',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
