@@ -1,29 +1,47 @@
 import React, { Component } from 'react';
-import {ScrollView} from 'react-native';
-
+import {connect} from 'react-redux';
 import {
   StyleSheet,
   View,
   TextInput,
   TouchableOpacity,
   Text,
-  Button,
+  ScrollView,
 } from 'react-native';
-//import styled from 'styled-components/native';
+import {login} from '../controllers/authentications';
+import {loggedIn} from '../redux/reducers';
 
-export default class LoginForm extends Component {
+class LoginForm extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
-      userName: '',
+      email: '',
       password: '',
+      warning: '',
     };
     this.onLoginPress = this.onLoginPress.bind(this);
     this.onRegisterPress = this.onRegisterPress.bind(this);
   }
 
   onLoginPress = () => {
-    this.props.navigation.navigate('Inventory');
+    if (this.state.email === '' || this.state.password === '') {
+      this.setState({...this.state, warning: 'Email and password can not be empty'});
+      return;
+    }
+
+    const dispatch = (data) => {this.props.loggedIn(data.users);};
+
+    login(this.state.email, this.state.password)
+      .then((data) => {
+        // dispatch(data);
+        this.props.navigation.navigate('Inventory');
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({...this.state, warning: 'Email or password is wrong'});
+      });
+
   };
 
   onRegisterPress = () => {
@@ -33,17 +51,18 @@ export default class LoginForm extends Component {
   render() {
     return (
         <ScrollView>
+          {this.state.warning !== '' && <Text style={styles.textStyle}>{this.state.warning}</Text>}
           <View style={styles.viewStyle}>
-            <Text style={styles.textStyle}>Username: </Text>
+            <Text style={styles.textStyle}>Email: </Text>
           </View>
           <TextInput
               style={styles.inputTextStyles}
               autoCorrect={false}
-              onChangeText={input => this.setState({ userName: input })}
+              onChangeText={input => this.setState({ email: input })}
               underlineColorAndroid={'#65807d'}
               placeholderTextColor="#6f8c89"
-              placeholder="Enter your username"
-              value={this.state.userName}
+              placeholder="Enter your email"
+              value={this.state.email}
           />
           <Text style={styles.textStyle}>Password: </Text>
           <TextInput
@@ -122,3 +141,5 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat',
   },
 });
+
+export default connect(null, {loggedIn})(LoginForm);

@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
-import {ScrollView} from 'react-native';
-
 import {
   View,
   TextInput,
   Button,
+  ScrollView,
   Text,
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import {connect} from 'react-redux';
+import {loggedIn} from '../redux/reducers';
+import {signUp, uploadProfile} from '../controllers/authentications';
 
-export default class RegisterForm extends Component {
+class RegisterForm extends Component {
   constructor(props) {
     super(props);
+    this.MINIMUM_PASSWORD_LENGTH = 8;
     this.state = {
       emailInput: '',
       firstName: '',
@@ -20,13 +23,54 @@ export default class RegisterForm extends Component {
       userName: '',
       password: '',
       reconfirmPass: '',
+      warning: 'Password must be at least ' + this.MINIMUM_PASSWORD_LENGTH + ' characters',
     };
     this.onSubmitForm = this.onSubmitForm.bind(this);
+    this.registerPromise = this.registerPromise.bind(this);
   }
 
   onSubmitForm = () => {
-    this.props.navigation.navigate('Inventory');
+    if (this.state.firstName === ''){
+      this.setState({...this.state, warning: 'First Name is required'});
+      return;
+    }
+
+    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if (!emailRegex.test(this.state.emailInput)){
+      this.setState({...this.state, warning: 'Please enter the correct email'});
+      return;
+    }
+
+    if (this.state.password < this.MINIMUM_PASSWORD_LENGTH){
+      this.setState({...this.state, warning: 'Password must be at least ' + this.MINIMUM_PASSWORD_LENGTH + ' characters'});
+      return;
+    }
+
+    if (this.state.password !== this.state.reconfirmPass){
+      this.setState({...this.state, warning: 'Please confirm password correctly'});
+      return;
+    }
+
+    // const reduxLogin = this.props.loggedIn;
+
+    this.registerPromise(reduxLogin)
+      .then(() => {this.props.navigation.navigate('Inventory');})
+      .catch((err) => {
+        console.log(err);
+        this.setState({...this.state, warning: err.response});
+      });
   };
+
+  registerPromise = async (reduxLogin) => {
+    const userCredential = await signUp(this.state.emailInput, this.state.password);
+    reduxLogin(userCredential.user);
+    await uploadProfile({
+      id: userCredential.user.uid,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+    });
+  }
 
   render() {
     return (
@@ -40,7 +84,8 @@ export default class RegisterForm extends Component {
           underlineColorAndroid={'#65807d'}
           placeholderTextColor="#6f8c89"
           placeholder="Enter your email address"
-          onSubmitEditing={input => this.setState({ emailInput: input })}
+          // onSubmitEditing={input => this.setState({ emailInput: input })}
+          onChangeText={input => this.setState({ emailInput: input })}
         />
         <Text style={styles.registerTextStyle}> First Name: </Text>
         <TextInput
@@ -89,6 +134,7 @@ export default class RegisterForm extends Component {
           placeholder="Re-confirm your password"
           onChangeText={input => this.setState({ reconfirmPass: input })}
         />
+        {this.state.warning !== '' && <Text style={styles.TextStyle}>{this.state.warning}</Text>}
         <TouchableOpacity
           style={styles.ButtonStyle}
           title="submit"
@@ -132,3 +178,5 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
+
+export default connect(null, {loggedIn})(RegisterForm);
