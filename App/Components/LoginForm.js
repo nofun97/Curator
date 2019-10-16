@@ -3,9 +3,10 @@ import {connect} from 'react-redux';
 import {
   StyleSheet,
   View,
+  ActivityIndicator,
+  Text,
   TextInput,
   TouchableOpacity,
-  Text,
   ScrollView,
 } from 'react-native';
 import {login} from '../controllers/authentications';
@@ -19,6 +20,7 @@ class LoginForm extends Component {
       email: '',
       password: '',
       warning: '',
+      isLoading: false,
     };
     this.onLoginPress = this.onLoginPress.bind(this);
     this.onRegisterPress = this.onRegisterPress.bind(this);
@@ -32,15 +34,20 @@ class LoginForm extends Component {
 
     const dispatch = (data) => {this.props.loggedIn(data.user);};
 
-    login(this.state.email, this.state.password)
-      .then((data) => {
-        dispatch(data);
-        this.props.navigation.navigate('Inventory');
-      })
-      .catch((err) => {
-        console.log(err);
-        this.setState({...this.state, warning: 'Email or password is wrong'});
-      });
+    this.setState({...this.state, isLoading: true}, 
+        () => {
+          login(this.state.email, this.state.password)
+            .then((data) => {
+              this.setState({...this.state, isLoading: false})
+              dispatch(data);
+              this.props.navigation.navigate('Inventory');
+            })
+            .catch((err) => {
+              console.log(err);
+              this.setState({...this.state, warning: 'Email or password is wrong'});
+            });
+        }
+      )
 
   };
 
@@ -75,6 +82,7 @@ class LoginForm extends Component {
               placeholder="Enter your password"
               value={this.state.password}
           />
+          {this.state.isLoading && <ActivityIndicator animating size="large"/>}
           <View style={styles.registerViewStyle}>
             <TouchableOpacity
                 style={styles.loginButtonStyle}

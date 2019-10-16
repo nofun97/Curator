@@ -7,6 +7,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {loggedIn} from '../redux/reducers';
@@ -23,6 +24,7 @@ class RegisterForm extends Component {
       userName: '',
       password: '',
       reconfirmPass: '',
+      isLoading: false,
       warning: 'Password must be at least ' + this.MINIMUM_PASSWORD_LENGTH + ' characters',
     };
     this.onSubmitForm = this.onSubmitForm.bind(this);
@@ -65,12 +67,19 @@ class RegisterForm extends Component {
       return userCredential;
     };
 
-    registerPromise()
-      .then((data) => dispatch(data))
-      .catch((err) => {
-        console.log(err);
-        this.setState({...this.state, warning: "The email is already used"});
-      });
+    this.setState({...this.state, isLoading: true},
+        () => {
+          registerPromise()
+            .then((data) => {
+              this.setState({...this.state, isLoading: false});
+              dispatch(data);
+            })
+            .catch((err) => {
+              console.log(err);
+              this.setState({...this.state, warning: "The email is already used"});
+            });
+        }
+      )
   };
 
   
@@ -138,6 +147,8 @@ class RegisterForm extends Component {
           onChangeText={input => this.setState({ reconfirmPass: input })}
         />
         {this.state.warning !== '' && <Text style={styles.TextStyle}>{this.state.warning}</Text>}
+        {this.state.isLoading && <ActivityIndicator animating size="large"/>}
+        
         <TouchableOpacity
           style={styles.ButtonStyle}
           title="submit"
@@ -182,8 +193,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(
-  state => {
-    const { user } = state;
-    return { user: user };
-}, () => {return {loggedIn};})(RegisterForm);
+export default connect(null, () => {return {loggedIn};})(RegisterForm);
