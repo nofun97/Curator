@@ -6,13 +6,15 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Dimensions,
-  Text
+  Text,
+  FlatList,
 } from 'react-native';
 import InventoryItems from './InventoryItems';
+import {connect} from 'react-redux';
 
 const { height, width } = Dimensions.get('window');
 
-export default class InventoryScroll extends Component {
+class InventoryScroll extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,7 +40,14 @@ export default class InventoryScroll extends Component {
           categories: '[string]', // categories name
           thumbnail: 'url string',
         },
-     ]
+     ],
+     limit: 10,
+     pageStart: 0,
+     order: {
+       field: 'dateOwned',
+       direction: 'desc',
+     },
+     categories: [],
     };
     this.onContentSizeChange = this.onContentSizeChange.bind(this);
     this.renderItems = this.renderItems.bind(this);
@@ -61,10 +70,10 @@ export default class InventoryScroll extends Component {
   };
 
   render() {
-    const scrollEnabled = this.state.screenHeight > height;
+    // const scrollEnabled = this.state.screenHeight > height;
     return (
       <SafeAreaView style={styles.safeAreaContainer}>
-        <ScrollView
+        {/* <ScrollView
           style={styles.scrollContainer}
           contentContainerStyle={styles.scrollView}
           scrollEnabled={scrollEnabled}
@@ -73,7 +82,21 @@ export default class InventoryScroll extends Component {
           <View style={styles.content}>
             {this.renderItems()}
           </View>
-        </ScrollView>
+        </ScrollView> */}
+        
+        <FlatList
+          style={styles.scrollContainer}
+          contentContainerStyle={styles.scrollView}
+          data={this.state.children}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => (
+            <View
+              style={styles.content}
+            >
+              <InventoryItems  item={item} navigation={this.props.navigation}/>
+            </View>
+          )}
+        />
       </SafeAreaView>
     );
   }
@@ -83,9 +106,19 @@ const styles = StyleSheet.create({
   safeAreaContainer:{},
   scrollView:{},
   content:{},
-  scrollContainer: {}
+  scrollContainer: {},
+  flatListContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    height: '100%',
+    width: '100%',
+  },
 });
 
 //place your functions here
 //function to update height
 //function to update the 'children'
+export default connect((state) => {
+  const {user} = state;
+  return {user: user};
+}, null)(InventoryScroll);
