@@ -8,7 +8,7 @@ import {
   Button,
   StyleSheet,
 } from 'react-native';
-import AccountDetailsDisplay from '../Components/AccountDetailsDisplay';
+import AccountDetailsDisplay from '../Components/AccountDetailDisplay';
 import AccountDetailsForm from '../Components/AccountDetailsForm';
 
 export default class AccountDetails extends Component {
@@ -24,8 +24,6 @@ export default class AccountDetails extends Component {
 
 const styles = StyleSheet.create({
   Container: {
-    width: 1,
-    height: 1,
     //position
   },
 });
