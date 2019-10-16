@@ -26,7 +26,6 @@ class RegisterForm extends Component {
       warning: 'Password must be at least ' + this.MINIMUM_PASSWORD_LENGTH + ' characters',
     };
     this.onSubmitForm = this.onSubmitForm.bind(this);
-    this.registerPromise = this.registerPromise.bind(this);
   }
 
   onSubmitForm = () => {
@@ -52,25 +51,29 @@ class RegisterForm extends Component {
       return;
     }
 
-    // const reduxLogin = this.props.loggedIn;
+    const dispatch = (data) => {
+      this.props.loggedIn(data.user);
+      this.props.navigation.navigate('Inventory');
+    }
+    const registerPromise = async () => {
+      const userCredential = await signUp(this.state.emailInput, this.state.password);
+      await uploadProfile({
+        id: userCredential.user.uid,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+      });
+      return userCredential;
+    };
 
-    this.registerPromise(reduxLogin)
-      .then(() => {this.props.navigation.navigate('Inventory');})
+    registerPromise()
+      .then((data) => dispatch(data))
       .catch((err) => {
         console.log(err);
-        this.setState({...this.state, warning: err.response});
+        this.setState({...this.state, warning: "The email is already used"});
       });
   };
 
-  registerPromise = async (reduxLogin) => {
-    const userCredential = await signUp(this.state.emailInput, this.state.password);
-    reduxLogin(userCredential.user);
-    await uploadProfile({
-      id: userCredential.user.uid,
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-    });
-  }
+  
 
   render() {
     return (
@@ -179,4 +182,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, {loggedIn})(RegisterForm);
+export default connect(
+  state => {
+    const { user } = state;
+    return { user: user };
+}, () => {return {loggedIn};})(RegisterForm);

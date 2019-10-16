@@ -30,11 +30,11 @@ class LoginForm extends Component {
       return;
     }
 
-    const dispatch = (data) => {this.props.loggedIn(data.users);};
+    const dispatch = (data) => {this.props.loggedIn(data.user);};
 
     login(this.state.email, this.state.password)
       .then((data) => {
-        // dispatch(data);
+        dispatch(data);
         this.props.navigation.navigate('Inventory');
       })
       .catch((err) => {
@@ -142,4 +142,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, {loggedIn})(LoginForm);
+export default connect(null, () => {return {loggedIn};})(LoginForm);
