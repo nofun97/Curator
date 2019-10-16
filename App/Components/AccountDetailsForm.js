@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 import {View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
 
-export default class AccountDetailsForm{
+export default class AccountDetailsForm extends Component{
   constructor(props){
     super(props);
     this.state = {
-      emailAddress : '',
-      firstName : '',
-      lastName : '',
-      userName: '',
+      emailAddress : '@gmail.com',
+      firstName : 'Yeeter',
+      lastName : 'Yeeterson',
+      userName: 'YeetYeetYeet',
     };
-    this.onAccountSavePress = this.onSavePress.bind(this);
+    this.onAccountSavePress = this.onAccountSavePress.bind(this);
   }
 
   onAccountSavePress = () => {

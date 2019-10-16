@@ -26,17 +26,17 @@ import {
 import {createAppContainer, createStackNavigator} from 'react-navigation';
 import LoginPage from '../Pages/LoginPage';
 import RegisterPage from '../Pages/RegisterPage';
-// import AccountDetailScreen from "./Screens/AccountDetailScreen"; -- done not tested
+import AccountDetailsPage from "../Pages/AccountDetailsPage";
 import InventoryPage from '../Pages/InventoryPage';
- import ItemDetailsPage from '../Pages/ItemDetailsPage';
-// import RegisterItemScreen from "./Screens/RegisterItemScreen";
+import ItemDetailsPage from '../Pages/ItemDetailsPage';
+import ItemRegisterPage from "../Pages/ItemRegistrationPage";
 
 const navigator = createStackNavigator(
   {
     Login: LoginPage,
     Register: RegisterPage,
-    // RegisterItem: RegisterItemScreen,
-    // Account: AccountDetailScreen,
+    ItemRegister: ItemRegisterPage,
+    AccountDetails: AccountDetailsPage,
     Inventory: InventoryPage,
     ItemDetails: ItemDetailsPage
   },

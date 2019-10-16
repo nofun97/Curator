@@ -6,13 +6,13 @@ export default class AccountDetailsDisplay extends Component{
     return (
       <View style = {styles.Container}>
         <Image style = {styles.ImageIcon}
-          source = {require['...Something.png']}
+          source = {require('../Assets/Images/MenuIcon.png')}
         />
         <Text style = {styles.TextBox}>
           My Account
         </Text>
         <Text style = {styles.Username}>
-          {/* TODO: get user Username */}
+          Username
         </Text>
       </View>
     );
