@@ -25,7 +25,7 @@ export default class ItemDetailsForm extends Component{
   render(){
     return(
       <View style= {styles.viewStyle}>
-        <Text style = {styles.textStyle}>
+        <Text style = {styles.titleStyle}>
           Details
         </Text>
         <Text style = {styles.textStyle}>
@@ -47,14 +47,14 @@ export default class ItemDetailsForm extends Component{
           Categories: {this.state.categories}
         </Text>
         <TouchableOpacity
-          style={styles.buttonStyle}
+          style={styles.saveButtonStyle}
           onPress={this.onItemSavePress}>
-          <Text> Save </Text>
+          <Text style={styles.buttonTextStyle}> Save </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.buttonStyle}
+          style={styles.cancelButtonStyle}
           onPress={this.onItemSavePress}>
-          <Text> Cancel </Text>
+          <Text style={styles.buttonTextStyle}> Cancel </Text>
         </TouchableOpacity>
       </View>
     );
@@ -63,12 +63,42 @@ export default class ItemDetailsForm extends Component{
 
 const styles = StyleSheet.create({
   viewStyle: {
-
+    backgroundColor: '#264242',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  titleStyle: {
+    color: '#ffffff',
+    fontFamily: 'proxima-nova-semibold',
+    fontSize: 18,
+    marginBottom: 12,
+    marginTop: 7,
   },
   textStyle: {
-
+    color: '#ffffff',
+    fontFamily: 'Montserrat',
+    marginBottom: 10,
+    marginLeft: 124,
+    alignSelf: 'flex-start',
   },
-  buttonStyle: {
-
+  saveButtonStyle: {
+    width: 165,
+    marginTop: 30,
+    marginBottom: 25,
+    height: 50,
+    backgroundColor: '#5f9999',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cancelButtonStyle: {
+    width: 165,
+    marginBottom: 25,
+    height: 50,
+    backgroundColor: '#5f9999',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonTextStyle: {
+    color: '#ffffff',
   }
 })
