@@ -105,16 +105,17 @@ class LoginForm extends Component {
 }
 
 const styles = StyleSheet.create({
+  scrollViewStyle: {
+    width: '55%',
+  },
   inputTextStyles: {
     marginBottom: 10,
     color: '#d4d4d4',
     alignItems: 'center',
-    width: 260,
   },
   textStyle: {
     color: '#ffffff',
     fontFamily: 'Montserrat',
-    marginLeft: 3,
   },
   registerViewStyle: {
     justifyContent: 'center',
@@ -131,7 +132,8 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 35,
     height: 50,
-    width: 175,
+    width: 165,
+    borderRadius: 2,
     backgroundColor: '#5f9999',
     justifyContent: 'center',
     alignItems: 'center',
@@ -139,7 +141,8 @@ const styles = StyleSheet.create({
   registerButtonStyle: {
     marginTop: 10,
     height: 50,
-    width: 175,
+    width: 165,
+    borderRadius: 2,
     backgroundColor: '#5f9999',
     justifyContent: 'center',
     alignItems: 'center',

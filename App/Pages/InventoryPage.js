@@ -11,28 +11,38 @@ export default class InventoryPage extends Component {
           style={styles.menuButtonStyle}
           navigation={this.props.navigation}
         />
+        <View style={styles.viewContainerTop}>
+          <Text> Welcome to Curator! </Text>
+        </View>
         <TouchableOpacity
           style={styles.buttonStyle}
           onPress={()=>this.props.navigation.navigate('ItemRegister')}
-          >
-          <Text> Add Items </Text>
+        >
+          <Text style = {styles.textStyle}> Add Items </Text>
         </TouchableOpacity>
-        <InventoryScroll navigation={this.props.navigation}/>
+        <View style={styles.viewContainerBottom}>
+          <InventoryScroll navigation={this.props.navigation}/>
+        </View>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  viewContainer: {
-
+  viewContainerTop: {
+    height: '35%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#264242',
   },
-  menuButtonStyle:{
-
+  textStyle: {
+    backgroundColor: '#264242',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  buttonStyle:{
-
-  }
+  viewContainerBottom: {
+    backgroundColor: '#264242',
+  },
 });
 
 //place your functions here
