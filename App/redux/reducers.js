@@ -5,12 +5,12 @@ export const loggedIn = createAction('LOGGED_IN');
 export const loggedOut = createAction('LOGGED_OUT');
 
 export const userReducer = createReducer(
-  { user: null },
+  { },
   {
-    [loggedIn]: (state, action) => {
+    [loggedIn.type]: (state, action) => {
       return action.payload;
     },
-    [loggedOut]: state => {
+    [loggedOut.type]: state => {
       return null;
     },
   }

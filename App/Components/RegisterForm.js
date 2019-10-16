@@ -193,4 +193,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, () => {return {loggedIn};})(RegisterForm);
+export default connect((state) => {
+  const {payload} = state;
+  return {user: payload}
+}, () => {return {loggedIn};})(RegisterForm);

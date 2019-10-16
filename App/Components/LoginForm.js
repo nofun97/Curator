@@ -21,9 +21,11 @@ class LoginForm extends Component {
       password: '',
       warning: '',
       isLoading: false,
+      user: null,
     };
     this.onLoginPress = this.onLoginPress.bind(this);
     this.onRegisterPress = this.onRegisterPress.bind(this);
+    this.nextStep = this.nextStep.bind(this);
   }
 
   onLoginPress = () => {
@@ -32,15 +34,19 @@ class LoginForm extends Component {
       return;
     }
 
-    const dispatch = (data) => {this.props.loggedIn(data.user);};
+
+    // const dispatch = (data) => {
+    //   const x = this.props.loggedIn(data.user);
+    //   console.log(x);
+    // };
 
     this.setState({...this.state, isLoading: true}, 
         () => {
           login(this.state.email, this.state.password)
             .then((data) => {
-              this.setState({...this.state, isLoading: false})
-              dispatch(data);
-              this.props.navigation.navigate('Inventory');
+              this.setState({...this.state, isLoading: false, user: data});
+              // dispatch(data);
+              // this.props.navigation.navigate('Inventory');
             })
             .catch((err) => {
               console.log(err);
@@ -50,6 +56,18 @@ class LoginForm extends Component {
       )
 
   };
+
+  componentDidUpdate() {
+    if (this.state.user !== null) {
+      this.nextStep(this.state.user);
+    }
+  }
+
+  nextStep = () => {
+    this.props.loggedIn(this.state.user);
+    this.props.navigation.navigate('Inventory');
+
+  }
 
   onRegisterPress = () => {
     this.props.navigation.navigate('Register');
@@ -150,4 +168,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, () => {return {loggedIn};})(LoginForm);
+export default connect((state) => {
+  const {payload} = state;
+  return {user: payload}
+}, () => {return {loggedIn};})(LoginForm);
