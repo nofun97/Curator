@@ -8,7 +8,9 @@ export default class ItemRegistrationPage extends Component{
     return (
       <View style= {styles.viewContainer}>
         <ItemRegistrationTop style = {styles.itemRegistrationTopStyle}/>
-        <ItemRegistrationForm style = {styles.itemRegistrationFormStyle}/>
+        <ItemRegistrationForm
+          style = {styles.itemRegistrationFormStyle}
+          navigation = {this.props.navigation}/>
       </View>
     );
   }
