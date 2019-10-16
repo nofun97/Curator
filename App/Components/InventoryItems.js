@@ -13,13 +13,15 @@ export default class InventoryItems extends Component {
       dateOwned: this.props.item.dateOwned, // milliseconds since unix epoch
       categories: this.props.item.categories, // categories name
       thumbnail: this.props.item.thumbnail,
-      logo: require('../Assets/Logo/Logo.png'), //the image
-    };
+      logo: require('../Assets/Logo/Logo.png') //the image
+    }
     this.onPressHandler = this.onPressHandler.bind(this);
   }
 
   onPressHandler(){
-    this.props.navigation.navigate('ItemDetails', this.state);
+    this.props.navigation.navigate('ItemDetails', {
+      id: this.state.id
+    });
   }
 
   render() {

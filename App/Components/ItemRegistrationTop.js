@@ -8,7 +8,7 @@ export default class ItemDescriptionTop extends Component{
   constructor(props){
     super(props);
     this.state = {
-      addImageIcon : require('../Assets/Image/AddImageIcon'),
+      addImageIcon : require('../Assets/Logo/Logo.png'),
     };
   }
   render(){

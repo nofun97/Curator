@@ -1,20 +1,18 @@
 import React, {Component} from 'react';
 import {View, Text, DatePicker, StyleSheet, TouchableOpacity} from 'react-native';
 
-var dateReg = "";//get date
-var dateOwn = "";//date
-
 export default class ItemDetailsForm extends Component{
   constructor(props){
     super(props);
     this.state = {
+      id: this.props.item.id,
       owners: this.props.item.owners, // user ids
       name: this.props.item.name,
       description: this.props.item.description,
       dateRegistered: this.props.item.dateRegistered, // milliseconds since unix epoch
       dateOwned: this.props.item.dateOwned, // milliseconds since unix epoch
       categories: this.props.item.categories,
-    }
+    };
     this.onItemSavePress = this.onItemSavePress.bind(this);
   }
 
@@ -29,22 +27,22 @@ export default class ItemDetailsForm extends Component{
           Details
         </Text>
         <Text style = {styles.textStyle}>
-          Name: {this.state.name}
+          Name: {this.props.name}
         </Text>
         <Text style = {styles.textStyle}>
-          Owner: {this.state.owners}
+          Owner: {this.props.owners}
         </Text>
         <Text style = {styles.textStyle}>
-          Description: {this.state.description}
+          Description: {this.props.description}
         </Text>
         <Text style = {styles.textStyle}>
-          Date Registered: {this.state.dateRegistered}
+          Date Registered: {this.props.dateRegistered}
         </Text>
         <Text style = {styles.textStyle}>
-          Date Owned: {this.state.dateOwned}
+          Date Owned: {this.props.dateOwned}
         </Text>
         <Text style = {styles.textStyle}>
-          Categories: {this.state.categories}
+          Categories: {this.props.categories}
         </Text>
         <TouchableOpacity
           style={styles.buttonStyle}
