@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import {
   StyleSheet,
   View,
@@ -9,11 +9,11 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {login} from '../controllers/authentications';
-import {loggedIn} from '../redux/reducers';
+import { login } from '../controllers/authentications';
+import { loggedIn } from '../redux/reducers';
+import { bindActionCreators } from 'redux';
 
 class LoginForm extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -30,31 +30,34 @@ class LoginForm extends Component {
 
   onLoginPress = () => {
     if (this.state.email === '' || this.state.password === '') {
-      this.setState({...this.state, warning: 'Email and password can not be empty'});
+      this.setState({
+        ...this.state,
+        warning: 'Email and password can not be empty',
+      });
       return;
     }
-
 
     // const dispatch = (data) => {
     //   const x = this.props.loggedIn(data.user);
     //   console.log(x);
     // };
 
-    this.setState({...this.state, isLoading: true}, 
-        () => {
-          login(this.state.email, this.state.password)
-            .then((data) => {
-              this.setState({...this.state, isLoading: false, user: data});
-              // dispatch(data);
-              // this.props.navigation.navigate('Inventory');
-            })
-            .catch((err) => {
-              console.log(err);
-              this.setState({...this.state, warning: 'Email or password is wrong'});
-            });
-        }
-      )
-
+    this.setState({ ...this.state, isLoading: true }, () => {
+      login(this.state.email, this.state.password)
+        .then(data => {
+          this.setState({ ...this.state, isLoading: false, user: data });
+          // dispatch(data);
+          // this.props.navigation.navigate('Inventory');
+          // this.nextStep(data);
+        })
+        .catch(err => {
+          console.log(err);
+          this.setState({
+            ...this.state,
+            warning: 'Email or password is wrong',
+          });
+        });
+    });
   };
 
   componentDidUpdate() {
@@ -63,11 +66,10 @@ class LoginForm extends Component {
     }
   }
 
-  nextStep = () => {
-    this.props.loggedIn(this.state.user);
+  nextStep = data => {
+    this.props.loggedIn(data.user);
     this.props.navigation.navigate('Inventory');
-
-  }
+  };
 
   onRegisterPress = () => {
     this.props.navigation.navigate('Register');
@@ -75,49 +77,51 @@ class LoginForm extends Component {
 
   render() {
     return (
-        <ScrollView>
-          {this.state.warning !== '' && <Text style={styles.textStyle}>{this.state.warning}</Text>}
-          <View style={styles.viewStyle}>
-            <Text style={styles.textStyle}>Email: </Text>
-          </View>
-          <TextInput
-              style={styles.inputTextStyles}
-              autoCorrect={false}
-              onChangeText={input => this.setState({ email: input })}
-              underlineColorAndroid={'#65807d'}
-              placeholderTextColor="#6f8c89"
-              placeholder="Enter your email"
-              value={this.state.email}
-          />
-          <Text style={styles.textStyle}>Password: </Text>
-          <TextInput
-              style={styles.inputTextStyles}
-              autoCorrect={false}
-              secureTextEntry={true}
-              onChangeText={input => this.setState({ password: input })}
-              underlineColorAndroid={'#65807d'}
-              placeholderTextColor="#6f8c89"
-              placeholder="Enter your password"
-              value={this.state.password}
-          />
-          {this.state.isLoading && <ActivityIndicator animating size="large"/>}
-          <View style={styles.registerViewStyle}>
-            <TouchableOpacity
-                style={styles.loginButtonStyle}
-                onPress={this.onLoginPress}
-            >
-              <Text style={styles.buttonTextStyle}>Login</Text>
-            </TouchableOpacity>
-            <Text style={styles.registerTextStyle}> Don't have an account? </Text>
-            <TouchableOpacity
-                title="Register Now"
-                style={styles.registerButtonStyle}
-                onPress={this.onRegisterPress}
-            >
-              <Text style={styles.buttonTextStyle}>Register Now</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
+      <ScrollView>
+        {this.state.warning !== '' && (
+          <Text style={styles.textStyle}>{this.state.warning}</Text>
+        )}
+        <View style={styles.viewStyle}>
+          <Text style={styles.textStyle}>Email: </Text>
+        </View>
+        <TextInput
+          style={styles.inputTextStyles}
+          autoCorrect={false}
+          onChangeText={input => this.setState({ email: input })}
+          underlineColorAndroid={'#65807d'}
+          placeholderTextColor="#6f8c89"
+          placeholder="Enter your email"
+          value={this.state.email}
+        />
+        <Text style={styles.textStyle}>Password: </Text>
+        <TextInput
+          style={styles.inputTextStyles}
+          autoCorrect={false}
+          secureTextEntry={true}
+          onChangeText={input => this.setState({ password: input })}
+          underlineColorAndroid={'#65807d'}
+          placeholderTextColor="#6f8c89"
+          placeholder="Enter your password"
+          value={this.state.password}
+        />
+        {this.state.isLoading && <ActivityIndicator animating size="large" />}
+        <View style={styles.registerViewStyle}>
+          <TouchableOpacity
+            style={styles.loginButtonStyle}
+            onPress={this.onLoginPress}
+          >
+            <Text style={styles.buttonTextStyle}>Login</Text>
+          </TouchableOpacity>
+          <Text style={styles.registerTextStyle}> Don't have an account? </Text>
+          <TouchableOpacity
+            title="Register Now"
+            style={styles.registerButtonStyle}
+            onPress={this.onRegisterPress}
+          >
+            <Text style={styles.buttonTextStyle}>Register Now</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     );
   }
 }
@@ -168,7 +172,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect((state) => {
-  const {payload} = state;
-  return {user: payload}
-}, () => {return {loggedIn};})(LoginForm);
+const mapDispatchToProps = { loggedIn };
+
+export default connect(
+  state => {
+    const { payload } = state;
+    return { user: payload };
+  },
+  mapDispatchToProps
+)(LoginForm);
