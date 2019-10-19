@@ -13,14 +13,14 @@ export default class InventoryItems extends Component {
       dateOwned: this.props.item.dateOwned, // milliseconds since unix epoch
       categories: this.props.item.categories, // categories name
       thumbnail: this.props.item.thumbnail,
-      logo: require('../Assets/Logo/Logo.png') //the image
-    }
+      logo: require('../Assets/Logo/Logo.png'), //the image
+    };
     this.onPressHandler = this.onPressHandler.bind(this);
   }
 
   onPressHandler(){
     this.props.navigation.navigate('ItemDetails', {
-      id: this.state.id
+      id: this.state.id,
     });
   }
 
@@ -34,7 +34,7 @@ export default class InventoryItems extends Component {
           <View style={styles.textContainer}>
             <Text style={styles.textStyle}>Item ID: {this.state.id}</Text>
             <Text style={styles.textStyle}>Name: {this.state.name}</Text>
-            <Text style={styles.textStyle}>DateOwned: {this.state.categories}</Text>
+            <Text style={styles.textStyle}>Date Owned: {this.state.categories}</Text>
             <Text style={styles.textStyle}>Item Description: {this.state.description}</Text>
             <Text style={styles.textStyle}>Owners: {this.state.owners}</Text>
             <Text style={styles.textStyle}>Item ID: {this.state.categories}</Text>
@@ -48,6 +48,10 @@ export default class InventoryItems extends Component {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
+    borderTopWidth: 20,
+    borderLeftWidth: 10,
+    borderRightWidth: 10,
+    borderColor: '#264242',
   },
   buttonStyle:{
     flexDirection:'row',
@@ -55,12 +59,14 @@ const styles = StyleSheet.create({
   itemImageContainer:{
   },
   textContainer:{
+    marginTop: 5,
   },
   itemImage: {
 
   },
   textStyle: {
-
+    marginLeft: 10,
+    color: '#e8e8e8',
   },
 });
 
