@@ -30,8 +30,7 @@ class InventoryScroll extends Component {
       isLoading: true,
       noMoreData: false,
     };
-    // this.onContentSizeChange = this.onContentSizeChange.bind(this);
-    this.onRefresh = this.onRefresh.bind(this);
+    // this.onRefresh = this.onRefresh.bind(this);
     this.loadItems = this.loadItems.bind(this);
     this.handleLoadMore = this.handleLoadMore.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
@@ -120,7 +119,7 @@ class InventoryScroll extends Component {
           initialNumToRender={this.state.limit}
           onEndReached={this.handleLoadMore}
           ListFooterComponent={this.renderFooter}
-          onEndReachedThreshold={0}
+          onEndReachedThreshold={this.state.noMoreData ? 0 : 0.5}
           // refreshing={this.state.isLoading}
           // onRefresh={() => this.onRefresh()}
           renderItem={({ item }) => (

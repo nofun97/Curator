@@ -2,9 +2,6 @@ import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/firestore';
 import '@react-native-firebase/storage';
 
-const collection = firebase.firestore().collection('items');
-const storage = firebase.storage();
-
 export const registerItem = (
   item,
   progressStorage,
@@ -47,7 +44,7 @@ export const registerItem = (
     dateUpdated: Date.now(),
     categories: categories,
   };
-  var uploadToFirestore = collection.add(toUpload);
+  var uploadToFirestore = firebase.firestore().collection('items').add(toUpload);
   var uploadImages = [];
   if (item.photos !== []) {
     for (let i = 0; i < item.photos.length; i++) {
@@ -110,7 +107,7 @@ const deleteImageAsPromise = (itemID, photosNames) => {
 
 // view item detail
 export const viewItem = async itemId => {
-  const itemDetails = await collection.doc(itemId).get();
+  const itemDetails = await firebase.firestore().collection('items').doc(itemId).get();
   const picturesReferences = await storage.ref(`${itemId}/`).listAll();
   var downloadURLs = [];
   for (let i = 0; i < picturesReferences.items.length; i++) {
@@ -119,7 +116,7 @@ export const viewItem = async itemId => {
   return {
     ...itemDetails.data(),
     photos: downloadURLs,
-  };
+  };  
 };
 
 export const getDataList = async (
@@ -154,8 +151,8 @@ export const getDataList = async (
     limit = 10;
   }
   console.log(owner);
-  var query = collection.where('owners', 'array-contains', owner);
-
+  var query = firestore().collection('items')('items').where('owners', 'array-contains', owner);
+  console.log(query);
   var categoriesMap = {};
 
   for (let i = 0; i < categories.length; i++){
@@ -199,7 +196,7 @@ export const getDataList = async (
       categoryList.push(category);
     }
     item.categories = categoryList;
-
+    item.id = data.id;
     // getting thumbnails
     const thumbnailList = await storage
       .ref(`${data.id}/`)
@@ -286,5 +283,5 @@ export const editItemWithoutPhotosModification = (itemID, updated) => {
     toUpload.categories = updated.categories;
   }
 
-  return collection.doc(itemID).udpate(toUpload);
+  return firebase.firestore().collection('items').doc(itemID).udpate(toUpload);
 };
