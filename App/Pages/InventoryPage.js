@@ -7,19 +7,24 @@ export default class InventoryPage extends Component {
   render() {
     return (
       <View style={styles.viewContainer}>
-        <MenuButton
-          style={styles.menuButtonStyle}
-          navigation={this.props.navigation}
-        />
-        <View style={styles.viewContainerTop}>
-          <Text> Welcome to Curator! </Text>
+        <View style={styles.navBarStyle}>
+          <MenuButton
+            style={styles.menuButtonStyle}
+            navigation={this.props.navigation}
+          />
         </View>
-        <TouchableOpacity
-          style={styles.buttonStyle}
-          onPress={()=>this.props.navigation.navigate('ItemRegister')}
-        >
-          <Text style = {styles.textStyle}> Add Items </Text>
-        </TouchableOpacity>
+        <View style={styles.viewContainerTop}>
+          <Text style = {styles.welcomeTextStyle}> Welcome to Curator, </Text>
+          <Text style = {styles.welcomeTextStyle}> (Username)! </Text>
+        </View>
+        <View style={styles.artifactButtonViewStyle}>
+          <TouchableOpacity
+            style={styles.artifactButtonStyle}
+            onPress={()=>this.props.navigation.navigate('ItemRegister')}
+          >
+            <Text style = {styles.textStyle}> REGISTER ARTIFACT </Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.viewContainerBottom}>
           <InventoryScroll navigation={this.props.navigation}/>
         </View>
@@ -36,12 +41,35 @@ const styles = StyleSheet.create({
     backgroundColor: '#264242',
   },
   textStyle: {
-    backgroundColor: '#264242',
-    alignItems: 'center',
-    justifyContent: 'center',
+    color: '#ffffff',
   },
   viewContainerBottom: {
-    backgroundColor: '#264242',
+    backgroundColor: '#5f9999',
+  },
+  artifactButtonStyle: {
+    width: 165,
+    height: 50,
+    borderRadius: 2,
+    backgroundColor: '#5f9999',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  artifactButtonViewStyle: {
+    backgroundColor: '#338c83',
+    height: 65,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  welcomeTextStyle: {
+    fontWeight: 'bold',
+    textShadowRadius: 120,
+    textShadowColor: 'black',
+    fontSize: 25,
+    color: '#e8e8e8',
+  },
+  navBarStyle: {
+    backgroundColor: '#338c83',
+    borderBottomWidth: 0.5,
   },
 });
 
