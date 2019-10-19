@@ -21,11 +21,12 @@ const navigator = createStackNavigator(
       title: 'Curator',
       // change the navigation bar's styling here
       headerStyle: {
-        backgroundColor: '#349e77',
+        backgroundColor: '#338c83',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
         fontWeight: 'bold',
+        color: '#ffffff',
       },
     },
   },
