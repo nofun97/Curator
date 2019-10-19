@@ -34,7 +34,7 @@ class LoginForm extends Component {
 
     const dispatch = (data) => {this.props.loggedIn(data.user);};
 
-    this.setState({...this.state, isLoading: true}, 
+    this.setState({...this.state, isLoading: true},
         () => {
           login(this.state.email, this.state.password)
             .then((data) => {
@@ -47,7 +47,7 @@ class LoginForm extends Component {
               this.setState({...this.state, warning: 'Email or password is wrong'});
             });
         }
-      )
+      );
 
   };
 
@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: '#d4d4d4',
     alignItems: 'center',
+    width: 260,
   },
   textStyle: {
     color: '#ffffff',
