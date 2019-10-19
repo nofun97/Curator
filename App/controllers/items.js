@@ -66,7 +66,7 @@ export const registerItem = (
 
 const uploadImageAsPromise = (itemID, filepath, progress, error, complete) => {
   return new Promise(function(resolve, reject) {
-    var storageRef = storage.ref(`${itemID}/${Date.now()}`);
+    var storageRef = firebase.storage().ref(`${itemID}/${Date.now()}`);
 
     //Upload file
     var task = storageRef.putFile(filepath);
@@ -100,7 +100,7 @@ const uploadImageAsPromise = (itemID, filepath, progress, error, complete) => {
 const deleteImageAsPromise = (itemID, photosNames) => {
   var deletionPromise = [];
   for (let i = 0; i < photosNames.length; i++) {
-    deletionPromise.push(storage.ref(`${itemID}/${photosNames[i]}`).delete());
+    deletionPromise.push(firebase.storage().ref(`${itemID}/${photosNames[i]}`).delete());
   }
   return deletionPromise;
 };
@@ -108,7 +108,7 @@ const deleteImageAsPromise = (itemID, photosNames) => {
 // view item detail
 export const viewItem = async itemId => {
   const itemDetails = await firebase.firestore().collection('items').doc(itemId).get();
-  const picturesReferences = await storage.ref(`${itemId}/`).listAll();
+  const picturesReferences = await firebase.storage().ref(`${itemId}/`).listAll();
   var downloadURLs = [];
   for (let i = 0; i < picturesReferences.items.length; i++) {
     downloadURLs.push(picturesReferences.items[i].getDownloadURL());
@@ -151,7 +151,7 @@ export const getDataList = async (
     limit = 10;
   }
   console.log(owner);
-  var query = firestore().collection('items')('items').where('owners', 'array-contains', owner);
+  var query = firebase.firestore().collection('items').where('owners', 'array-contains', owner);
   console.log(query);
   var categoriesMap = {};
 
@@ -198,7 +198,7 @@ export const getDataList = async (
     item.categories = categoryList;
     item.id = data.id;
     // getting thumbnails
-    const thumbnailList = await storage
+    const thumbnailList = await firebase.storage()
       .ref(`${data.id}/`)
       .list({ maxResults: 1 });
     if (thumbnailList.items.length > 0) {
