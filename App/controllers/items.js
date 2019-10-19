@@ -135,50 +135,76 @@ export const getDataList = async (
     };
   }
 
-  if (!pageStart) {
+  if (pageStart < 0) {
     pageStart = 0;
   }
 
-  if (!order || !order.field) {
+  if (order === undefined || order.field === undefined) {
     order = {
       field: 'dateOwned',
       direction: 'desc',
     };
   }
-  if (
-    !order.direction ||
-    order.direction !== 'desc' ||
-    order.direction !== 'asc'
-  ) {
+
+  if (order.direction !== 'desc' && order.direction !== 'asc') {
     order.direction = 'desc';
   }
 
-  if (!limit) {
-    limit = 10; // Set this on env
+  if (limit < 0) {
+    limit = 10;
+  }
+  console.log(owner);
+  var query = collection.where('owners', 'array-contains', owner);
+
+  var categoriesMap = {};
+
+  for (let i = 0; i < categories.length; i++){
+    categoriesMap[categories[i]] = true;
   }
 
-  var query = collection.where(`owners.${owner}`, '==', 'true');
+  query = query.orderBy(order.field, order.direction);
 
-  if (categories !== []) {
-    for (let i = 0; i < categories.length; i++) {
-      query = query.where(`categories.${categories[i]}`, '==', 'true');
+  if (pageStart != null){
+    query = query.startAfter(pageStart);
+  }
+
+  const querySnapshot = await query.limit(limit).get();
+
+  const items = querySnapshot.docs;
+
+  const withinCategory = data => {
+    // check if not categories was set
+    if (Object.entries(categoriesMap).length === 0 && categoriesMap.constructor === Object){
+      return true;
     }
-  }
 
-  const querySnapshot = await query
-    .orderBy(order.field, order.direction)
-    .startAt(pageStart)
-    .limit(limit)
-    .get();
+    // only include items that has all categories
+    var item = data.data();
+    for (let category in categoriesMap){
+      if (!(category in item.categories)) {
+        return false;
+      }
+    }
 
-  const items = querySnapshot.docs();
+    return true;
+  };
+
 
   const dataTransform = async data => {
     var item = data.data();
+
+    // converting categories into a list
+    var categoryList = [];
+    for (let category in item.categories){
+      categoryList.push(category);
+    }
+    item.categories = categoryList;
+
+    // getting thumbnails
     const thumbnailList = await storage
       .ref(`${data.id}/`)
       .list({ maxResults: 1 });
-    if (thumbnailList.items !== []) {
+    if (thumbnailList.items.length > 0) {
       item.thumbnail = await thumbnailList.items[0].getDownloadURL();
     } else {
       item.thumbnail = undefined;
@@ -186,8 +212,9 @@ export const getDataList = async (
     return item;
   };
 
-  var listOfItems = [];
+  var listOfItems = []; 
   for (let i = 0; i < items.length; i++) {
+    if (!withinCategory(items[i])) {continue;}
     listOfItems.push(await dataTransform(items[i]));
   }
 
