@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
-  ScrollView,
   SafeAreaView,
-  TouchableOpacity,
   Dimensions,
   ActivityIndicator,
   FlatList,
@@ -12,8 +10,6 @@ import {
 import InventoryItems from './InventoryItems';
 import {connect} from 'react-redux';
 import {getDataList} from '../controllers/items';
-
-const { height, width } = Dimensions.get('window');
 
 class InventoryScroll extends Component {
   constructor(props) {
@@ -49,8 +45,8 @@ class InventoryScroll extends Component {
               ...state,
               isLoading: false,
               noMoreData: true,
-            }
-          })
+            };
+          });
           return;
         }
 
@@ -67,7 +63,7 @@ class InventoryScroll extends Component {
   }
 
   handleLoadMore = () => {
-    if (this.state.noMoreData) return;
+    if (this.state.noMoreData) {return;}
     this.setState({...this.state, isLoading: true}, () => {this.loadItems();});
   }
 
