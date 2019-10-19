@@ -63,7 +63,7 @@ class InventoryScroll extends Component {
         navigation={this.props.navigation}/>);
     }
     return render;
-  }
+  };
 
   onContentSizeChange = (contentWidth, contentHeight) => {
     this.setState({ screenHeight: contentHeight });
@@ -83,7 +83,7 @@ class InventoryScroll extends Component {
             {this.renderItems()}
           </View>
         </ScrollView> */}
-        
+
         <FlatList
           style={styles.scrollContainer}
           contentContainerStyle={styles.scrollView}
