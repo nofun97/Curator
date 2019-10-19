@@ -113,10 +113,21 @@ export const viewItem = async itemId => {
   for (let i = 0; i < picturesReferences.items.length; i++) {
     downloadURLs.push(picturesReferences.items[i].getDownloadURL());
   }
+  const data = itemDetails.data();
+  console.log(data);
+  var categoriesList = [];
+  for (let category in data.categories){
+    categoriesList.push(category);
+  }
+
+  console.log(categoriesList);
   return {
-    ...itemDetails.data(),
+    ...data,
+    categories: categoriesList,
+    dateOwned: new Date(data.dateOwned),
+    dateRegistered: new Date(data.dateRegistered),
     photos: downloadURLs,
-  };  
+  };
 };
 
 export const getDataList = async (
@@ -150,9 +161,7 @@ export const getDataList = async (
   if (limit < 0) {
     limit = 10;
   }
-  console.log(owner);
   var query = firebase.firestore().collection('items').where('owners', 'array-contains', owner);
-  console.log(query);
   var categoriesMap = {};
 
   for (let i = 0; i < categories.length; i++){
