@@ -8,13 +8,13 @@ export default class MenuButton extends Component{
     this.state = {
       showMenu: false,
       menuImage: require('../Assets/Images/MenuIcon.png')
-    }
+    };
     this.changeMenuState=this.changeMenuState.bind(this);
   }
 
   changeMenuState=()=>{
     this.setState({showMenu: !this.state.showMenu})
-  }
+  };
 
   render(){
     return(
@@ -43,13 +43,13 @@ const styles=StyleSheet.create({
   },
   buttonStyle:{
     height:30,
-    width:30
+    width:30,
   },
   menuButtonStyle:{
     height:30,
-    width:30
+    width:30,
   },
   menuListStyle:{
 
-  }
+  },
 })
