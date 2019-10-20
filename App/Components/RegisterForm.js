@@ -82,7 +82,7 @@ class RegisterForm extends Component {
       )
   };
 
-  
+
 
   render() {
     return (
@@ -148,7 +148,6 @@ class RegisterForm extends Component {
         />
         {this.state.warning !== '' && <Text style={styles.TextStyle}>{this.state.warning}</Text>}
         {this.state.isLoading && <ActivityIndicator animating size="large"/>}
-        
         <TouchableOpacity
           style={styles.ButtonStyle}
           title="submit"
@@ -175,6 +174,7 @@ const styles = StyleSheet.create({
   ButtonStyle: {
     width: 165,
     marginTop: 40,
+    marginBottom: 50,
     height: 50,
     borderRadius: 2,
     backgroundColor: '#5f9999',
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
   TextStyle: {
     color: '#c8dede',
     fontFamily: 'Montserrat',
-    marginTop: 10,
+    marginTop: 50,
     marginBottom: 15,
   },
   registerTextStyle: {
