@@ -18,7 +18,7 @@ export default class ItemRegistrationPage extends Component{
 
 const styles = StyleSheet.create({
   viewContainer:{
-
+    flex: 1,
   },
   ItemRegistrationTop:{
 

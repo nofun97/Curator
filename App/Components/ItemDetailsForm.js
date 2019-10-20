@@ -23,7 +23,7 @@ export default class ItemDetailsForm extends Component{
   render(){
     return(
       <View style= {styles.viewStyle}>
-        <Text style = {styles.textStyle}>
+        <Text style = {styles.titleStyle}>
           Details
         </Text>
         <Text style = {styles.textStyle}>
@@ -45,14 +45,14 @@ export default class ItemDetailsForm extends Component{
           Categories: {this.props.categories}
         </Text>
         <TouchableOpacity
-          style={styles.buttonStyle}
+          style={styles.saveButtonStyle}
           onPress={this.onItemSavePress}>
-          <Text> Save </Text>
+          <Text style={styles.buttonTextStyle}> Save </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.buttonStyle}
+          style={styles.cancelButtonStyle}
           onPress={this.onItemSavePress}>
-          <Text> Cancel </Text>
+          <Text style={styles.buttonTextStyle}> Cancel </Text>
         </TouchableOpacity>
       </View>
     );

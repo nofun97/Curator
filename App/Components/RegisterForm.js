@@ -88,7 +88,7 @@ class RegisterForm extends Component {
     return (
       <ScrollView contentContainerStyle={styles.ViewStyle}>
         <Text style={styles.TextStyle}>Enter your information below:</Text>
-        <Text style={styles.registerTextStyle}> Email Address </Text>
+        <Text style={styles.registerTextStyle}> Email Address: </Text>
         <TextInput
           style={styles.InputStyle}
           keyboardType="email-address"
@@ -99,7 +99,7 @@ class RegisterForm extends Component {
           // onSubmitEditing={input => this.setState({ emailInput: input })}
           onChangeText={input => this.setState({ emailInput: input })}
         />
-        <Text style={styles.registerTextStyle}> First Name </Text>
+        <Text style={styles.registerTextStyle}> First Name: </Text>
         <TextInput
           style={styles.InputStyle}
           autoCorrect={false}
@@ -108,7 +108,7 @@ class RegisterForm extends Component {
           placeholder="Enter your first name"
           onChangeText={input => this.setState({ firstName: input })}
         />
-        <Text style={styles.registerTextStyle}> Last Name </Text>
+        <Text style={styles.registerTextStyle}> Last Name: </Text>
         <TextInput
           style={styles.InputStyle}
           autoCorrect={false}
@@ -117,7 +117,7 @@ class RegisterForm extends Component {
           placeholder="Enter your last name"
           onChangeText={input => this.setState({ lastName: input })}
         />
-        <Text style={styles.registerTextStyle}> Username </Text>
+        <Text style={styles.registerTextStyle}> Username: </Text>
         <TextInput
           style={styles.InputStyle}
           autoCorrect={false}
@@ -126,7 +126,7 @@ class RegisterForm extends Component {
           placeholder="Enter your username"
           onChangeText={input => this.setState({ username: input })}
         />
-        <Text style={styles.registerTextStyle}> Password </Text>
+        <Text style={styles.registerTextStyle}> Password: </Text>
         <TextInput
           style={styles.InputStyle}
           secureTextEntry={true}
@@ -136,7 +136,7 @@ class RegisterForm extends Component {
           placeholder="Enter your password"
           onChangeText={input => this.setState({ password: input })}
         />
-        <Text style={styles.registerTextStyle}> Re-confirm Password </Text>
+        <Text style={styles.registerTextStyle}> Re-confirm Password: </Text>
         <TextInput
           style={styles.InputStyle}
           secureTextEntry={true}
@@ -153,7 +153,7 @@ class RegisterForm extends Component {
           title="submit"
           onPress={this.onSubmitForm}
         >
-          <Text style={styles.ButtonTextStyle}>Submit</Text>
+          <Text style={styles.ButtonTextStyle}>Submit: </Text>
         </TouchableOpacity>
       </ScrollView>
     );
@@ -191,10 +191,11 @@ const styles = StyleSheet.create({
     marginTop: 50,
     marginBottom: 15,
   },
-  registerTextStyle: {
+  registerTextStyle: {  
+    marginLeft: 22,
     color: '#ffffff',
     marginTop: 10,
-    marginBottom: 5,
+    alignSelf: 'flex-start',
   },
 });
 
