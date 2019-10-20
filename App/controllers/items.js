@@ -8,21 +8,14 @@ export const registerItem = (
   errorStorage = null,
   completeStorage = null
 ) => {
-  if (!item.owners) {
-    return {
-      error: 'No owner is assigned',
-    };
+
+
+  if (typeof item.owners === undefined || item.owners.length <= 0) {
+    throw new Error('No owner is assigned');
   }
 
-  var owners = {};
-  for (let o of item.owners) {
-    owners[o] = true;
-  }
-
-  if (!item.categories) {
-    return {
-      error: 'Item must belong in a category',
-    };
+  if (typeof item.categories === undefined || item.categories.length <= 0) {
+    throw new Error('Item must belong in a category');
   }
 
   var categories = {};
@@ -30,14 +23,17 @@ export const registerItem = (
     categories[c] = true;
   }
 
-  if (!item.dateOwned) {
-    return {
-      error: 'Date must be assigned',
-    };
+  if (typeof item.dateOwned === undefined || item.dateOwned <= 0) {
+    throw new Error('Date must be assigned');
+  }
+
+  if (typeof item.name === undefined || item.name === ''){
+    throw new Error('Name must be defined');
   }
 
   const toUpload = {
-    owners: owners,
+    owners: item.owners,
+    name: item.name,
     dateOwned: item.dateOwned,
     description: item.description,
     dateRegistered: Date.now(),
@@ -46,7 +42,7 @@ export const registerItem = (
   };
   var uploadToFirestore = firebase.firestore().collection('items').add(toUpload);
   var uploadImages = [];
-  if (item.photos !== []) {
+  if (item.photos.length > 0) {
     for (let i = 0; i < item.photos.length; i++) {
       var promise = uploadToFirestore.then(data => {
         uploadImageAsPromise(
@@ -205,7 +201,7 @@ export const getDataList = async (
     if (thumbnailList.items.length > 0) {
       item.thumbnail = await thumbnailList.items[0].getDownloadURL();
     } else {
-      item.thumbnail = undefined;
+      item.thumbnail = '';
     }
     return item;
   };
