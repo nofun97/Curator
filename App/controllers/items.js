@@ -4,9 +4,9 @@ import '@react-native-firebase/storage';
 
 export const registerItem = (
   item,
-  progressStorage,
-  errorStorage,
-  completeStorage
+  progressStorage = null,
+  errorStorage = null,
+  completeStorage = null
 ) => {
   if (!item.owners) {
     return {
@@ -131,18 +131,11 @@ export const viewItem = async itemId => {
 };
 
 export const getDataList = async (
-  owner,
   pageStart,
   limit,
   order,
   categories
 ) => {
-  if (!owner) {
-    return {
-      error: 'Owner must be defined',
-    };
-  }
-
   if (pageStart < 0) {
     pageStart = 0;
   }
@@ -161,14 +154,13 @@ export const getDataList = async (
   if (limit < 0) {
     limit = 10;
   }
-  var query = firebase.firestore().collection('items').where('owners', 'array-contains', owner);
   var categoriesMap = {};
-
+  
   for (let i = 0; i < categories.length; i++){
     categoriesMap[categories[i]] = true;
   }
-
-  query = query.orderBy(order.field, order.direction);
+  
+  var query = firebase.firestore().collection('items').orderBy(order.field, order.direction);
 
   if (pageStart != null){
     query = query.startAfter(pageStart);
@@ -223,7 +215,7 @@ export const getDataList = async (
     if (!withinCategory(items[i])) {continue;}
     listOfItems.push(await dataTransform(items[i]));
   }
-
+  console.log(listOfItems.length);
   return listOfItems;
 };
 
