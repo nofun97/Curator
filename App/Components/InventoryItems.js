@@ -35,9 +35,7 @@ export default class InventoryItems extends Component {
             <Text style={styles.textStyle}>Item ID: {this.state.id}</Text>
             <Text style={styles.textStyle}>Name: {this.state.name}</Text>
             <Text style={styles.textStyle}>Date Owned: {this.state.categories}</Text>
-            <Text style={styles.textStyle}>Item Description: {this.state.description}</Text>
             <Text style={styles.textStyle}>Owners: {this.state.owners}</Text>
-            <Text style={styles.textStyle}>Item ID: {this.state.categories}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -49,8 +47,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     borderTopWidth: 20,
-    borderLeftWidth: 10,
-    borderRightWidth: 10,
     borderColor: '#264242',
   },
   buttonStyle:{
@@ -60,6 +56,7 @@ const styles = StyleSheet.create({
   },
   textContainer:{
     marginTop: 5,
+    width: '45%',
   },
   itemImage: {
 
