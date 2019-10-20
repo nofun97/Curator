@@ -46,7 +46,7 @@ export default class InventoryItems extends Component {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    borderTopWidth: 20,
+    borderWidth: 10,
     borderColor: '#264242',
   },
   buttonStyle:{
