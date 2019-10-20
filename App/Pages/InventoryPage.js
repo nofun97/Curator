@@ -56,7 +56,9 @@ const styles = StyleSheet.create({
   },
   artifactButtonViewStyle: {
     backgroundColor: '#338c83',
-    height: 65,
+    height: 70,
+    borderBottomWidth: 10,
+    borderColor: '#264242',
     justifyContent: 'center',
     alignItems: 'center',
   },
