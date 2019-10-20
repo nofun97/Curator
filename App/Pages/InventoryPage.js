@@ -34,8 +34,11 @@ export default class InventoryPage extends Component {
 }
 
 const styles = StyleSheet.create({
+  viewContainer: {
+    flex: 1,
+  },
   viewContainerTop: {
-    height: '35%',
+    height: '30%',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#264242',
@@ -44,6 +47,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
   viewContainerBottom: {
+    flex: 1,
     backgroundColor: '#5f9999',
   },
   artifactButtonStyle: {
