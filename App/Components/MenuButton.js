@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, StyleSheet,TouchableOpacity, Image, Text} from 'react-native';
-import MenuList from './MenuList'
+import MenuList from './MenuList';
 
 export default class MenuButton extends Component{
   constructor(props){
@@ -17,25 +17,6 @@ export default class MenuButton extends Component{
   }
 
   render(){
-    if(this.state.showMenu){
-      return(
-        <View style={styles.viewStyle}>
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            onPress={this.changeMenuState}>
-            <Image
-              style = {styles.menuButtonStyle}
-              source = {this.state.menuImage}
-            />
-          </TouchableOpacity>
-          <MenuList
-            style={styles.menuListStyle}
-            item={this.state.showMenu}
-            navigation={this.props.navigation}
-          />
-        </View>
-      );
-    }
     return(
       <View style={styles.viewStyle}>
         <TouchableOpacity
@@ -46,6 +27,11 @@ export default class MenuButton extends Component{
             source = {this.state.menuImage}
           />
         </TouchableOpacity>
+        <MenuList
+          style={styles.menuListStyle}
+          showMenu={this.state.showMenu}
+          navigation={this.props.navigation}
+        />
       </View>
     );
   }
@@ -56,12 +42,12 @@ const styles=StyleSheet.create({
 
   },
   buttonStyle:{
-    height:25,
-    width:25
+    height:30,
+    width:30
   },
   menuButtonStyle:{
-    height:25,
-    width:25
+    height:30,
+    width:30
   },
   menuListStyle:{
 
