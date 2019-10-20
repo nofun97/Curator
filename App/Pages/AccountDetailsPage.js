@@ -24,6 +24,8 @@ export default class AccountDetails extends Component {
 
 const styles = StyleSheet.create({
   Container: {
+    flex: 1,
+    backgroundColor: '#264242',
     //position
   },
 });

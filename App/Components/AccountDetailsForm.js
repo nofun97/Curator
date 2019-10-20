@@ -19,40 +19,44 @@ export default class AccountDetailsForm extends Component{
 
   render(){
     return (
-      <View style = {styles.viewStyle}>
-        <Text style = {styles.textStyle}> Email Address </Text>
-        <TextInput
+      <View>
+        <View style = {styles.viewStyle}>
+          <Text style = {styles.textStyle}> Email Address </Text>
+          <TextInput
             style = {styles.inputTextStyles}
             autoCorrect={false}
             onChangeText={input => this.setState({ emailAddress: input })}
-            value={this.state.emailAddres}
-        />
-        <Text style = {styles.textStyle}> First Name </Text>
-        <TextInput
+            value={this.state.emailAddress}
+          />
+          <Text style = {styles.textStyle}> First Name </Text>
+          <TextInput
             style = {styles.inputTextStyles}
             autoCorrect={false}
             onChangeText={input => this.setState({ firstName: input })}
             value={this.state.firstName}
-        />
-        <Text style = {styles.textStyle}> Last Name </Text>
-        <TextInput
+          />
+          <Text style = {styles.textStyle}> Last Name </Text>
+          <TextInput
             style = {styles.inputTextStyles}
             autoCorrect={false}
             onChangeText={input => this.setState({ lastName: input })}
             value={this.state.lastName}
-        />
-        <Text style = {styles.textStyle}> Username </Text>
-        <TextInput
+          />
+          <Text style = {styles.textStyle}> Username </Text>
+          <TextInput
             style = {styles.inputTextStyles}
             autoCorrect={false}
             onChangeText={input => this.setState({ userName: input })}
             value={this.state.userName}
-        />
-        <TouchableOpacity
-          style={styles.buttonStyle}
-          onPress={this.onAccountSavePress}>
-          <Text> Save </Text>
-        </TouchableOpacity>
+          />
+        </View>
+        <View style = {styles.saveButtonViewStyle}>
+          <TouchableOpacity
+            style={styles.saveButtonStyle}
+            onPress={this.onAccountSavePress}>
+            <Text style={styles.saveButtonTextStyle}> Save </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -70,7 +74,26 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat',
   },
   viewStyle: {
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    paddingTop: '12%',
+    marginLeft: '5%',
+  },
+  saveButtonStyle: {
+    width: 165,
+    marginBottom: 50,
+    height: 50,
+    borderRadius: 2,
+    backgroundColor: '#5f9999',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  saveButtonViewStyle: {
+    marginTop: '10%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  saveButtonTextStyle: {
+    color: '#ffffff',
   },
 });
