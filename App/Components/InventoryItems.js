@@ -10,7 +10,7 @@ export default class InventoryItems extends Component {
       name: this.props.item.name,
       description: this.props.item.description,
       dateRegistered: this.props.item.dateRegistered, // milliseconds since unix epoch
-      dateOwned: this.props.item.dateOwned, // milliseconds since unix epoch
+      dateOwned: new Date(this.props.item.dateOwned), // milliseconds since unix epoch
       categories: this.props.item.categories, // categories name
       thumbnail: this.props.item.thumbnail,
       logo: require('../Assets/Logo/Logo.png'), //the image
@@ -25,19 +25,23 @@ export default class InventoryItems extends Component {
   }
 
   render() {
+    const dateOwned = `${this.state.dateOwned.getDate()}/${this.state.dateOwned.getMonth() + 1}/${this.state.dateOwned.getFullYear()}`
+    const image = (this.state.thumbnail === '') ? this.state.logo : {uri: this.state.thumbnail};
+    // console.log(this.state.name, this.state.thumbnail, (typeof this.state.thumbnail));
+    // const image = this.state.logo;
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.buttonStyle} onPress={this.onPressHandler}>
           <View style = {styles.itemImageContainer}>
-            <Image style={styles.itemImage} source={this.state.logo} />
+            <Image style={styles.itemImage} source={image} />
           </View>
           <View style={styles.textContainer}>
             <Text style={styles.textStyle}>Item ID: {this.state.id}</Text>
             <Text style={styles.textStyle}>Name: {this.state.name}</Text>
-            <Text style={styles.textStyle}>Date Owned: {this.state.categories}</Text>
+            <Text style={styles.textStyle}>Date Owned: {dateOwned}</Text>
             <Text style={styles.textStyle}>Item Description: {this.state.description}</Text>
-            <Text style={styles.textStyle}>Owners: {this.state.owners}</Text>
-            <Text style={styles.textStyle}>Item ID: {this.state.categories}</Text>
+            {/*TODO: <Text style={styles.textStyle}>Owners: {this.state.owners}</Text> maybe not show this because fetching user names take time*/}
+            <Text style={styles.textStyle}>Categories: {this.state.categories}</Text>
           </View>
         </TouchableOpacity>
       </View>
