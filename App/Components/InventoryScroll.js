@@ -70,30 +70,32 @@ class InventoryScroll extends Component {
     }, () => {this.loadItems();});
   }
 
-  // onRefresh = () => {
-  //   this.setState((state, props) => {
-  //     var nextState = {
-  //       ...state,
-  //       children: [],
-  //       noMoreData: false,
-  //       isLoading: true,
-  //     }
+  onRefresh = () => {
+    if (this.state.noMoreData || this.state.isLoading) {return;}
 
-  //     if (state.order.direction === 'desc') {
-  //       nextState = {
-  //         ...nextState,
-  //         pageStart: Number.POSITIVE_INFINITY,
-  //       }
-  //     } else if (state.order.direction === 'asc') {
-  //       nextState = {
-  //         ...nextState,
-  //         pageStart: 0,
-  //       }
-  //     }
+    this.setState((state, props) => {
+      var nextState = {
+        ...state,
+        children: [],
+        noMoreData: false,
+        isLoading: true,
+      }
 
-  //     return nextState;
-  //   }, () => this.loadItems());
-  // }
+      if (state.order.direction === 'desc') {
+        nextState = {
+          ...nextState,
+          pageStart: Number.POSITIVE_INFINITY,
+        }
+      } else if (state.order.direction === 'asc') {
+        nextState = {
+          ...nextState,
+          pageStart: 0,
+        }
+      }
+
+      return nextState;
+    }, () => this.loadItems());
+  }
 
   renderFooter = () => {
     return (
@@ -119,8 +121,8 @@ class InventoryScroll extends Component {
           onEndReached={this.handleLoadMore}
           ListFooterComponent={this.renderFooter}
           onEndReachedThreshold={this.state.noMoreData ? 0 : 0.5}
-          // refreshing={this.state.isLoading}
-          // onRefresh={() => this.onRefresh()}
+          refreshing={this.state.isLoading}
+          onRefresh={() => this.onRefresh()}
           renderItem={({ item }) => (
             <View
               style={styles.content}
