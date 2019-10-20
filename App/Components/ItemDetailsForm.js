@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, DatePicker, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, DatePicker, StyleSheet, TouchableOpacity,TextInput} from 'react-native';
 
 export default class ItemDetailsForm extends Component{
   constructor(props){
@@ -22,39 +22,64 @@ export default class ItemDetailsForm extends Component{
 
   render(){
     return(
-      <View style= {styles.viewStyle}>
-        <Text style = {styles.titleStyle}>
-          Details
-        </Text>
-        <Text style = {styles.textStyle}>
-          Name: {this.props.name}
-        </Text>
-        <Text style = {styles.textStyle}>
-          Owner: {this.props.owners}
-        </Text>
-        <Text style = {styles.textStyle}>
-          Description: {this.props.description}
-        </Text>
-        <Text style = {styles.textStyle}>
-          Date Registered: {this.props.dateRegistered}
-        </Text>
-        <Text style = {styles.textStyle}>
-          Date Owned: {this.props.dateOwned}
-        </Text>
-        <Text style = {styles.textStyle}>
-          Categories: {this.props.categories}
-        </Text>
-        <TouchableOpacity
-          style={styles.saveButtonStyle}
-          onPress={this.onItemSavePress}>
-          <Text style={styles.buttonTextStyle}> Save </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.cancelButtonStyle}
-          onPress={this.onItemSavePress}>
-          <Text style={styles.buttonTextStyle}> Cancel </Text>
-        </TouchableOpacity>
-      </View>
+    <View style= {styles.viewStyle}>
+      <Text style = {styles.textStyle}>
+        Details
+      </Text>
+
+      <Text style = {styles.textStyle}>
+        Name
+      </Text>
+      <TextInput
+        style={styles.textInputStyle}
+        placeholder={this.props.name}/>
+
+      <Text style = {styles.textStyle}>
+        Owners
+      </Text>
+      <TextInput
+        style={styles.textInputStyle}
+        placeholder={this.props.owners}/>
+
+      <Text style = {styles.textStyle}>
+        Description
+      </Text>
+      <TextInput
+        style={styles.textInputStyle}
+        placeholder={this.props.description}/>
+
+      <Text style = {styles.textStyle}>
+        DateRegistered
+      </Text>
+      <TextInput
+        style={styles.textInputStyle}
+        placeholder={this.props.dateRegistered}/>
+
+      <Text style = {styles.textStyle}>
+        dateOwned
+      </Text>
+      <TextInput
+        style={styles.textInputStyle}
+        placeholder={this.props.dateOwned}/>
+
+      <Text style = {styles.textStyle}>
+        Categories
+      </Text>
+      <TextInput
+        style={styles.textInputStyle}
+        placeholder={this.props.categories}/>
+
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        onPress={this.onItemSavePress}>
+        <Text> Save </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        onPress={this.onItemSavePress}>
+        <Text> Cancel </Text>
+      </TouchableOpacity>
+    </View>
     );
   }
 }
@@ -62,8 +87,8 @@ export default class ItemDetailsForm extends Component{
 const styles = StyleSheet.create({
   viewStyle: {
     backgroundColor: '#264242',
-    justifyContent: 'center',
-    alignItems: 'center',
+  },
+  inputviewStyle:{
   },
   titleStyle: {
     color: '#ffffff',
@@ -72,10 +97,15 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     marginTop: 7,
   },
+  textInputStyle:{
+    color: '#ffffff',
+    fontFamily: 'Montserrat',
+    marginLeft: 124,
+    marginBottom: 10,
+  },
   textStyle: {
     color: '#ffffff',
     fontFamily: 'Montserrat',
-    marginBottom: 10,
     marginLeft: 124,
     alignSelf: 'flex-start',
   },
