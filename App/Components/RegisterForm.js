@@ -153,7 +153,7 @@ class RegisterForm extends Component {
           title="submit"
           onPress={this.onSubmitForm}
         >
-          <Text style={styles.ButtonTextStyle}>Submit: </Text>
+          <Text style={styles.ButtonTextStyle}> Submit </Text>
         </TouchableOpacity>
       </ScrollView>
     );
@@ -173,7 +173,6 @@ const styles = StyleSheet.create({
   },
   ButtonStyle: {
     width: 165,
-    marginTop: 40,
     marginBottom: 50,
     height: 50,
     borderRadius: 2,
@@ -191,7 +190,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
     marginBottom: 15,
   },
-  registerTextStyle: {  
+  registerTextStyle: {
     marginLeft: 22,
     color: '#ffffff',
     marginTop: 10,
