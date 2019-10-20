@@ -29,6 +29,7 @@ class LoginForm extends Component {
   }
 
   onLoginPress = () => {
+    //TODO: left and right trim characters
     if (this.state.email === '' || this.state.password === '') {
       this.setState({
         ...this.state,
@@ -37,24 +38,18 @@ class LoginForm extends Component {
       return;
     }
 
-    // const dispatch = (data) => {
-    //   const x = this.props.loggedIn(data.user);
-    //   console.log(x);
-    // };
 
     this.setState({ ...this.state, isLoading: true }, () => {
       login(this.state.email, this.state.password)
         .then(data => {
           this.setState({ ...this.state, isLoading: false, user: data });
-          // dispatch(data);
-          // this.props.navigation.navigate('Inventory');
-          // this.nextStep(data);
         })
         .catch(err => {
           console.log(err);
           this.setState({
             ...this.state,
             warning: 'Email or password is wrong',
+            isLoading: false,
           });
         });
     });
