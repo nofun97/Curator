@@ -35,7 +35,7 @@ export default class InventoryPage extends Component {
 
 const styles = StyleSheet.create({
   viewContainerTop: {
-    height: '35%',
+    height: '30%',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#264242',
