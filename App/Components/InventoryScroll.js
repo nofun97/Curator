@@ -33,7 +33,7 @@ class InventoryScroll extends Component {
   }
 
   loadItems = () => {
-    getDataList(this.props.uid, this.state.pageStart, this.state.limit, this.state.order, this.state.categories)
+    getDataList(this.state.pageStart, this.state.limit, this.state.order, this.state.categories)
       .then(data => {
         if (data.error){
           throw data.error;
@@ -50,21 +50,24 @@ class InventoryScroll extends Component {
           return;
         }
 
-        var nextPageStart = data[data.length - 1].dateOwned;
-
         this.setState((state, props) => {return {
           ...state,
           children: [...state.children, ...data],
-          pageStart: nextPageStart,
           isLoading: false,
+          newExistingData: new Set(),
+          noMoreData: data.length < state.limit,
         };});
       })
       .catch(err => console.log(err));
   }
 
   handleLoadMore = () => {
-    if (this.state.noMoreData) {return;}
-    this.setState({...this.state, isLoading: true}, () => {this.loadItems();});
+    if (this.state.noMoreData || this.state.isLoading) {return;}
+    this.setState({
+      ...this.state, 
+      isLoading: true,
+      pageStart: this.state.children[this.state.children.length - 1].dateOwned,
+    }, () => {this.loadItems();});
   }
 
   // onRefresh = () => {
