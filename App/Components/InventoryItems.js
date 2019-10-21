@@ -27,8 +27,7 @@ export default class InventoryItems extends Component {
   render() {
     const dateOwned = `${this.state.dateOwned.getDate()}/${this.state.dateOwned.getMonth() + 1}/${this.state.dateOwned.getFullYear()}`
     const image = (this.state.thumbnail === '') ? this.state.logo : {uri: this.state.thumbnail};
-    // console.log(this.state.name, this.state.thumbnail, (typeof this.state.thumbnail));
-    // const image = this.state.logo;
+
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.buttonStyle} onPress={this.onPressHandler}>
@@ -49,6 +48,7 @@ export default class InventoryItems extends Component {
   }
 }
 
+// TODO: make image size more responsive, images only appear when size is defined
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
@@ -61,12 +61,14 @@ const styles = StyleSheet.create({
     flexDirection:'row',
   },
   itemImageContainer:{
+    flex: 2
   },
   textContainer:{
+    flex: 2,
     marginTop: 5,
   },
   itemImage: {
-
+    flex: 1
   },
   textStyle: {
     marginLeft: 10,
