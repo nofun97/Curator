@@ -27,7 +27,7 @@ export default class ItemDetailsForm extends Component{
   render(){
     return(
     <View style= {styles.viewStyle}>
-      <Text style = {styles.textStyle}>
+      <Text style = {styles.titleStyle}>
         Details
       </Text>
 
@@ -56,9 +56,9 @@ export default class ItemDetailsForm extends Component{
       </Text>
 
       <TouchableOpacity
-        style={styles.buttonStyle}
+        style={styles.editButtonStyle}
         onPress={this.onEditItemPress}>
-        <Text> Edit </Text>
+        <Text style = {styles.buttonTextStyle}> Edit </Text>
       </TouchableOpacity>
     </View>
     );
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 12,
     marginTop: 7,
+    alignSelf: 'center',
   },
   textInputStyle:{
     color: '#ffffff',
@@ -86,24 +87,18 @@ const styles = StyleSheet.create({
   textStyle: {
     color: '#ffffff',
     fontFamily: 'Montserrat',
-    marginLeft: 124,
+    marginLeft: 74,
+    marginBottom: 10,
     alignSelf: 'flex-start',
   },
-  saveButtonStyle: {
-    width: 165,
-    marginTop: 30,
+  editButtonStyle: {
+    width: 245,
+    marginTop: 10,
     marginBottom: 25,
     height: 50,
     backgroundColor: '#5f9999',
     justifyContent: 'center',
-    alignItems: 'center',
-  },
-  cancelButtonStyle: {
-    width: 165,
-    marginBottom: 25,
-    height: 50,
-    backgroundColor: '#5f9999',
-    justifyContent: 'center',
+    alignSelf: 'center',
     alignItems: 'center',
   },
   buttonTextStyle: {
