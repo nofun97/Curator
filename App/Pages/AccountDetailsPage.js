@@ -16,7 +16,7 @@ export default class AccountDetails extends Component {
     return (
       <View style={styles.Container}>
         <AccountDetailsDisplay />
-        <AccountDetailsForm />
+        <AccountDetailsForm navigation={this.props.navigation}/>
       </View>
     );
   }
