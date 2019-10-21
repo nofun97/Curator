@@ -107,7 +107,7 @@ export const viewItem = async itemId => {
   const picturesReferences = await firebase.storage().ref(`${itemId}/`).listAll();
   var downloadURLs = [];
   for (let i = 0; i < picturesReferences.items.length; i++) {
-    downloadURLs.push(picturesReferences.items[i].getDownloadURL());
+    downloadURLs.push(await picturesReferences.items[i].getDownloadURL());
   }
   const data = itemDetails.data();
   console.log(data);
@@ -151,11 +151,11 @@ export const getDataList = async (
     limit = 10;
   }
   var categoriesMap = {};
-  
+
   for (let i = 0; i < categories.length; i++){
     categoriesMap[categories[i]] = true;
   }
-  
+
   var query = firebase.firestore().collection('items').orderBy(order.field, order.direction);
 
   if (pageStart != null){
@@ -206,7 +206,7 @@ export const getDataList = async (
     return item;
   };
 
-  var listOfItems = []; 
+  var listOfItems = [];
   for (let i = 0; i < items.length; i++) {
     if (!withinCategory(items[i])) {continue;}
     listOfItems.push(await dataTransform(items[i]));
