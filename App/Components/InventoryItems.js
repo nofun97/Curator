@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
   textContainer:{
     marginTop: 5,
-    width: '45%',
+    width: '40%',
   },
   itemImage: {
 
