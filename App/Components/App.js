@@ -5,6 +5,7 @@ import AccountDetailsPage from "../Pages/AccountDetailsPage";
 import InventoryPage from '../Pages/InventoryPage';
 import ItemDetailsPage from '../Pages/ItemDetailsPage';
 import ItemRegisterPage from "../Pages/ItemRegistrationPage";
+import ItemEditPage from '../Pages/ItemEditPage';
 
 const navigator = createStackNavigator(
   {
@@ -14,6 +15,7 @@ const navigator = createStackNavigator(
     AccountDetails: AccountDetailsPage,
     Inventory: InventoryPage,
     ItemDetails: ItemDetailsPage,
+    ItemEdit: ItemEditPage,
   },
   {
     initialRouteName: 'Login',

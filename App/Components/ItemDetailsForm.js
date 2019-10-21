@@ -12,13 +12,17 @@ export default class ItemDetailsForm extends Component{
       dateRegistered: this.props.item.dateRegistered, // milliseconds since unix epoch
       dateOwned: this.props.item.dateOwned, // milliseconds since unix epoch
       categories: this.props.item.categories,
+      allowEdit: false,
     };
-    this.onItemSavePress = this.onItemSavePress.bind(this);
+    this.onEditItemPress = this.onEditItemPress.bind(this);
   }
 
-  onItemSavePress = () => {
-    this.props.navigation.navigate('Inventory');
+  onEditItemPress = () => {
+    this.props.navigation.navigate('ItemEdit',{
+      id: this.state.id,
+    });
   };
+
 
   render(){
     return(
@@ -28,56 +32,33 @@ export default class ItemDetailsForm extends Component{
       </Text>
 
       <Text style = {styles.textStyle}>
-        Name
+        Name : {this.state.name}
       </Text>
-      <TextInput
-        style={styles.textInputStyle}
-        placeholder={this.props.name}/>
 
       <Text style = {styles.textStyle}>
-        Owners
+        Owners : {this.state.owners}
       </Text>
-      <TextInput
-        style={styles.textInputStyle}
-        placeholder={this.props.owners}/>
 
       <Text style = {styles.textStyle}>
-        Description
+        Description : {this.state.description}
       </Text>
-      <TextInput
-        style={styles.textInputStyle}
-        placeholder={this.props.description}/>
 
       <Text style = {styles.textStyle}>
-        DateRegistered
+        Date Registered : {this.state.dateRegistered}
       </Text>
-      <TextInput
-        style={styles.textInputStyle}
-        placeholder={this.props.dateRegistered}/>
 
       <Text style = {styles.textStyle}>
-        dateOwned
+        Date Owned : {this.state.dateOwned}
       </Text>
-      <TextInput
-        style={styles.textInputStyle}
-        placeholder={this.props.dateOwned}/>
 
       <Text style = {styles.textStyle}>
-        Categories
+        Categories : {this.state.categories}
       </Text>
-      <TextInput
-        style={styles.textInputStyle}
-        placeholder={this.props.categories}/>
 
       <TouchableOpacity
         style={styles.buttonStyle}
-        onPress={this.onItemSavePress}>
-        <Text> Save </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonStyle}
-        onPress={this.onItemSavePress}>
-        <Text> Cancel </Text>
+        onPress={this.onEditItemPress}>
+        <Text> Edit </Text>
       </TouchableOpacity>
     </View>
     );
@@ -88,8 +69,7 @@ const styles = StyleSheet.create({
   viewStyle: {
     backgroundColor: '#264242',
   },
-  inputviewStyle:{
-  },
+
   titleStyle: {
     color: '#ffffff',
     fontFamily: 'proxima-nova-semibold',

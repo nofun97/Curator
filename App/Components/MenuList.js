@@ -17,6 +17,7 @@ export default class MenuList extends Component{
       <View style={styles.viewStyle}>
         <TouchableOpacity
           style={styles.buttonStyle}
+          activeOpacity=1,
           OnPress={this.props.navigation.navigate("AccountDetails")}
         >
           <Text>Account Details</Text>
