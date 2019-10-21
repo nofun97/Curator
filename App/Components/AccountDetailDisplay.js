@@ -16,14 +16,10 @@ export default class AccountDetailsDisplay extends Component{
   }
 }
 
-/* <Image style = {styles.ImageIcon}
-               source = {require('../Assets/Images/MenuIcon.png')}
-        />*/
-
 const styles = StyleSheet.create({
   Container: {
-    paddingLeft: "5%",
-    paddingTop: "5%",
+    paddingLeft: '5%',
+    paddingTop: '5%',
     height: '15%',
     width: '100%',
     backgroundColor: '#264242',

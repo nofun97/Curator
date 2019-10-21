@@ -40,7 +40,7 @@ export default class ItemRegistrationForm extends Component{
           value={this.state.name}
           underlineColorAndroid={'#65807d'}
           placeholderTextColor="#6f8c89"
-          placeholder="Enter artifact's name: "
+          placeholder="Enter artifact's name "
         />
         <Text style = {styles.textStyle}>
         Owner:
@@ -52,7 +52,7 @@ export default class ItemRegistrationForm extends Component{
           value={this.state.owner}
           underlineColorAndroid={'#65807d'}
           placeholderTextColor="#6f8c89"
-          placeholder="Enter artifact's owner: "
+          placeholder="Enter artifact's owner "
         />
         <Text style = {styles.textStyle}>
         Date Added:
@@ -88,7 +88,7 @@ export default class ItemRegistrationForm extends Component{
           value={this.state.origin}
           underlineColorAndroid={'#65807d'}
           placeholderTextColor="#6f8c89"
-          placeholder="Enter artifact's origin: "
+          placeholder="Enter artifact's origin "
         />
         <Text style = {styles.textStyle}>
         Description:
@@ -100,7 +100,7 @@ export default class ItemRegistrationForm extends Component{
           value={this.state.description}
           underlineColorAndroid={'#65807d'}
           placeholderTextColor="#6f8c89"
-          placeholder="Enter artifact's description: "
+          placeholder="Enter artifact's description "
         />
         <TouchableOpacity
           style={styles.addButtonStyle}
@@ -168,5 +168,5 @@ const styles = StyleSheet.create({
   },
   buttonTextStyle: {
     color: '#ffffff',
-  }
+  },
 });
