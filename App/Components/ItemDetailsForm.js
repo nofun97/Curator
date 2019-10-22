@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {View, Text, DatePicker, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {connect} from 'react-redux';
 import {viewItem} from '../controllers/items';
+import {getProfilesOfIds} from '../controllers/authentications';
 
 class ItemDetailsForm extends Component{
   constructor(props){
@@ -11,17 +12,13 @@ class ItemDetailsForm extends Component{
       id: this.props.id,
       warning: '',
       photos: [],
-      // owners: this.props.item.owners, // user ids
-      // name: this.props.item.name,
-      // description: this.props.item.description,
-      // dateRegistered: this.props.item.dateRegistered, // milliseconds since unix epoch
-      // dateOwned: this.props.item.dateOwned, // milliseconds since unix epoch
-      // categories: this.props.item.categories,
+      ownerNames: [],
     };
     console.log(this.props.id);
     this.onItemSavePress = this.onItemSavePress.bind(this);
     this.itemLoad = this.itemLoad.bind(this);
     this.renderImage = this.renderImage.bind(this);
+    this.getNames = this.getNames.bind(this);
   }
 
   onItemSavePress = () => {
@@ -32,32 +29,45 @@ class ItemDetailsForm extends Component{
   itemLoad = () => {
     viewItem(this.state.id)
       .then(data => {
-        console.log(data);
         this.setState({
           ...this.state,
-          owners: data.owners.join(','), // TODO: change this to name somehow
           description: data.description,
           dateRegistered: `${data.dateRegistered.getDate()}/${data.dateRegistered.getMonth() + 1}/${data.dateRegistered.getFullYear()}`,
           photos: data.photos,
           dateOwned: `${data.dateOwned.getDate()}/${data.dateOwned.getMonth() + 1}/${data.dateOwned.getFullYear()}`,
           categories: data.categories.join(','), // TODO: to show this better, change the format accordingly
           name: data.name,
-        });
+        }, () => this.getNames(data.owners));
       })
       .catch(err => {
         console.log(err);
-        this.setState({...this.state, warning: 'Something is not right, please refresh'});
+        this.setState({...this.state, warning: 'Something is not right, please go back'});
       });
+  }
+
+  getNames = (ids) => {
+    getProfilesOfIds(ids)
+      .then(data => {
+        const names = data.map(profile => {
+          var name = `${profile.firstName}`;
+          if (profile.lastName !== '') name += ` ${profile.lastName}`;
+          return name;
+        });
+        this.setState({...this.state, owners: names.join(', ')});
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({...this.state, warning: 'Something is not right, please go back'});
+      })
   }
 
   componentDidMount = () => {this.itemLoad();};
 
   renderImage = () => {
-    console.log(this.state.photos);
     var images = [];
     for (let i = 0; i < this.state.photos.length; i++){
       if (this.state.photos[i] === '' || this.state.photos[i] === null) continue;
-      images.push(<Image key={i} source={{uri: this.state.photos[i]}}/>);
+      images.push(<Image style={{flex: 1, width: 50, height: 50}} key={i} source={{uri: this.state.photos[i]}}/>);
     }
 
     return images;
