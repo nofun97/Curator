@@ -1,6 +1,9 @@
 import React,{Component} from 'react';
 import {View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
-
+import { SliderBox } from 'react-native-image-slider-box';
+import DatePicker from 'react-native-datepicker';
+import Modal from 'react-native-modal';
+import ImageDetails from "../Components/ImageDetails"
 
 export default class ItemEditPage extends Component{
   constructor(props){
@@ -9,89 +12,132 @@ export default class ItemEditPage extends Component{
       name: "yeet",
       owners: "yeetersons",
       description: "passed down from your great yeetparents",
-      dateRegistered:"1909 Nov 2019",
       dateOwned:"1900 Dec 2010",
-      categories: "Yeet, Yeetyeet, yeetyeetyeet"
+      categories: "Yeet, Yeetyeet, yeetyeetyeet",
+      images:["https://source.unsplash.com/1024x768/?nature ","https://source.unsplash.com/800x600/?water"],
+      isModalVisible: false,
+      currentIndex: 0
     };
     this.onItemSavePress = this.onItemSavePress.bind(this);
+    this.onImagePress = this.onImagePress.bind(this);
+    this.toggleModal=this.toggleModal.bind(this);
   }
 
   onItemSavePress = () => {
     this.props.navigation.navigate('Inventory');
   };
 
+  toggleModal = () =>{
+    this.setState({isModalVisible:!this.state.isModalVisible});
+  }
+
+  onImagePress = (index) => {
+    this.setState({isModalVisible : true});
+    this.setState({currentIndex : index})
+  };
+
   render(){
     return(
-      <ScrollView style={styles.viewStyle}>
-        <Text style = {styles.titleStyle}>
-          Edit Artifact Information
-        </Text>
+      <View>
+        <SliderBox
+          style= {styles.sliderBoxStyle}
+          images={this.state.images}
+          sliderBoxHeight={200}
+          circleLoop
+          onCurrentImagePressed={index=>onImagePress(index)}/>
+        <Modal
+          isVisible={this.state.isModalVisible}>
+          <ImageDetails items={this.state.imagess[currentIndex]}/>
+          <TouchableOpacity>
+            <Text>Delete</Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Text>Cancel</Text>
+          </TouchableOpacity>
+        </Modal>
 
-        <Text style = {styles.textStyle}>
-          Name :
-        </Text>
-        <TextInput
-          style = {styles.textInputStyle}
-          placeholder={this.state.name}
-          underlineColorAndroid={'#65807d'}
-          placeholderTextColor="#6f8c89"/>
+        <ScrollView style={styles.viewStyle}>
+          <Text style = {styles.titleStyle}>
+            Edit Artifact Information
+          </Text>
 
-        <Text style = {styles.textStyle}>
-          Owners :
-        </Text>
-        <TextInput
-          style = {styles.textInputStyle}
-          placeholder={this.state.owners}
-          underlineColorAndroid={'#65807d'}
-          placeholderTextColor="#6f8c89"/>
+          <Text style = {styles.textStyle}>
+            Name :
+          </Text>
+          <TextInput
+            style = {styles.textInputStyle}
+            placeholder={this.state.name}
+            underlineColorAndroid={'#65807d'}
+            placeholderTextColor="#6f8c89"
+            onChangeText={input=>this.setState({name:input})}/>
 
-        <Text style = {styles.textStyle}>
-          Description :
-        </Text>
-        <TextInput
-          style = {styles.textInputStyle}
-          placeholder={this.state.description}
-          underlineColorAndroid={'#65807d'}
-          placeholderTextColor="#6f8c89"/>
+          <Text style = {styles.textStyle}>
+            Owners :
+          </Text>
+          <TextInput
+            style = {styles.textInputStyle}
+            placeholder={this.state.owners}
+            underlineColorAndroid={'#65807d'}
+            placeholderTextColor="#6f8c89"
+            onChangeText={input=>this.setState({owners:input})}/>
 
-        <Text style = {styles.textStyle}>
-          Date Registered :
-        </Text>
-        <TextInput
-          style = {styles.textInputStyle}
-          placeholder={this.state.dateRegistered}
-          underlineColorAndroid={'#65807d'}
-          placeholderTextColor="#6f8c89"/>
+          <Text style = {styles.textStyle}>
+            Description :
+          </Text>
+          <TextInput
+            style = {styles.textInputStyle}
+            placeholder={this.state.description}
+            underlineColorAndroid={'#65807d'}
+            placeholderTextColor="#6f8c89"
+            onChangeText={input=>this.setState({description:input})}/>
 
-        <Text style = {styles.textStyle}>
-          Date Owned :
-        </Text>
-        <TextInput
-          style = {styles.textInputStyle}
-          placeholder={this.state.dateOwned}
-          underlineColorAndroid={'#65807d'}
-          placeholderTextColor="#6f8c89"/>
+          <Text style = {styles.textStyle}>
+            Date Owned :
+          </Text>
+          <DatePicker
+            style={styles.datePickerStyle}
+            date={this.state.date}
+            mode="date"
+            placeholder="select date"
+            format="YYYY-MM-DD"
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            customStyles={{
+              dateIcon: {
+                position: 'absolute',
+                left: 0,
+                top: 4,
+                marginLeft: 0,
+              },
+              dateInput: {
+                marginLeft: 36,
+              },
+            }}
+            onDateChange={(date) => {this.setState({dateOwned: date});}}
+          />
 
-        <Text style = {styles.textStyle}>
-          Categories :
-        </Text>
-        <TextInput
-          style = {styles.textInputStyle}
-          placeholder={this.state.categories}
-          underlineColorAndroid={'#65807d'}
-          placeholderTextColor="#6f8c89"/>
+          <Text style = {styles.textStyle}>
+            Categories :
+          </Text>
+          <TextInput
+            style = {styles.textInputStyle}
+            placeholder={this.state.categories}
+            underlineColorAndroid={'#65807d'}
+            placeholderTextColor="#6f8c89"
+            onChangeText={input=>this.setState({categories:input})}/>
 
-        <TouchableOpacity
-          style={styles.saveButtonStyle}
-          onPress={this.onItemSavePress}>
-          <Text style = {styles.buttonTextStyle}> Save </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.cancelButtonStyle}
-          onPress={this.onItemSavePress}>
-          <Text style = {styles.buttonTextStyle}> Cancel </Text>
-        </TouchableOpacity>
-      </ScrollView>
+          <TouchableOpacity
+            style={styles.saveButtonStyle}
+            onPress={this.onItemSavePress}>
+            <Text style = {styles.buttonTextStyle}> Save </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.cancelButtonStyle}
+            onPress={this.onItemSavePress}>
+            <Text style = {styles.buttonTextStyle}> Cancel </Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
     )
   }
 }
@@ -101,6 +147,9 @@ const styles=StyleSheet.create({
     backgroundColor: '#264242',
     width:'100%',
   },
+  sliderBoxStyle:{
+
+  },
   titleStyle: {
     color: '#ffffff',
     fontFamily: 'proxima-nova-semibold',
@@ -109,7 +158,7 @@ const styles=StyleSheet.create({
     marginTop: 7,
     alignSelf: 'center',
   },
-  
+
   textStyle: {
     color: '#ffffff',
     fontFamily: 'Montserrat',

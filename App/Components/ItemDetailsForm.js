@@ -14,7 +14,7 @@ export default class ItemDetailsForm extends Component{
       dateOwned: this.props.item.dateOwned, // milliseconds since unix epoch
       categories: this.props.item.categories,
       allowEdit: false,
-      images:[/*give list of images*/""]
+      images:["https://source.unsplash.com/1024x768/?nature ","https://source.unsplash.com/800x600/?water"]
     };
     this.onEditItemPress = this.onEditItemPress.bind(this);
     this.getImages = this.getImages.bind(this);

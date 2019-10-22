@@ -45,7 +45,8 @@ export default class ItemRegistrationForm extends Component{
           style= {styles.sliderBoxStyle}
           images={this.state.images}
           sliderBoxHeight={200}
-          circleLoop/>
+          circleLoop
+          /*onCurrentImagePressed={index}*//>
         <ScrollView style = {styles.scrollViewContainer}>
           <Text style = {styles.nameStyle}>
           Name:
