@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, DatePicker, StyleSheet, TouchableOpacity,TextInput} from 'react-native';
+import { SliderBox } from 'react-native-image-slider-box';
 
 export default class ItemDetailsForm extends Component{
   constructor(props){
@@ -13,8 +14,10 @@ export default class ItemDetailsForm extends Component{
       dateOwned: this.props.item.dateOwned, // milliseconds since unix epoch
       categories: this.props.item.categories,
       allowEdit: false,
+      images:[/*give list of images*/""]
     };
     this.onEditItemPress = this.onEditItemPress.bind(this);
+    this.getImages = this.getImages.bind(this);
   }
 
   onEditItemPress = () => {
@@ -24,10 +27,23 @@ export default class ItemDetailsForm extends Component{
     });
   };
 
+  getImages = () =>{
+    //Get id and shit
+    let image=".";
+    while(image!=null){
+      //get from backend
+    }
+  }
+
 
   render(){
     return(
     <View style= {styles.viewStyle}>
+      <SliderBox
+        style= {styles.sliderBoxStyle}
+        images={this.state.images}
+        sliderBoxHeight={200}
+        circleLoop/>
       <Text style = {styles.titleStyle}>
         Details
       </Text>
@@ -71,6 +87,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#264242',
   },
 
+  sliderBoxStyle:{
+
+  },
   titleStyle: {
     color: '#ffffff',
     fontFamily: 'proxima-nova-semibold',
