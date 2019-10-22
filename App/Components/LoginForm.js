@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 35,
     height: 50,
-    width: 165,
+    width: 245,
     borderRadius: 2,
     backgroundColor: '#5f9999',
     justifyContent: 'center',
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   registerButtonStyle: {
     marginTop: 10,
     height: 50,
-    width: 165,
+    width: 245,
     borderRadius: 2,
     backgroundColor: '#5f9999',
     justifyContent: 'center',
