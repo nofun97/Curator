@@ -14,7 +14,11 @@ export const uploadProfile = user => {
   return firebase
     .firestore()
     .collection('users')
-    .add(user);
+    .doc(user.id)
+    .set({
+      firstName: user.firstName,
+      lastName: user.lastName,
+    });
 };
 
 export const getListOfProfiles = async () => {
@@ -32,4 +36,3 @@ export const getPersonalProfile = async (userID) => {
 export const editProfile = (profileId, newProfile) => {
   return firebase.firestore().collection('users').doc(profileId).update(newProfile);
 }
-;
