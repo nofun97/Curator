@@ -2,30 +2,20 @@ import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/firestore';
 import '@react-native-firebase/storage';
 
-const collection = firebase.firestore().collection('items');
-const storage = firebase.storage();
-
 export const registerItem = (
   item,
-  progressStorage,
-  errorStorage,
-  completeStorage
+  progressStorage = null,
+  errorStorage = null,
+  completeStorage = null
 ) => {
-  if (!item.owners) {
-    return {
-      error: 'No owner is assigned',
-    };
+
+
+  if (typeof item.owners === undefined || item.owners.length <= 0) {
+    throw new Error('No owner is assigned');
   }
 
-  var owners = {};
-  for (let o of item.owners) {
-    owners[o] = true;
-  }
-
-  if (!item.categories) {
-    return {
-      error: 'Item must belong in a category',
-    };
+  if (typeof item.categories === undefined || item.categories.length <= 0) {
+    throw new Error('Item must belong in a category');
   }
 
   var categories = {};
@@ -33,23 +23,26 @@ export const registerItem = (
     categories[c] = true;
   }
 
-  if (!item.dateOwned) {
-    return {
-      error: 'Date must be assigned',
-    };
+  if (typeof item.dateOwned === undefined || item.dateOwned <= 0) {
+    throw new Error('Date must be assigned');
+  }
+
+  if (typeof item.name === undefined || item.name === ''){
+    throw new Error('Name must be defined');
   }
 
   const toUpload = {
-    owners: owners,
+    owners: item.owners,
+    name: item.name,
     dateOwned: item.dateOwned,
     description: item.description,
     dateRegistered: Date.now(),
     dateUpdated: Date.now(),
     categories: categories,
   };
-  var uploadToFirestore = collection.add(toUpload);
+  var uploadToFirestore = firebase.firestore().collection('items').add(toUpload);
   var uploadImages = [];
-  if (item.photos !== []) {
+  if (item.photos.length > 0) {
     for (let i = 0; i < item.photos.length; i++) {
       var promise = uploadToFirestore.then(data => {
         uploadImageAsPromise(
@@ -69,7 +62,7 @@ export const registerItem = (
 
 const uploadImageAsPromise = (itemID, filepath, progress, error, complete) => {
   return new Promise(function(resolve, reject) {
-    var storageRef = storage.ref(`${itemID}/${Date.now()}`);
+    var storageRef = firebase.storage().ref(`itemsPhotos/${itemID}/${Date.now()}`);
 
     //Upload file
     var task = storageRef.putFile(filepath);
@@ -81,7 +74,7 @@ const uploadImageAsPromise = (itemID, filepath, progress, error, complete) => {
         ? progress
         : snapshot => {
             console.log(
-              snapshot.downloadURL +
+              snapshot.ref.name +
                 ': ' +
                 (snapshot.bytesTransferred / snapshot.totalBytes) * 100
             );
@@ -100,164 +93,178 @@ const uploadImageAsPromise = (itemID, filepath, progress, error, complete) => {
   });
 };
 
-const deleteImageAsPromise = (itemID, photosNames) => {
-  var deletionPromise = [];
-  for (let i = 0; i < photosNames.length; i++) {
-    deletionPromise.push(storage.ref(`${itemID}/${photosNames[i]}`).delete());
-  }
-  return deletionPromise;
-};
-
 // view item detail
 export const viewItem = async itemId => {
-  const itemDetails = await collection.doc(itemId).get();
-  const picturesReferences = await storage.ref(`${itemId}/`).listAll();
+  const itemDetails = await firebase.firestore().collection('items').doc(itemId).get();
+  const picturesReferences = await firebase.storage().ref(`itemsPhotos/${itemId}/`).listAll();
   var downloadURLs = [];
   for (let i = 0; i < picturesReferences.items.length; i++) {
-    downloadURLs.push(picturesReferences.items[i].getDownloadURL());
+    downloadURLs.push(await picturesReferences.items[i].getDownloadURL());
   }
+  const data = itemDetails.data();
+  var categoriesList = [];
+  for (let category in data.categories){
+    categoriesList.push(category);
+  }
+
   return {
-    ...itemDetails.data(),
+    ...data,
+    categories: categoriesList,
+    dateOwned: new Date(data.dateOwned),
+    dateRegistered: new Date(data.dateRegistered),
     photos: downloadURLs,
+    photosReferences: picturesReferences.items,
   };
 };
 
 export const getDataList = async (
-  owner,
   pageStart,
   limit,
   order,
   categories
 ) => {
-  if (!owner) {
-    return {
-      error: 'Owner must be defined',
-    };
-  }
-
-  if (!pageStart) {
+  if (pageStart < 0) {
     pageStart = 0;
   }
 
-  if (!order || !order.field) {
+  if (order === undefined || order.field === undefined) {
     order = {
       field: 'dateOwned',
       direction: 'desc',
     };
   }
-  if (
-    !order.direction ||
-    order.direction !== 'desc' ||
-    order.direction !== 'asc'
-  ) {
+
+  if (order.direction !== 'desc' && order.direction !== 'asc') {
     order.direction = 'desc';
   }
 
-  if (!limit) {
-    limit = 10; // Set this on env
+  if (limit < 0) {
+    limit = 10;
+  }
+  var categoriesMap = {};
+
+  for (let i = 0; i < categories.length; i++){
+    categoriesMap[categories[i]] = true;
   }
 
-  var query = collection.where(`owners.${owner}`, '==', 'true');
+  var query = firebase.firestore().collection('items').orderBy(order.field, order.direction);
 
-  if (categories !== []) {
-    for (let i = 0; i < categories.length; i++) {
-      query = query.where(`categories.${categories[i]}`, '==', 'true');
+  if (pageStart != null){
+    query = query.startAfter(pageStart);
+  }
+
+  const querySnapshot = await query.limit(limit).get();
+
+  const items = querySnapshot.docs;
+
+  const withinCategory = data => {
+    // check if not categories was set
+    if (Object.entries(categoriesMap).length === 0 && categoriesMap.constructor === Object){
+      return true;
     }
-  }
 
-  const querySnapshot = await query
-    .orderBy(order.field, order.direction)
-    .startAt(pageStart)
-    .limit(limit)
-    .get();
+    // only include items that has all categories
+    var item = data.data();
+    for (let category in categoriesMap){
+      if (!(category in item.categories)) {
+        return false;
+      }
+    }
 
-  const items = querySnapshot.docs();
+    return true;
+  };
+
 
   const dataTransform = async data => {
     var item = data.data();
-    const thumbnailList = await storage
+
+    // converting categories into a list
+    var categoryList = [];
+    for (let category in item.categories){
+      categoryList.push(category);
+    }
+    item.categories = categoryList;
+    item.id = data.id;
+    // getting thumbnails
+    const thumbnailList = await firebase.storage()
       .ref(`${data.id}/`)
       .list({ maxResults: 1 });
-    if (thumbnailList.items !== []) {
+    if (thumbnailList.items.length > 0) {
       item.thumbnail = await thumbnailList.items[0].getDownloadURL();
     } else {
-      item.thumbnail = undefined;
+      item.thumbnail = '';
     }
     return item;
   };
 
   var listOfItems = [];
   for (let i = 0; i < items.length; i++) {
+    if (!withinCategory(items[i])) {continue;}
     listOfItems.push(await dataTransform(items[i]));
   }
-
+  console.log(listOfItems.length);
   return listOfItems;
 };
 
-export const editItemWithPhotosUpload = (
-  itemID,
-  updated,
-  progressStorage,
-  errorStorage,
-  completeStorage
-) => {
-  var editItemPromise = editItemWithoutPhotosModification(itemID, updated);
-  var addedPhotosPromise = [];
-  if (updated.photos !== []) {
-    for (let i = 0; i < updated.photos.length; i++) {
-      var promise = editItemPromise.then(data => {
-        uploadImageAsPromise(
-          data.id,
-          updated.photos[i],
-          progressStorage,
-          errorStorage,
-          completeStorage
-        );
-      });
-      addedPhotosPromise.push(promise);
-    }
-  }
 
-  return Promise.all([editItemPromise, ...addedPhotosPromise]);
-};
-
-export const editItemWithPhotosDelete = (itemID, updated) => {
-  var editItemPromise = editItemWithoutPhotosModification(itemID, updated);
-  var deletePhotos = [];
-  if (updated.photos !== []) {
-    deletePhotos = deleteImageAsPromise(itemID, updated.photos);
-  }
-  return Promise.all([editItemPromise, ...deletePhotos]);
-};
-
-export const editItemWithoutPhotosModification = (itemID, updated) => {
+export const editItem = (itemID, updated) => {
   const toUpload = { dateUpdated: Date.now() };
 
-  if (updated.owners !== []) {
-    var owners = {};
-    for (let o of updated.owners) {
-      owners[o] = true;
-    }
+
+  if (updated.owners.length === 0) {
+    throw new Error('Owners can not be empty')
+  }
+  toUpload.owners = updated.owners;
+
+
+  if (updated.dateOwned < 0) {
+    throw new Error('Date is not right');
   }
 
-  if (updated.dateOwned) {
-    toUpload.dateOwned = updated.dateOwned;
+  toUpload.dateOwned = updated.dateOwned;
+
+
+  if (updated.description === '') {
+    throw new Error('Description can not be empty')
   }
 
-  if (updated.description) {
-    toUpload.description = updated.description;
-  }
+  toUpload.description = updated.description;
+
 
   if (updated.dateRegistered) {
-    return {
-      error:
-        "Hello there, you're not supposed to be able to do this but here you are, if you could create a github issue telling me how you did it, please do that, I'll appreciate you so much",
-    };
+    throw new Error("Hello there, you're not supposed to be able to do this but here you are, if you could create a github issue telling me how you did it, please do that, I'll appreciate you so much");
   }
 
-  if (updated.categories) {
-    toUpload.categories = updated.categories;
+  if (updated.categories.length === 0) {
+    throw new Error('Categories can not be empty')
   }
 
-  return collection.doc(itemID).udpate(toUpload);
+  toUpload.categories = updated.categories;
+
+
+  return firebase.firestore().collection('items').doc(itemID).update(toUpload);
 };
+
+export const deleteImageAsPromise = (itemId, photosReferences) => {
+  var deletionPromise = [];
+  for (let i = 0; i < photosReferences.length; i++) {
+    deletionPromise.push(photosReferences[i].delete());
+  }
+  return deletionPromise;
+};
+
+export const uploadAdditionalImagesAsPromise = (itemId, images, progress, error, complete) => {
+  var uploadPromise = [];
+  for (let i = 0; i < images.length; i++) {
+    uploadPromise.push(uploadImageAsPromise(itemId, images[i], progress, error, complete))
+  }
+  return uploadPromise;
+}
+
+export const deleteItem = async (itemId) => {
+  await firebase.firestore().collection('items').doc(itemId).delete();
+  const picturesReferences = await firebase.storage().ref(`itemsPhotos/${itemId}/`).listAll();
+  await deleteImageAsPromise(itemId, picturesReferences);
+  await firebase.storage().ref(`itemsPhotos/${itemId}}`).delete();
+  return;
+}

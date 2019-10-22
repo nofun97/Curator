@@ -9,9 +9,9 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import {connect} from 'react-redux';
-import {loggedIn} from '../redux/reducers';
-import {signUp, uploadProfile} from '../controllers/authentications';
+import { connect } from 'react-redux';
+import { loggedIn } from '../redux/reducers';
+import { signUp, uploadProfile } from '../controllers/authentications';
 
 class RegisterForm extends Component {
   constructor(props) {
@@ -25,40 +25,66 @@ class RegisterForm extends Component {
       password: '',
       reconfirmPass: '',
       isLoading: false,
-      warning: 'Password must be at least ' + this.MINIMUM_PASSWORD_LENGTH + ' characters',
+      warning:
+        'Password must be at least ' +
+        this.MINIMUM_PASSWORD_LENGTH +
+        ' characters',
+      user: null,
     };
     this.onSubmitForm = this.onSubmitForm.bind(this);
+    this.nextStep = this.nextStep.bind(this);
   }
 
+  nextStep = data => {
+    this.props.loggedIn(data);
+    this.props.navigation.navigate('Inventory');
+  };
+
+  componentDidUpdate() {
+    if (this.state.user !== null) {
+      this.nextStep(this.state.user);
+    }
+  }
   onSubmitForm = () => {
-    if (this.state.firstName === ''){
-      this.setState({...this.state, warning: 'First Name is required'});
+    if (this.state.firstName === '') {
+      this.setState({ ...this.state, warning: 'First Name is required' });
       return;
     }
 
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-    if (!emailRegex.test(this.state.emailInput)){
-      this.setState({...this.state, warning: 'Please enter the correct email'});
+    if (!emailRegex.test(this.state.emailInput)) {
+      this.setState({
+        ...this.state,
+        warning: 'Please enter the correct email',
+      });
       return;
     }
 
-    if (this.state.password < this.MINIMUM_PASSWORD_LENGTH){
-      this.setState({...this.state, warning: 'Password must be at least ' + this.MINIMUM_PASSWORD_LENGTH + ' characters'});
+    if (this.state.password < this.MINIMUM_PASSWORD_LENGTH) {
+      this.setState({
+        ...this.state,
+        warning:
+          'Password must be at least ' +
+          this.MINIMUM_PASSWORD_LENGTH +
+          ' characters',
+      });
       return;
     }
 
-    if (this.state.password !== this.state.reconfirmPass){
-      this.setState({...this.state, warning: 'Please confirm password correctly'});
+    if (this.state.password !== this.state.reconfirmPass) {
+      this.setState({
+        ...this.state,
+        warning: 'Please confirm password correctly',
+      });
       return;
     }
 
-    const dispatch = (data) => {
-      this.props.loggedIn(data.user);
-      this.props.navigation.navigate('Inventory');
-    }
     const registerPromise = async () => {
-      const userCredential = await signUp(this.state.emailInput, this.state.password);
+      const userCredential = await signUp(
+        this.state.emailInput,
+        this.state.password
+      );
       await uploadProfile({
         id: userCredential.user.uid,
         firstName: this.state.firstName,
@@ -67,22 +93,20 @@ class RegisterForm extends Component {
       return userCredential;
     };
 
-    this.setState({...this.state, isLoading: true},
-        () => {
-          registerPromise()
-            .then((data) => {
-              this.setState({...this.state, isLoading: false});
-              dispatch(data);
-            })
-            .catch((err) => {
-              console.log(err);
-              this.setState({...this.state, warning: "The email is already used"});
-            });
-        }
-      )
+    this.setState({ ...this.state, isLoading: true }, () => {
+      registerPromise()
+        .then(data => {
+          this.setState({ ...this.state, isLoading: false, user: data.user });
+        })
+        .catch(err => {
+          console.log(err);
+          this.setState({
+            ...this.state,
+            warning: 'The email is already used',
+          });
+        });
+    });
   };
-
-
 
   render() {
     return (
@@ -198,4 +222,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, () => {return {loggedIn};})(RegisterForm);
+const mapDispatchToProps = { loggedIn };
+export default connect(
+  state => {
+    const { payload } = state;
+    return { user: payload };
+  },
+  mapDispatchToProps
+)(RegisterForm);

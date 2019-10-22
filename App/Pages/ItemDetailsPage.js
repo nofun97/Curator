@@ -11,7 +11,7 @@ export default class ItemDetailsPage extends Component {
         <ItemDetailsForm
           style = {styles.itemDetailsForm}
           navigation={this.props.navigation}
-          item= {id}
+          id= {id}
         />
       </View>
     );
