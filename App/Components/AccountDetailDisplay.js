@@ -9,7 +9,7 @@ export default class AccountDetailsDisplay extends Component{
                source = {require('../Assets/Images/UserIcon.png')}
         />
         <Text style = {styles.accountTextStyle}>
-          My Account
+          Edit Account
         </Text>
       </View>
     );
