@@ -7,7 +7,6 @@ export default class ItemRegistrationPage extends Component{
   render(){
     return (
       <KeyboardAvoidingView enabled style= {styles.viewContainer}>
-        <ItemRegistrationTop style = {styles.itemRegistrationTopStyle}/>
         <ItemRegistrationForm
           style = {styles.itemRegistrationFormStyle}
           navigation = {this.props.navigation}/>
@@ -19,9 +18,6 @@ export default class ItemRegistrationPage extends Component{
 const styles = StyleSheet.create({
   viewContainer:{
     flex: 1,
-  },
-  ItemRegistrationTop:{
-
   },
   ItemRegistrationForm:{
 

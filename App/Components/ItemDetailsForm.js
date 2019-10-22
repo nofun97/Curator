@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, DatePicker, StyleSheet, TouchableOpacity,TextInput} from 'react-native';
+import { SliderBox } from 'react-native-image-slider-box';
 import {connect} from 'react-redux';
 import {viewItem} from '../controllers/items';
 import {getProfilesOfIds} from '../controllers/authentications';
@@ -12,13 +13,15 @@ class ItemDetailsForm extends Component{
       photos: [],
       isLoaded: false,
       allowEdit: false,
-      categories: []
+      categories: [],
+      images:["https://source.unsplash.com/1024x768/?nature ","https://source.unsplash.com/800x600/?water"]
     };
     this.itemLoad = this.itemLoad.bind(this);
     this.getNames = this.getNames.bind(this);
     this.onEditItemPress = this.onEditItemPress.bind(this);
     this.displayDate = this.displayDate.bind(this);
     this.displayName = this.displayName.bind(this);
+    this.getImages = this.getImages.bind(this);
   }
 
   itemLoad = () => {
@@ -84,10 +87,27 @@ class ItemDetailsForm extends Component{
     });
   };
 
+  getImages = () =>{
+    //Get id and shit
+    let image=".";
+    while(image!=null){
+      //get from backend
+    }
+  }
+
+
   render(){
-    return (
-      <View style= {styles.viewStyle}>
+    return(
+      <View style={styles.viewStyle}>
+        <SliderBox
+          style= {styles.sliderBoxStyle}
+          images={this.state.images}
+          sliderBoxHeight={200}
+          circleLoop
+          />
+
         {this.state.warning !== '' && <Text>{this.state.warning}</Text>}
+
         <Text style = {styles.textStyle}>
           Details
         </Text>
@@ -108,10 +128,10 @@ class ItemDetailsForm extends Component{
         </Text>
 
         <TouchableOpacity
-        style={styles.editButtonStyle}
-        onPress={this.onEditItemPress}>
-        <Text style = {styles.buttonTextStyle}> Edit </Text>
-      </TouchableOpacity>
+          style={styles.editButtonStyle}
+          onPress={this.onEditItemPress}>
+          <Text style = {styles.buttonTextStyle}> Edit </Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -122,6 +142,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#264242',
   },
 
+  sliderBoxStyle:{
+
+  },
   titleStyle: {
     color: '#ffffff',
     fontFamily: 'proxima-nova-semibold',

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+  import React, {Component} from 'react';
 import {View} from 'react-native';
 import {StyleSheet,
         Image,
@@ -24,7 +24,7 @@ export default class ItemDescriptionTop extends Component{
 
 const styles = StyleSheet.create({
   viewContainer : {
-    
+
   },
   buttonContainer : {
     alignItems : 'center',

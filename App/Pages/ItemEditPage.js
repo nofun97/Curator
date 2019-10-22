@@ -1,7 +1,10 @@
 import React,{Component} from 'react';
 import {View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator, FlatList} from 'react-native';
+import { SliderBox } from 'react-native-image-slider-box';
 import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
+import Modal from 'react-native-modal';
+import ImageDetails from "../Components/ImageDetails"
 import Tags from 'react-native-tags';
 import ImagePickingComponent from '../Components/ImagePickingComponent';
 import PickerCheckBox from 'react-native-picker-checkbox';
@@ -28,6 +31,9 @@ export default class ItemEditPage extends Component{
       owners: [],
       isLoading: false,
       isProcessingPhotos: false,
+      images:["https://source.unsplash.com/1024x768/?nature ","https://source.unsplash.com/800x600/?water"],
+      isModalVisible: false,
+      currentIndex: 0
     };
     this.onItemSavePress = this.onItemSavePress.bind(this);
     this.saveModifications = this.saveModifications.bind(this);
@@ -35,7 +41,9 @@ export default class ItemEditPage extends Component{
     this.onHandleFinishOwner = this.onHandleFinishOwner.bind(this);
     this.onPressImage = this.onPressImage.bind(this);
     this.displayFullName = this.displayFullName.bind(this);
-    console.log(this.state.pickedOwners);
+    this.onImagePress = this.onImagePress.bind(this);
+    this.toggleModal=this.toggleModal.bind(this);
+    this.onDeletePress=this.onDeletePress.bind(this);
     this.loadOwners();
   }
 
@@ -57,6 +65,19 @@ export default class ItemEditPage extends Component{
     const isProcessingPhotos = this.state.additionalPhotos.length !== 0 || this.state.photosToDelete.length !== 0;
     this.setState({...this.state, isLoading: true, isProcessingPhotos: isProcessingPhotos}, () => this.saveModifications());
   };
+
+  toggleModal = () =>{
+    this.setState({isModalVisible:!this.state.isModalVisible});
+  }
+
+  onImagePress = (index) => {
+    this.setState({isModalVisible : true});
+    this.setState({currentIndex : index});
+  };
+  onDeletePress = ()=>{
+    //delete item
+    this.setState({isModalVisible : false});
+  }
 
   saveModifications = () => {
     var editPromise = [];
@@ -132,7 +153,26 @@ export default class ItemEditPage extends Component{
   }
 
   render(){
-    return (
+    return(
+      <View>
+        <SliderBox
+          style= {styles.sliderBoxStyle}
+          images={this.state.images}
+          sliderBoxHeight={200}
+          circleLoop
+          onCurrentImagePressed={(index)=>this.onImagePress(index)}/>
+        <Modal
+          isVisible={this.state.isModalVisible}>
+          <ImageDetails items={this.state.images[this.state.currentIndex]}/>
+          <TouchableOpacity
+            onPress= {this.onDeletePress}>
+            <Text style={styles.imageTextStyle}>Delete</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={this.toggleModal}>
+            <Text style={styles.imageTextStyle}t>Cancel</Text>
+          </TouchableOpacity>
+        </Modal>
       <ScrollView style={styles.viewStyle}>
         {this.state.isLoading && <ActivityIndicator animating size="large" />}
 
@@ -256,20 +296,32 @@ export default class ItemEditPage extends Component{
           <Text style = {styles.buttonTextStyle}> Cancel </Text>
         </TouchableOpacity>
       </ScrollView>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   datePickerStyle:{
-    width: 180,
+    width: 280,
     marginTop: 10,
     marginBottom: 10,
-    marginLeft: 70,
+    marginLeft: 58,
   },
   viewStyle:{
     backgroundColor: '#264242',
     width:'100%',
+  },
+  sliderBoxStyle:{
+
+  },
+  imageTextStyle:{
+    color: '#ffffff',
+    fontFamily: 'proxima-nova-semibold',
+    fontSize: 18,
+    marginBottom: 12,
+    marginTop: 7,
+    alignSelf: 'center',
   },
   titleStyle: {
     color: '#ffffff',

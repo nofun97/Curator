@@ -7,11 +7,10 @@ import {
   SafeAreaView,
   ScrollView,
   ActivityIndicator,
-  Button,
-  Image,
   View,
 } from 'react-native';
 import DatePicker from 'react-native-datepicker';
+import { SliderBox } from 'react-native-image-slider-box';
 import {registerItem} from '../controllers/items';
 import {connect} from 'react-redux';
 import moment from 'moment';
@@ -25,17 +24,17 @@ class ItemRegistrationForm extends Component{
     super(props);
     this.state = {
       name: '',
-      owners: [], //TODO: need to be a list of {firstName: string, lastName: string, id: string}
+      owners: [],
       dateOwned: moment(),
       pickedOwners: [],
       // origin: '',  Not used?
       description: '',
+      images:[/*give list of images*/""],
       photos: [], // a list of items
-      categories: ['antique'], //TODO: needs to be a list
+      categories: ['antique'],
       warning: '',
       isLoadingImage: false,
       isLoading: false,
-      // TODO: make this look better
       finishedMessage: <Text>Uploading is complete! You can continue doing anything else</Text>,
       showFinishedMessage: false,
       maxNumberOfTags: 5,
@@ -43,12 +42,12 @@ class ItemRegistrationForm extends Component{
     this.onPressHandler = this.onPressHandler.bind(this);
     this.addItem = this.addItem.bind(this);
     this.onAddOwner = this.onAddOwner.bind(this);
-    this.renderImages = this.renderImages.bind(this);
     this.goBack = this.goBack.bind(this);
     this.loadOwners = this.loadOwners.bind(this);
     this.onHandleFinishOwner = this.onHandleFinishOwner.bind(this);
     this.renderCategoriesTag = this.renderCategoriesTag.bind(this);
     this.loadOwners();
+    this.getImages = this.getImages.bind(this);
   }
 
   renderCategoriesTag = () => (
@@ -85,18 +84,15 @@ class ItemRegistrationForm extends Component{
       });
   }
 
-  goBack = () => {this.props.navigation.navigate('Inventory');};
-
-  // TODO: style this to make it look better
-  renderImages = () => {
-    var images = [];
-    for (let i = 0; i < this.state.photos.length; i++){
-      images.push(
-        <Image key={i} style={{width: 100, height: 100}} source={{uri: this.state.photos[i]}} />
-      );
+  getImages = () =>{
+    //Get id and shit
+    let image=".";
+    while(image!=null){
+      //get from backend
     }
-    return images;
   }
+
+  goBack = () => {this.props.navigation.navigate('Inventory');};
 
   onAddOwner = () => {
     if (this.state.owners.length === 0) {
@@ -154,25 +150,32 @@ class ItemRegistrationForm extends Component{
     console.log(this.state.dateOwned.valueOf());
 
     return (
-      <ScrollView style = {styles.scrollViewContainer}>
+      <View>
+        <SliderBox
+          style= {styles.sliderBoxStyle}
+          images={this.state.images}
+          circleLoop
+          sliderBoxHeight={200}
+          /*onCurrentImagePressed={index}*//>
         {this.state.warning !== '' && <Text>{this.state.warning}</Text>}
         {this.state.isLoading && <ActivityIndicator animating size="large" />}
         {this.state.showFinishedMessage && <SafeAreaView>{this.state.finishedMessage}</SafeAreaView>}
-        <Text style = {styles.nameStyle}>
-        Name:
-        </Text>
-        <TextInput
-          style = {styles.inputTextStyles}
-          autoCorrect={false}
-          onChangeText={input => this.setState({ name: input })}
-          value={this.state.name}
-          underlineColorAndroid={'#65807d'}
-          placeholderTextColor="#6f8c89"
-          placeholder="Enter artifact's name "
-        />
-        <Text style = {styles.textStyle}>
-        Owner:
-        </Text>
+        <ScrollView style = {styles.scrollViewContainer}>
+          <Text style = {styles.nameStyle}>
+          Name:
+          </Text>
+          <TextInput
+            style = {styles.inputTextStyles}
+            autoCorrect={false}
+            onChangeText={input => this.setState({ name: input })}
+            value={this.state.name}
+            underlineColorAndroid={'#65807d'}
+            placeholderTextColor="#6f8c89"
+            placeholder="Enter artifact's name "
+          />
+          <Text style = {styles.textStyle}>
+          Owner:
+          </Text>
         <View style={{flex: 1, marginHorizontal: 70}}>
           <PickerCheckBox
             data={this.state.owners}
@@ -196,8 +199,8 @@ class ItemRegistrationForm extends Component{
           mode="date"
           placeholder="select date"
           format="YYYY-MM-DD"
-          confirmBtnText="Confirm"
           cancelBtnText="Cancel"
+          confirmBtnText="Confirm"
           customStyles={{
             dateIcon: {
               position: 'absolute',
@@ -231,9 +234,7 @@ class ItemRegistrationForm extends Component{
           Categories:
           </Text>
           <Text style = {styles.textStyle}>(Add up to {this.state.maxNumberOfTags}, press space after each tag to add tag, touch tag to delete tag)</Text>
-
           {this.renderCategoriesTag()}
-
           <ImagePickingComponent
             OnError={err => this.setState({...this.state, warning: err})}   
             OnSucceed={uri => this.setState({...this.state, photos: [...this.state.photos, uri]})}
@@ -241,7 +242,6 @@ class ItemRegistrationForm extends Component{
             ButtonTextStyle={styles.buttonTextStyle}
             />
 
-          {this.state.photos.length > 0 && this.renderImages()}
         <TouchableOpacity
           style={styles.addButtonStyle}
           onPress={this.onPressHandler}>
@@ -252,7 +252,8 @@ class ItemRegistrationForm extends Component{
             onPress={this.goBack}>
           <Text style={styles.buttonTextStyle}> Cancel </Text>
         </TouchableOpacity>
-      </ScrollView>
+        </ScrollView>
+      </View>
     );
   }
 }
