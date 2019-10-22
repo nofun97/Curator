@@ -208,6 +208,9 @@ class ItemRegistrationForm extends Component{
             dateInput: {
               marginLeft: 36,
             },
+            dateText: {
+              color: '#fff',
+            }
           }}
             onDateChange={(date) => {this.setState({dateOwned: moment(date)});}}
         />

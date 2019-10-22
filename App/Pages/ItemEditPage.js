@@ -192,7 +192,7 @@ export default class ItemEditPage extends Component{
         </Text>
         <DatePicker
           style={styles.datePickerStyle}
-            date={this.state.dateOwned}
+          date={this.state.dateOwned}
           mode="date"
           placeholder="select date"
           format="YYYY-MM-DD"
@@ -208,6 +208,9 @@ export default class ItemEditPage extends Component{
             dateInput: {
               marginLeft: 36,
             },
+            dateText: {
+              color: '#fff',
+            }
           }}
             onDateChange={(date) => {this.setState({dateOwned: moment(date), dataModified: true});}}
         />
