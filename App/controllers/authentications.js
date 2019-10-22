@@ -23,14 +23,17 @@ export const uploadProfile = user => {
 
 export const getListOfProfiles = async () => {
   const snapshot = await firebase.firestore().collection('users').orderBy('firstName', 'asc').get();
-  return snapshot.docs.map(doc => doc.data());
+  return snapshot.docs.map(doc => {
+    return {
+      uid: doc.id,
+      ...doc.data()
+    }
+  });
 };
 
 export const getPersonalProfile = async (userID) => {
-  const query = firebase.firestore().collection('users').where('id', '==', userID);
-  const snapshot = await query.get();
-  if (snapshot.docs.length !== 1) {throw new Error('Profile not found');}
-  return snapshot.docs[0].data();
+  const snapshot = await firebase.firestore().collection('users').doc(userID).get();
+  return snapshot.data();
 };
 
 export const editProfile = (profileId, newProfile) => {
