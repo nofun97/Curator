@@ -1,11 +1,11 @@
 import React,{Component} from 'react';
 import {View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
 
+
 export default class ItemEditPage extends Component{
   constructor(props){
     super(props);
     this.state = {
-      id: this.props.item.id,
       name: "yeet",
       owners: "yeetersons",
       description: "passed down from your great yeetparents",
@@ -13,7 +13,7 @@ export default class ItemEditPage extends Component{
       dateOwned:"1900 Dec 2010",
       categories: "Yeet, Yeetyeet, yeetyeetyeet"
     };
-    this.onEditItemPress = this.onEditItemPress.bind(this);
+    this.onItemSavePress = this.onItemSavePress.bind(this);
   }
 
   onItemSavePress = () => {

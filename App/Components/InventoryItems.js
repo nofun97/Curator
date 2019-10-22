@@ -21,6 +21,7 @@ export default class InventoryItems extends Component {
   onPressHandler(){
     this.props.navigation.navigate('ItemDetails', {
       id: this.state.id,
+      navigation: this.props.navigation
     });
   }
 

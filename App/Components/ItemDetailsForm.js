@@ -20,6 +20,7 @@ export default class ItemDetailsForm extends Component{
   onEditItemPress = () => {
     this.props.navigation.navigate('ItemEdit',{
       id: this.state.id,
+      navigation: this.props.navigation
     });
   };
 
