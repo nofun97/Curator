@@ -15,10 +15,10 @@ import DatePicker from 'react-native-datepicker';
 import {registerItem} from '../controllers/items';
 import {connect} from 'react-redux';
 import moment from 'moment';
-import ImagePicker from 'react-native-image-picker';
 import PickerCheckBox from 'react-native-picker-checkbox';
 import {getListOfProfiles} from '../controllers/authentications';
 import Tags from 'react-native-tags';
+import ImagePickingComponent from './ImagePickingComponent';
 
 class ItemRegistrationForm extends Component{
   constructor(props){
@@ -42,7 +42,6 @@ class ItemRegistrationForm extends Component{
     };
     this.onPressHandler = this.onPressHandler.bind(this);
     this.addItem = this.addItem.bind(this);
-    this.onAddImage = this.onAddImage.bind(this);
     this.onAddOwner = this.onAddOwner.bind(this);
     this.renderImages = this.renderImages.bind(this);
     this.goBack = this.goBack.bind(this);
@@ -59,15 +58,11 @@ class ItemRegistrationForm extends Component{
       }}
       initialTags={this.state.categories}
       onChangeTags={tags => this.setState({categories: tags})}
-      containerStyle={{ justifyContent: 'center' }}
-      tagContainerStyle={styles.tagContainer}
+      containerStyle={styles.tagSystemContainerStyle}
+      tagContainerStyle={styles.tagContainerStyle}
       maxNumberOfTags={this.state.maxNumberOfTags}
       inputStyle={styles.tagInputTextStyle}
-      renderTag={({ tag, index, onPress, deleteTagOnPress, readonly }) => (
-        <TouchableOpacity key={`${tag}-${index}`} onPress={onPress} >
-          <Text>{`${tag}${index !== this.state.maxNumberOfTags - 1 ? ', ' : ''}`}</Text>
-        </TouchableOpacity>
-      )}
+      tagTextStyle={styles.tagTextStyle}
     />
   );
 
@@ -114,31 +109,6 @@ class ItemRegistrationForm extends Component{
   onHandleFinishOwner = (data) => {
     this.setState({pickedOwners: data, isLoading: false, warning: '', showOwnerChecklist: false});
   }
-
-  onAddImage = () => {
-    var options = {
-      title: 'Select Image',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-      };
-
-    ImagePicker.showImagePicker(options, response => {
-      console.log('Response = ', response);
-
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-        this.setState({...this.state, warning: response.error});
-      } else {
-        this.setState({...this.state, photos: [...this.state.photos, response.uri]});
-      }
-    });
-  };
-
-
 
   onPressHandler = () => {
 
@@ -203,17 +173,20 @@ class ItemRegistrationForm extends Component{
         <Text style = {styles.textStyle}>
         Owner:
         </Text>
+        <View style={{flex: 1, marginHorizontal: 70}}>
           <PickerCheckBox
-          data={this.state.owners}
-          headerComponent={<Text style={{fontSize:25}} >owners</Text>}
-          OnConfirm={(pItems) => this.onHandleFinishOwner(pItems)}
-          ConfirmButtonTitle="OK"
-          DescriptionField="fullName"
-          KeyField="uid"
-          placeholder="select owners"
-          arrowColor="#338c83"
-          arrowSize={10}
+            data={this.state.owners}
+            headerComponent={<Text style={{fontSize:25}} >owners</Text>}
+            OnConfirm={(pItems) => this.onHandleFinishOwner(pItems)}
+            ConfirmButtonTitle="OK"
+            DescriptionField="fullName"
+            KeyField="uid"
+            placeholder="Press to select owners"
+            arrowColor="#338c83"
+            arrowSize={10}
+            style={styles.textStyle}
           />
+        </View>
         <Text style = {styles.textStyle}>
           Date Owned:
         </Text>
@@ -238,11 +211,11 @@ class ItemRegistrationForm extends Component{
           }}
             onDateChange={(date) => {this.setState({dateOwned: moment(date)});}}
         />
-          Description:
         <Text style = {styles.textStyle}>
         Description:
         </Text>
         <TextInput
+          multiline
           autoCorrect={false}
           style = {styles.inputTextStyles}
           value={this.state.description}
@@ -255,9 +228,16 @@ class ItemRegistrationForm extends Component{
           Categories:
           </Text>
           <Text style = {styles.textStyle}>(Add up to {this.state.maxNumberOfTags}, press space after each tag to add tag, touch tag to delete tag)</Text>
+
           {this.renderCategoriesTag()}
-          <Button title="Add Pictures" onPress={this.onAddImage} />
-          {/* TODO: make the gallery look better */}
+
+          <ImagePickingComponent
+            OnError={err => this.setState({...this.state, warning: err})}   
+            OnSucceed={uri => this.setState({...this.state, photos: [...this.state.photos, uri]})}
+            ButtonStyle={styles.addButtonStyle}
+            ButtonTextStyle={styles.buttonTextStyle}
+            />
+
           {this.state.photos.length > 0 && this.renderImages()}
         <TouchableOpacity
           style={styles.addButtonStyle}
@@ -289,6 +269,7 @@ const styles = StyleSheet.create({
   textStyle: {
     color: '#ffffff',
     marginLeft: 70,
+    marginRight: 70,
     fontFamily: 'Montserrat',
     alignSelf: 'flex-start',
   },
@@ -328,6 +309,17 @@ const styles = StyleSheet.create({
   buttonTextStyle: {
     color: '#ffffff',
   },
+  tagSystemContainerStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    marginHorizontal: 70,
+    marginBottom: 50,
+    marginTop: 10,
+  },
+  tagContainerStyle: {
+    flexWrap: 'wrap',
+    backgroundColor: '#338c83'
+  }
 });
 
 export default connect((state) => {
