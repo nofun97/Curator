@@ -21,30 +21,34 @@ export default class AccountDetailsForm extends Component{
     return (
       <View>
         <View style = {styles.viewStyle}>
-          <Text style = {styles.textStyle}> Email Address </Text>
+          <Text style = {styles.textStyle}> Email Address: </Text>
           <TextInput
             style = {styles.inputTextStyles}
+            underlineColorAndroid={'#65807d'}
             autoCorrect={false}
             onChangeText={input => this.setState({ emailAddress: input })}
             value={this.state.emailAddress}
           />
-          <Text style = {styles.textStyle}> First Name </Text>
+          <Text style = {styles.textStyle}> First Name: </Text>
           <TextInput
             style = {styles.inputTextStyles}
+            underlineColorAndroid={'#65807d'}
             autoCorrect={false}
             onChangeText={input => this.setState({ firstName: input })}
             value={this.state.firstName}
           />
-          <Text style = {styles.textStyle}> Last Name </Text>
+          <Text style = {styles.textStyle}> Last Name: </Text>
           <TextInput
             style = {styles.inputTextStyles}
+            underlineColorAndroid={'#65807d'}
             autoCorrect={false}
             onChangeText={input => this.setState({ lastName: input })}
             value={this.state.lastName}
           />
-          <Text style = {styles.textStyle}> Username </Text>
+          <Text style = {styles.textStyle}> Username: </Text>
           <TextInput
             style = {styles.inputTextStyles}
+            underlineColorAndroid={'#65807d'}
             autoCorrect={false}
             onChangeText={input => this.setState({ userName: input })}
             value={this.state.userName}
@@ -67,7 +71,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: '#d4d4d4',
     alignItems: 'center',
-    width: 260,
+    width: 350,
   },
   textStyle: {
     color: '#ffffff',
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
     marginLeft: '5%',
   },
   saveButtonStyle: {
-    width: 165,
+    width: 245,
     marginBottom: 50,
     height: 50,
     borderRadius: 2,
