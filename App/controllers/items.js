@@ -74,7 +74,7 @@ const uploadImageAsPromise = (itemID, filepath, progress, error, complete) => {
         ? progress
         : snapshot => {
             console.log(
-              snapshot.downloadURL +
+              snapshot.ref.name +
                 ': ' +
                 (snapshot.bytesTransferred / snapshot.totalBytes) * 100
             );
@@ -93,14 +93,6 @@ const uploadImageAsPromise = (itemID, filepath, progress, error, complete) => {
   });
 };
 
-const deleteImageAsPromise = (itemID, photosNames) => {
-  var deletionPromise = [];
-  for (let i = 0; i < photosNames.length; i++) {
-    deletionPromise.push(firebase.storage().ref(`itemsPhotos/${itemID}/${photosNames[i]}`).delete());
-  }
-  return deletionPromise;
-};
-
 // view item detail
 export const viewItem = async itemId => {
   const itemDetails = await firebase.firestore().collection('items').doc(itemId).get();
@@ -110,19 +102,18 @@ export const viewItem = async itemId => {
     downloadURLs.push(await picturesReferences.items[i].getDownloadURL());
   }
   const data = itemDetails.data();
-  console.log(data);
   var categoriesList = [];
   for (let category in data.categories){
     categoriesList.push(category);
   }
 
-  console.log(categoriesList);
   return {
     ...data,
     categories: categoriesList,
     dateOwned: new Date(data.dateOwned),
     dateRegistered: new Date(data.dateRegistered),
     photos: downloadURLs,
+    photosReferences: picturesReferences.items,
   };
 };
 
@@ -215,70 +206,65 @@ export const getDataList = async (
   return listOfItems;
 };
 
-export const editItemWithPhotosUpload = (
-  itemID,
-  updated,
-  progressStorage,
-  errorStorage,
-  completeStorage
-) => {
-  var editItemPromise = editItemWithoutPhotosModification(itemID, updated);
-  var addedPhotosPromise = [];
-  if (updated.photos !== []) {
-    for (let i = 0; i < updated.photos.length; i++) {
-      var promise = editItemPromise.then(data => {
-        uploadImageAsPromise(
-          data.id,
-          updated.photos[i],
-          progressStorage,
-          errorStorage,
-          completeStorage
-        );
-      });
-      addedPhotosPromise.push(promise);
-    }
-  }
 
-  return Promise.all([editItemPromise, ...addedPhotosPromise]);
-};
-
-export const editItemWithPhotosDelete = (itemID, updated) => {
-  var editItemPromise = editItemWithoutPhotosModification(itemID, updated);
-  var deletePhotos = [];
-  if (updated.photos !== []) {
-    deletePhotos = deleteImageAsPromise(itemID, updated.photos);
-  }
-  return Promise.all([editItemPromise, ...deletePhotos]);
-};
-
-export const editItemWithoutPhotosModification = (itemID, updated) => {
+export const editItem = (itemID, updated) => {
   const toUpload = { dateUpdated: Date.now() };
 
-  if (updated.owners !== []) {
-    var owners = {};
-    for (let o of updated.owners) {
-      owners[o] = true;
-    }
+
+  if (updated.owners.length === 0) {
+    throw new Error('Owners can not be empty')
+  }
+  toUpload.owners = updated.owners;
+
+
+  if (updated.dateOwned < 0) {
+    throw new Error('Date is not right');
   }
 
-  if (updated.dateOwned) {
-    toUpload.dateOwned = updated.dateOwned;
+  toUpload.dateOwned = updated.dateOwned;
+
+
+  if (updated.description === '') {
+    throw new Error('Description can not be empty')
   }
 
-  if (updated.description) {
-    toUpload.description = updated.description;
-  }
+  toUpload.description = updated.description;
+
 
   if (updated.dateRegistered) {
-    return {
-      error:
-        "Hello there, you're not supposed to be able to do this but here you are, if you could create a github issue telling me how you did it, please do that, I'll appreciate you so much",
-    };
+    throw new Error("Hello there, you're not supposed to be able to do this but here you are, if you could create a github issue telling me how you did it, please do that, I'll appreciate you so much");
   }
 
-  if (updated.categories) {
-    toUpload.categories = updated.categories;
+  if (updated.categories.length === 0) {
+    throw new Error('Categories can not be empty')
   }
 
-  return firebase.firestore().collection('items').doc(itemID).udpate(toUpload);
+  toUpload.categories = updated.categories;
+
+
+  return firebase.firestore().collection('items').doc(itemID).update(toUpload);
 };
+
+export const deleteImageAsPromise = (itemId, photosReferences) => {
+  var deletionPromise = [];
+  for (let i = 0; i < photosReferences.length; i++) {
+    deletionPromise.push(photosReferences[i].delete());
+  }
+  return deletionPromise;
+};
+
+export const uploadAdditionalImagesAsPromise = (itemId, images, progress, error, complete) => {
+  var uploadPromise = [];
+  for (let i = 0; i < images.length; i++) {
+    uploadPromise.push(uploadImageAsPromise(itemId, images[i], progress, error, complete))
+  }
+  return uploadPromise;
+}
+
+export const deleteItem = async (itemId) => {
+  await firebase.firestore().collection('items').doc(itemId).delete();
+  const picturesReferences = await firebase.storage().ref(`itemsPhotos/${itemId}/`).listAll();
+  await deleteImageAsPromise(itemId, picturesReferences);
+  await firebase.storage().ref(`itemsPhotos/${itemId}}`).delete();
+  return;
+}

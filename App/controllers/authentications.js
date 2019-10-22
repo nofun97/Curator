@@ -44,7 +44,10 @@ export const getProfilesOfIds = async (profileIds) => {
   var profiles = [];
   for (let i = 0; i < profileIds.length; i++){
     const snapshot = await firebase.firestore().collection('users').doc(profileIds[i]).get();
-    profiles.push(snapshot.data());
+    const data = snapshot.data();
+    var name = data.firstName;
+    if (data.lastName !== '') name += ' ' + data.lastName;
+    profiles.push({...data, uid: profileIds[i], fullName: name});
   }
   return profiles;
 }
