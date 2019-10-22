@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, DatePicker, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, DatePicker, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {connect} from 'react-redux';
 import {viewItem} from '../controllers/items';
 
@@ -10,6 +10,7 @@ class ItemDetailsForm extends Component{
     this.state = {
       id: this.props.id,
       warning: '',
+      photos: [],
       // owners: this.props.item.owners, // user ids
       // name: this.props.item.name,
       // description: this.props.item.description,
@@ -20,6 +21,7 @@ class ItemDetailsForm extends Component{
     console.log(this.props.id);
     this.onItemSavePress = this.onItemSavePress.bind(this);
     this.itemLoad = this.itemLoad.bind(this);
+    this.renderImage = this.renderImage.bind(this);
   }
 
   onItemSavePress = () => {
@@ -49,6 +51,18 @@ class ItemDetailsForm extends Component{
   }
 
   componentDidMount = () => {this.itemLoad();};
+
+  renderImage = () => {
+    console.log(this.state.photos);
+    var images = [];
+    for (let i = 0; i < this.state.photos.length; i++){
+      if (this.state.photos[i] === '' || this.state.photos[i] === null) continue;
+      images.push(<Image key={i} source={{uri: this.state.photos[i]}}/>);
+    }
+
+    return images;
+  }
+
   render(){
     return (
       <View style= {styles.viewStyle}>
@@ -74,6 +88,8 @@ class ItemDetailsForm extends Component{
         <Text style = {styles.textStyle}>
           Categories: {this.state.categories}
         </Text>
+
+        {this.renderImage()}
         <TouchableOpacity
           style={styles.buttonStyle}
           onPress={this.onItemSavePress}>
