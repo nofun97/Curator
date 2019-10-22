@@ -39,3 +39,12 @@ export const getPersonalProfile = async (userID) => {
 export const editProfile = (profileId, newProfile) => {
   return firebase.firestore().collection('users').doc(profileId).update(newProfile);
 }
+
+export const getProfilesOfIds = async (profileIds) => {
+  var profiles = [];
+  for (let i = 0; i < profileIds.length; i++){
+    const snapshot = await firebase.firestore().collection('users').doc(profileIds[i]).get();
+    profiles.push(snapshot.data());
+  }
+  return profiles;
+}
