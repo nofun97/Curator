@@ -62,7 +62,7 @@ export const registerItem = (
 
 const uploadImageAsPromise = (itemID, filepath, progress, error, complete) => {
   return new Promise(function(resolve, reject) {
-    var storageRef = firebase.storage().ref(`${itemID}/${Date.now()}`);
+    var storageRef = firebase.storage().ref(`itemsPhotos/${itemID}/${Date.now()}`);
 
     //Upload file
     var task = storageRef.putFile(filepath);
@@ -96,7 +96,7 @@ const uploadImageAsPromise = (itemID, filepath, progress, error, complete) => {
 const deleteImageAsPromise = (itemID, photosNames) => {
   var deletionPromise = [];
   for (let i = 0; i < photosNames.length; i++) {
-    deletionPromise.push(firebase.storage().ref(`${itemID}/${photosNames[i]}`).delete());
+    deletionPromise.push(firebase.storage().ref(`itemsPhotos/${itemID}/${photosNames[i]}`).delete());
   }
   return deletionPromise;
 };
@@ -104,7 +104,7 @@ const deleteImageAsPromise = (itemID, photosNames) => {
 // view item detail
 export const viewItem = async itemId => {
   const itemDetails = await firebase.firestore().collection('items').doc(itemId).get();
-  const picturesReferences = await firebase.storage().ref(`${itemId}/`).listAll();
+  const picturesReferences = await firebase.storage().ref(`itemsPhotos/${itemId}/`).listAll();
   var downloadURLs = [];
   for (let i = 0; i < picturesReferences.items.length; i++) {
     downloadURLs.push(await picturesReferences.items[i].getDownloadURL());
