@@ -132,6 +132,7 @@ const styles = StyleSheet.create({
     width: 260,
   },
   textStyle: {
+    marginLeft: 4,
     color: '#ffffff',
     fontFamily: 'Montserrat',
   },

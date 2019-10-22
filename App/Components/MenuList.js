@@ -1,27 +1,29 @@
 import React, {Component} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet,Button} from 'react-native';
 
 export default class MenuList extends Component{
   constructor(props){
     super(props);
-    this.AccountDetailPress= this.AccountDetailPress.bind(this);
-  }
-
-  AccountDetailPress=()=>{
-    this.props.navigation.navigate("AccountDetails");
+    this.state={
+      showMenu:this.props.showMenu
+    }
   }
 
   render(){
+    if(!this.props.showMenu){
+      return (null);
+    }
     return(
       <View style={styles.viewStyle}>
         <TouchableOpacity
           style={styles.buttonStyle}
-          OnPress={this.AccountDetailPress}
+          activeOpacity={1}
+          OnPress={this.props.navigation.navigate("AccountDetails")}
         >
-        <Text>Account Details</Text>
+          <Text>Account Details</Text>
         </TouchableOpacity>
       </View>
-    )
+    );
   }
 }
 

@@ -16,7 +16,7 @@ export default class AccountDetails extends Component {
     return (
       <View style={styles.Container}>
         <AccountDetailsDisplay />
-        <AccountDetailsForm />
+        <AccountDetailsForm navigation={this.props.navigation}/>
       </View>
     );
   }
@@ -24,6 +24,8 @@ export default class AccountDetails extends Component {
 
 const styles = StyleSheet.create({
   Container: {
+    flex: 1,
+    backgroundColor: '#264242',
     //position
   },
 });

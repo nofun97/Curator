@@ -24,12 +24,12 @@ export default class ItemDescriptionTop extends Component{
 
 const styles = StyleSheet.create({
   viewContainer : {
-
+    
   },
   buttonContainer : {
     alignItems : 'center',
   },
-  textStye : {
+  textStyle : {
 
   },
 });

@@ -21,6 +21,7 @@ export default class InventoryItems extends Component {
   onPressHandler(){
     this.props.navigation.navigate('ItemDetails', {
       id: this.state.id,
+      navigation: this.props.navigation
     });
   }
 
@@ -52,9 +53,7 @@ export default class InventoryItems extends Component {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    borderTopWidth: 20,
-    borderLeftWidth: 10,
-    borderRightWidth: 10,
+    borderWidth: 10,
     borderColor: '#264242',
   },
   buttonStyle:{
@@ -66,6 +65,7 @@ const styles = StyleSheet.create({
   textContainer:{
     flex: 2,
     marginTop: 5,
+    width: '40%',
   },
   itemImage: {
     flex: 1

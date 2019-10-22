@@ -20,9 +20,7 @@ export default class ItemDetailsPage extends Component {
 
 const styles = StyleSheet.create({
   viewContainer:{
-
-  },
-  itemDetailsForm:{
-
+    flex: 1,
+    backgroundColor: '#264242',
   }
 })

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, DatePicker, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {View, Text, DatePicker, StyleSheet, TouchableOpacity, Image, TextInput} from 'react-native';
 import {connect} from 'react-redux';
 import {viewItem} from '../controllers/items';
 import {getProfilesOfIds} from '../controllers/authentications';
@@ -13,65 +13,27 @@ class ItemDetailsForm extends Component{
       warning: '',
       photos: [],
       ownerNames: [],
+      owners: this.props.item.owners, // user ids
+      name: this.props.item.name,
+      description: this.props.item.description,
+      dateRegistered: this.props.item.dateRegistered, // milliseconds since unix epoch
+      dateOwned: this.props.item.dateOwned, // milliseconds since unix epoch
+      categories: this.props.item.categories,
+      allowEdit: false,
     };
-    console.log(this.props.id);
     this.onItemSavePress = this.onItemSavePress.bind(this);
     this.itemLoad = this.itemLoad.bind(this);
     this.renderImage = this.renderImage.bind(this);
     this.getNames = this.getNames.bind(this);
+    this.onEditItemPress = this.onEditItemPress.bind(this);
   }
 
-  onItemSavePress = () => {
-    this.props.navigation.navigate('Inventory');
+  onEditItemPress = () => {
+    this.props.navigation.navigate('ItemEdit',{
+      id: this.state.id,
+      navigation: this.props.navigation
+    });
   };
-
-
-  itemLoad = () => {
-    viewItem(this.state.id)
-      .then(data => {
-        this.setState({
-          ...this.state,
-          description: data.description,
-          dateRegistered: `${data.dateRegistered.getDate()}/${data.dateRegistered.getMonth() + 1}/${data.dateRegistered.getFullYear()}`,
-          photos: data.photos,
-          dateOwned: `${data.dateOwned.getDate()}/${data.dateOwned.getMonth() + 1}/${data.dateOwned.getFullYear()}`,
-          categories: data.categories.join(','), // TODO: to show this better, change the format accordingly
-          name: data.name,
-        }, () => this.getNames(data.owners));
-      })
-      .catch(err => {
-        console.log(err);
-        this.setState({...this.state, warning: 'Something is not right, please go back'});
-      });
-  }
-
-  getNames = (ids) => {
-    getProfilesOfIds(ids)
-      .then(data => {
-        const names = data.map(profile => {
-          var name = `${profile.firstName}`;
-          if (profile.lastName !== '') name += ` ${profile.lastName}`;
-          return name;
-        });
-        this.setState({...this.state, owners: names.join(', ')});
-      })
-      .catch(err => {
-        console.log(err);
-        this.setState({...this.state, warning: 'Something is not right, please go back'});
-      })
-  }
-
-  componentDidMount = () => {this.itemLoad();};
-
-  renderImage = () => {
-    var images = [];
-    for (let i = 0; i < this.state.photos.length; i++){
-      if (this.state.photos[i] === '' || this.state.photos[i] === null) continue;
-      images.push(<Image style={{flex: 1, width: 50, height: 50}} key={i} source={{uri: this.state.photos[i]}}/>);
-    }
-
-    return images;
-  }
 
   render(){
     return (
@@ -101,15 +63,10 @@ class ItemDetailsForm extends Component{
 
         {this.renderImage()}
         <TouchableOpacity
-          style={styles.buttonStyle}
-          onPress={this.onItemSavePress}>
-          <Text> Save </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.buttonStyle}
-          onPress={this.onItemSavePress}>
-          <Text> Cancel </Text>
-        </TouchableOpacity>
+        style={styles.editButtonStyle}
+        onPress={this.onEditItemPress}>
+        <Text style = {styles.buttonTextStyle}> Edit </Text>
+      </TouchableOpacity>
       </View>
     );
   }
@@ -117,15 +74,44 @@ class ItemDetailsForm extends Component{
 
 const styles = StyleSheet.create({
   viewStyle: {
+    backgroundColor: '#264242',
+  },
 
+  titleStyle: {
+    color: '#ffffff',
+    fontFamily: 'proxima-nova-semibold',
+    fontSize: 18,
+    marginBottom: 12,
+    marginTop: 7,
+    alignSelf: 'center',
+  },
+  textInputStyle:{
+    color: '#ffffff',
+    fontFamily: 'Montserrat',
+    marginLeft: 124,
+    marginBottom: 10,
   },
   textStyle: {
-
+    color: '#ffffff',
+    fontFamily: 'Montserrat',
+    marginLeft: 74,
+    marginBottom: 10,
+    alignSelf: 'flex-start',
   },
-  buttonStyle: {
-
+  editButtonStyle: {
+    width: 245,
+    marginTop: 10,
+    marginBottom: 25,
+    height: 50,
+    backgroundColor: '#5f9999',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    alignItems: 'center',
   },
-});
+  buttonTextStyle: {
+    color: '#ffffff',
+  }
+})
 
 export default connect((state) => {
   const {user} = state;

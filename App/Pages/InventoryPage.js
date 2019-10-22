@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View ,Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import InventoryScroll from '../Components/InventoryScroll';
 import MenuButton from '../Components/MenuButton';
 
@@ -8,10 +8,14 @@ export default class InventoryPage extends Component {
     return (
       <View style={styles.viewContainer}>
         <View style={styles.navBarStyle}>
-          <MenuButton
-            style={styles.menuButtonStyle}
-            navigation={this.props.navigation}
-          />
+          <TouchableOpacity
+            style={styles.accountButtonStyle}
+            onPress={()=>this.props.navigation.navigate('AccountDetails')}
+          >
+            <Image style = {styles.accountIconStyle}
+                   source = {require('../Assets/Images/UserEditIcon.png')}
+            />
+          </TouchableOpacity>
         </View>
         <View style={styles.viewContainerTop}>
           <Text style = {styles.welcomeTextStyle}> Welcome to Curator, </Text>
@@ -60,7 +64,9 @@ const styles = StyleSheet.create({
   },
   artifactButtonViewStyle: {
     backgroundColor: '#338c83',
-    height: 65,
+    height: 70,
+    borderBottomWidth: 10,
+    borderColor: '#264242',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -74,6 +80,18 @@ const styles = StyleSheet.create({
   navBarStyle: {
     backgroundColor: '#338c83',
     borderBottomWidth: 0.5,
+  },
+  accountIconStyle: {
+    flex: 1,
+    backgroundColor: '#338c83',
+    resizeMode: 'contain',
+    marginLeft: 15,
+  },
+  accountButtonStyle: {
+    width: 45,
+    height: 45,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

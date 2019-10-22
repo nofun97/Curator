@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   Button,
   Image,
+  View,
 } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import {registerItem} from '../controllers/items';
@@ -183,23 +184,25 @@ class ItemRegistrationForm extends Component{
     console.log(this.state.dateOwned.valueOf());
 
     return (
-      <SafeAreaView style = {styles.viewContainer}>
+      <ScrollView style = {styles.scrollViewContainer}>
         {this.state.warning !== '' && <Text>{this.state.warning}</Text>}
         {this.state.isLoading && <ActivityIndicator animating size="large" />}
         {this.state.showFinishedMessage && <SafeAreaView>{this.state.finishedMessage}</SafeAreaView>}
-        <ScrollView style = {styles.scrollViewContainer}>
-          <Text style = {styles.textStyle}>
-          Name:
-          </Text>
-          <TextInput
-            style = {styles.inputTextStyles}
-            autoCorrect={false}
-            onChangeText={input => this.setState({ name: input })}
-            value={this.state.name}
-          />
-          <Text style = {styles.textStyle}>
-          Owner:
-          </Text>
+        <Text style = {styles.nameStyle}>
+        Name:
+        </Text>
+        <TextInput
+          style = {styles.inputTextStyles}
+          autoCorrect={false}
+          onChangeText={input => this.setState({ name: input })}
+          value={this.state.name}
+          underlineColorAndroid={'#65807d'}
+          placeholderTextColor="#6f8c89"
+          placeholder="Enter artifact's name "
+        />
+        <Text style = {styles.textStyle}>
+        Owner:
+        </Text>
           <PickerCheckBox
           data={this.state.owners}
           headerComponent={<Text style={{fontSize:25}} >owners</Text>}
@@ -211,110 +214,119 @@ class ItemRegistrationForm extends Component{
           arrowColor="#338c83"
           arrowSize={10}
           />
-          <Text style = {styles.textStyle}>
+        <Text style = {styles.textStyle}>
           Date Owned:
-          </Text>
-          <DatePicker
-            style={styles.datePickerStyle}
+        </Text>
+        <DatePicker
+          style={styles.datePickerStyle}
             date={this.state.dateOwned}
-            mode="date"
-            placeholder="select date"
-            format="YYYY-MM-DD"
-            confirmBtnText="Confirm"
-            cancelBtnText="Cancel"
-            customStyles={{
-              dateIcon: {
-                position: 'absolute',
-                left: 0,
-                top: 4,
-                marginLeft: 0,
-              },
-              dateInput: {
-                marginLeft: 36,
-              },
-            }}
+          mode="date"
+          placeholder="select date"
+          format="YYYY-MM-DD"
+          confirmBtnText="Confirm"
+          cancelBtnText="Cancel"
+          customStyles={{
+            dateIcon: {
+              position: 'absolute',
+              top: 4,
+              left: 0,
+              marginLeft: 0,
+            },
+            dateInput: {
+              marginLeft: 36,
+            },
+          }}
             onDateChange={(date) => {this.setState({dateOwned: moment(date)});}}
-          />
-          <Text style = {styles.textStyle}>
+        />
           Description:
-          </Text>
-          <TextInput
-            style = {styles.inputTextStyles}
-            autoCorrect={false}
-            onChangeText={input => this.setState({ description: input })}
-            value={this.state.description}
-          />
-
+        <Text style = {styles.textStyle}>
+        Description:
+        </Text>
+        <TextInput
+          autoCorrect={false}
+          style = {styles.inputTextStyles}
+          value={this.state.description}
+          onChangeText={input => this.setState({ description: input })}
+          underlineColorAndroid={'#65807d'}
+          placeholderTextColor="#6f8c89"
+          placeholder="Enter artifact's description "
+        />
           <Text style = {styles.textStyle}>
           Categories:
           </Text>
           <Text style = {styles.textStyle}>(Add up to {this.state.maxNumberOfTags}, press space after each tag to add tag, touch tag to delete tag)</Text>
           {this.renderCategoriesTag()}
           <Button title="Add Pictures" onPress={this.onAddImage} />
-
-
           {/* TODO: make the gallery look better */}
           {this.state.photos.length > 0 && this.renderImages()}
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            onPress={this.onPressHandler}>
-            <Text> Add Item </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.buttonStyle}
+        <TouchableOpacity
+          style={styles.addButtonStyle}
+          onPress={this.onPressHandler}>
+          <Text style={styles.buttonTextStyle}> Add Item </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.cancelButtonStyle}
             onPress={this.goBack}>
-            <Text> Cancel </Text>
-          </TouchableOpacity>
-        </ScrollView>
-      </SafeAreaView>
+          <Text style={styles.buttonTextStyle}> Cancel </Text>
+        </TouchableOpacity>
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  viewContainer:{
-    flex: 1
-  },
   scrollViewContainer:{
-
+    width: '100%',
+    backgroundColor: '#264242',
   },
-  textStyle:{
-
+  nameStyle: {
+    color: '#ffffff',
+    fontFamily: 'Montserrat',
+    marginTop: 10,
+    marginLeft: 70,
+    alignSelf: 'flex-start',
+  },
+  textStyle: {
+    color: '#ffffff',
+    marginLeft: 70,
+    fontFamily: 'Montserrat',
+    alignSelf: 'flex-start',
   },
   inputTextStyles:{
-
+    marginBottom: 10,
+    color: '#d4d4d4',
+    alignSelf: 'center',
+    width: 260,
   },
   datePickerStyle:{
-    width: 200,
+    width: 180,
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 70,
   },
-  buttonStyle:{
-
-  },
-  tagStyle: {
-    flex: 1,
-    borderRadius: 25,
+  addButtonStyle: {
+    width: 245,
+    marginTop: 5,
+    marginBottom: 25,
+    height: 50,
+    borderRadius: 2,
+    backgroundColor: '#5f9999',
+    alignSelf: 'center',
+    justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
-    backgroundColor: '#338c83',
   },
-  tagSystemContainer: {
-    flex: 1,
-    flexDirection: 'column',
-    alignContent: 'stretch',
+  cancelButtonStyle: {
+    width: 245,
+    marginBottom: 25,
+    height: 50,
+    borderRadius: 2,
+    backgroundColor: '#5f9999',
+    alignSelf: 'center',
     justifyContent: 'center',
-    flexWrap: 'wrap',
+    alignItems: 'center',
   },
-  tagContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignContent: 'stretch',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-  },
-  tagInputTextStyle: { 
-    backgroundColor: 'white', 
-    borderBottomColor: '#000000',
-    borderBottomWidth: 1 
+  buttonTextStyle: {
+    color: '#ffffff',
   },
 });
 
