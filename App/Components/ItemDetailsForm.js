@@ -1,37 +1,86 @@
 import React, {Component} from 'react';
-import {View, Text, DatePicker, StyleSheet, TouchableOpacity, Image, TextInput} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import {viewItem} from '../controllers/items';
 import {getProfilesOfIds} from '../controllers/authentications';
-
 class ItemDetailsForm extends Component{
   constructor(props){
     super(props);
-    console.log('Going to item details form');
     this.state = {
       id: this.props.id,
       warning: '',
       photos: [],
-      ownerNames: [],
-      owners: this.props.item.owners, // user ids
-      name: this.props.item.name,
-      description: this.props.item.description,
-      dateRegistered: this.props.item.dateRegistered, // milliseconds since unix epoch
-      dateOwned: this.props.item.dateOwned, // milliseconds since unix epoch
-      categories: this.props.item.categories,
+      isLoaded: false,
       allowEdit: false,
+      categories: []
     };
-    this.onItemSavePress = this.onItemSavePress.bind(this);
     this.itemLoad = this.itemLoad.bind(this);
-    this.renderImage = this.renderImage.bind(this);
     this.getNames = this.getNames.bind(this);
     this.onEditItemPress = this.onEditItemPress.bind(this);
+    this.displayDate = this.displayDate.bind(this);
+    this.displayName = this.displayName.bind(this);
   }
 
+  itemLoad = () => {
+    viewItem(this.state.id)
+      .then(data => {
+        this.setState({
+          ...this.state,
+          description: data.description,
+          dateRegistered: data.dateRegistered,
+          photos: data.photos,
+          dateOwned: data.dateOwned,
+          categories: data.categories,
+          name: data.name,
+          photosReferences: data.photosReferences,
+          warning: '',
+        }, () => this.getNames(data.owners));
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({...this.state, warning: 'Something is not right, please go back'});
+      });
+  }
+
+  displayDate = (date) => {
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+  }
+
+  displayName = (data) => {
+    if (!this.state.isLoaded) return;
+    const names = data.map(profile => {
+      return profile.fullName
+    });
+    return names.join(', ');
+  }
+
+  getNames = (ids) => {
+    getProfilesOfIds(ids)
+      .then(data => {
+        this.setState({...this.state, owners: data, isLoaded: true});
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({...this.state, warning: 'Something is not right, please go back'});
+      })
+  }
+
+  componentDidMount = () => {this.itemLoad();};
+
   onEditItemPress = () => {
+    if (!this.state.isLoaded) {
+      this.setState({warning: 'Please wait until data is loaded'});
+      return;
+    }
     this.props.navigation.navigate('ItemEdit',{
       id: this.state.id,
-      navigation: this.props.navigation
+      description: this.state.description,
+      photos: this.state.photos,
+      dateOwned: this.state.dateOwned,
+      categories: this.state.categories,
+      name: this.state.name,
+      owners: this.state.owners,
+      photosReferences: this.state.photosReferences,
     });
   };
 
@@ -46,22 +95,18 @@ class ItemDetailsForm extends Component{
           Name: {this.state.name}
         </Text>
         <Text style = {styles.textStyle}>
-          Owner: {this.state.owners}
+          Owner: {this.displayName(this.state.owners)}
         </Text>
         <Text style = {styles.textStyle}>
           Description: {this.state.description}
         </Text>
         <Text style = {styles.textStyle}>
-          Date Registered: {this.state.dateRegistered}
+          Date Owned: {this.displayDate(new Date(this.state.dateOwned))}
         </Text>
         <Text style = {styles.textStyle}>
-          Date Owned: {this.state.dateOwned}
-        </Text>
-        <Text style = {styles.textStyle}>
-          Categories: {this.state.categories}
+          Categories: {this.state.categories.join(', ')}
         </Text>
 
-        {this.renderImage()}
         <TouchableOpacity
         style={styles.editButtonStyle}
         onPress={this.onEditItemPress}>
