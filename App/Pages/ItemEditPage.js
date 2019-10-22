@@ -21,6 +21,7 @@ export default class ItemEditPage extends Component{
     this.onItemSavePress = this.onItemSavePress.bind(this);
     this.onImagePress = this.onImagePress.bind(this);
     this.toggleModal=this.toggleModal.bind(this);
+    this.onDeletePress=this.onDeletePress.bind(this);
   }
 
   onItemSavePress = () => {
@@ -33,8 +34,12 @@ export default class ItemEditPage extends Component{
 
   onImagePress = (index) => {
     this.setState({isModalVisible : true});
-    this.setState({currentIndex : index})
+    this.setState({currentIndex : index});
   };
+  onDeletePress = ()=>{
+    //delete item
+    this.setState({isModalVisible : false});
+  }
 
   render(){
     return(
@@ -44,15 +49,17 @@ export default class ItemEditPage extends Component{
           images={this.state.images}
           sliderBoxHeight={200}
           circleLoop
-          onCurrentImagePressed={index=>onImagePress(index)}/>
+          onCurrentImagePressed={(index)=>this.onImagePress(index)}/>
         <Modal
           isVisible={this.state.isModalVisible}>
-          <ImageDetails items={this.state.imagess[currentIndex]}/>
-          <TouchableOpacity>
-            <Text>Delete</Text>
+          <ImageDetails items={this.state.images[this.state.currentIndex]}/>
+          <TouchableOpacity
+            onPress= {this.onDeletePress}>
+            <Text style={styles.imageTextStyle}>Delete</Text>
           </TouchableOpacity>
-          <TouchableOpacity>
-            <Text>Cancel</Text>
+          <TouchableOpacity
+            onPress={this.toggleModal}>
+            <Text style={styles.imageTextStyle}t>Cancel</Text>
           </TouchableOpacity>
         </Modal>
 
@@ -150,6 +157,14 @@ const styles=StyleSheet.create({
   sliderBoxStyle:{
 
   },
+  imageTextStyle:{
+    color: '#ffffff',
+    fontFamily: 'proxima-nova-semibold',
+    fontSize: 18,
+    marginBottom: 12,
+    marginTop: 7,
+    alignSelf: 'center',
+  },
   titleStyle: {
     color: '#ffffff',
     fontFamily: 'proxima-nova-semibold',
@@ -169,6 +184,11 @@ const styles=StyleSheet.create({
     marginBottom: 10,
     color: '#ffffff',
     fontFamily: 'Montserrat',
+    marginLeft: 58,
+    width: 280,
+  },
+  datePickerStyle:{
+    marginBottom: 10,
     marginLeft: 58,
     width: 280,
   },

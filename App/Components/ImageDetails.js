@@ -1,28 +1,30 @@
 import React,{Component} from 'react';
-import {View, TouchableOpacity, Text, Dimensions} from 'react-native';
+import {View, TouchableOpacity, Text, Image, Dimensions} from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
 
-export default class ImageDetailsPage extends Component{
+export default class ImageDetails extends Component{
   constructor(props){
     super(props);
     this.state = {
       url : this.props.items,
-      imageWidth : 200,
-      imageHeight : 200,
+      imageWidth : 200, // might want to update this
+      imageHeight : 200, // might want to update this
     }
   }
   render(){
-    return
-    <View>
-      <ImageZoom
-        cropWidth = {Dimeonsions.get('window').width}
-        cropHeight = {Dimensions.get('window').height}
-        imageWidth = {this.state.imageWidth}
-        imageHeight = {this.state.imageHeight}>
-        <Image
-          style={{width:this.state.imageWidth, height:this.state.imageHeight}}
-          source={this.state.url}/>
-      </ImageZoom>
-    </View>
+    return(
+      <View>
+        <ImageZoom
+          cropWidth = {Dimensions.get('window').width}
+          cropHeight = {Dimensions.get('window').height-200}
+          imageWidth = {this.state.imageWidth}
+          imageHeight = {this.state.imageHeight}>
+          <Image
+            style={{width:this.state.imageWidth, height:this.state.imageHeight}}
+            source={{uri:this.state.url}}/>
+        </ImageZoom>
+
+      </View>
+    );
   }
 }
