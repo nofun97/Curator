@@ -97,8 +97,8 @@ class ItemDetailsForm extends Component{
 
         {this.state.warning !== '' && <Text style={styles.textStyle}>{this.state.warning}</Text>}
 
-        <Text style = {styles.textStyle}>
-          Details
+        <Text style = {styles.titleStyle}>
+          Artifact Details
         </Text>
         <Text style = {styles.textStyle}>
           Name: {this.state.name}
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   textStyle: {
     color: '#ffffff',
     fontFamily: 'Montserrat',
-    marginLeft: 74,
+    marginLeft: 76,
     marginBottom: 10,
     alignSelf: 'flex-start',
   },

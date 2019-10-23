@@ -274,7 +274,7 @@ export default class ItemEditPage extends Component{
         <ImagePickingComponent
           OnError={err => this.setState({...this.state, warning: err})}
           OnSucceed={uri => this.setState({...this.state, additionalPhotos: [...this.state.additionalPhotos, uri]})}
-          ButtonStyle={styles.saveButtonStyle}
+          ButtonStyle={styles.addButtonStyle}
           ButtonTextStyle={styles.buttonTextStyle}
           />
 
@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
   datePickerStyle:{
     width: 280,
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 15,
     marginLeft: 58,
   },
   viewStyle:{
@@ -338,15 +338,25 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   textInputStyle:{
-    marginBottom: 10,
+    marginTop: -5,
+    marginBottom: 15,
     color: '#ffffff',
     fontFamily: 'Montserrat',
     marginLeft: 58,
     width: 280,
   },
+  addButtonStyle: {
+    width: 245,
+    marginBottom: 15,
+    height: 50,
+    backgroundColor: '#5f9999',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    alignItems: 'center',
+  },
   saveButtonStyle: {
     width: 245,
-    marginTop: 10,
+    marginTop: 50,
     marginBottom: 25,
     height: 50,
     backgroundColor: '#5f9999',
@@ -374,13 +384,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     marginHorizontal: 70,
-    marginBottom: 50,
+    marginBottom: 40,
     marginTop: 10,
   },
   selectOwnersButton: {
     flex: 1,
-    marginTop: 5,
-    marginBottom: 5,
+    marginTop: 7,
+    marginBottom: 20,
     width: '65%',
     marginHorizontal: '17%',
     borderWidth: 1.5,
