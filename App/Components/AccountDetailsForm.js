@@ -158,17 +158,9 @@ const styles = StyleSheet.create({
   },
   accountIconStyle: {
     flex: 1,
-    backgroundColor: '#338c83',
     resizeMode: 'contain',
     width: 20,
     marginLeft: 15,
-  },
-  accountButtonStyle: {
-    width: 45,
-    height: 45,
-    marginHorizontal: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
 
