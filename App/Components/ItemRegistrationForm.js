@@ -28,7 +28,7 @@ class ItemRegistrationForm extends Component{
       dateOwned: moment(),
       pickedOwners: [],
       description: '',
-      photos: [], 
+      photos: [],
       categories: ['antique'],
       warning: '',
       isLoadingImage: false,
@@ -146,7 +146,7 @@ class ItemRegistrationForm extends Component{
           circleLoop
           sliderBoxHeight={200}
           /*onCurrentImagePressed={index}*//>
-        
+
         <ScrollView style = {styles.scrollViewContainer}>
         {this.state.warning !== '' && <Text style={styles.textStyle}>{this.state.warning}</Text>}
         {this.state.isLoading && <ActivityIndicator animating size="large" />}
@@ -166,7 +166,7 @@ class ItemRegistrationForm extends Component{
           <Text style = {styles.textStyle}>
           Owner:
           </Text>
-        <View style={{flex: 1, marginHorizontal: 70}}>
+        <View style={styles.selectOwnersButton}>
           <PickerCheckBox
             data={this.state.owners}
             headerComponent={<Text style={{fontSize:25}} >owners</Text>}
@@ -313,6 +313,14 @@ const styles = StyleSheet.create({
   tagContainerStyle: {
     flexWrap: 'wrap',
     backgroundColor: '#338c83',
+  },
+  selectOwnersButton: {
+    marginTop: 5,
+    marginBottom: 5,
+    width: '65%',
+    marginHorizontal: '17%',
+    borderWidth: 1.5,
+    borderColor: '#6f8c89',
   },
 });
 
