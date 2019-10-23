@@ -27,10 +27,8 @@ class ItemRegistrationForm extends Component{
       owners: [],
       dateOwned: moment(),
       pickedOwners: [],
-      // origin: '',  Not used?
       description: '',
-      images:[/*give list of images*/""],
-      photos: [], // a list of items
+      photos: [], 
       categories: ['antique'],
       warning: '',
       isLoadingImage: false,
@@ -47,7 +45,6 @@ class ItemRegistrationForm extends Component{
     this.onHandleFinishOwner = this.onHandleFinishOwner.bind(this);
     this.renderCategoriesTag = this.renderCategoriesTag.bind(this);
     this.loadOwners();
-    this.getImages = this.getImages.bind(this);
   }
 
   renderCategoriesTag = () => (
@@ -82,14 +79,6 @@ class ItemRegistrationForm extends Component{
         console.log(err);
         this.setState({warning: 'Something is not right please refresh'});
       });
-  }
-
-  getImages = () =>{
-    //Get id and shit
-    let image=".";
-    while(image!=null){
-      //get from backend
-    }
   }
 
   goBack = () => {this.props.navigation.navigate('Inventory');};
@@ -153,14 +142,15 @@ class ItemRegistrationForm extends Component{
       <View>
         <SliderBox
           style= {styles.sliderBoxStyle}
-          images={this.state.images}
+          images={this.state.photos}
           circleLoop
           sliderBoxHeight={200}
           /*onCurrentImagePressed={index}*//>
-        {this.state.warning !== '' && <Text>{this.state.warning}</Text>}
+        
+        <ScrollView style = {styles.scrollViewContainer}>
+        {this.state.warning !== '' && <Text style={styles.textStyle}>{this.state.warning}</Text>}
         {this.state.isLoading && <ActivityIndicator animating size="large" />}
         {this.state.showFinishedMessage && <SafeAreaView>{this.state.finishedMessage}</SafeAreaView>}
-        <ScrollView style = {styles.scrollViewContainer}>
           <Text style = {styles.nameStyle}>
           Name:
           </Text>
@@ -213,7 +203,7 @@ class ItemRegistrationForm extends Component{
             },
             dateText: {
               color: '#fff',
-            }
+            },
           }}
             onDateChange={(date) => {this.setState({dateOwned: moment(date)});}}
         />
@@ -236,7 +226,7 @@ class ItemRegistrationForm extends Component{
           <Text style = {styles.textStyle}>(Add up to {this.state.maxNumberOfTags}, press space after each tag to add tag, touch tag to delete tag)</Text>
           {this.renderCategoriesTag()}
           <ImagePickingComponent
-            OnError={err => this.setState({...this.state, warning: err})}   
+            OnError={err => this.setState({...this.state, warning: err})}
             OnSucceed={uri => this.setState({...this.state, photos: [...this.state.photos, uri]})}
             ButtonStyle={styles.addButtonStyle}
             ButtonTextStyle={styles.buttonTextStyle}
@@ -322,8 +312,8 @@ const styles = StyleSheet.create({
   },
   tagContainerStyle: {
     flexWrap: 'wrap',
-    backgroundColor: '#338c83'
-  }
+    backgroundColor: '#338c83',
+  },
 });
 
 export default connect((state) => {

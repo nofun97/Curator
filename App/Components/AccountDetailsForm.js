@@ -1,33 +1,68 @@
 import React, {Component} from 'react';
-import {View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
-
-export default class AccountDetailsForm extends Component{
+import {View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator} from 'react-native';
+import {connect} from 'react-redux';
+import {getPersonalProfile, editProfile} from '../controllers/authentications';
+class AccountDetailsForm extends Component{
   constructor(props){
     super(props);
     this.state = {
-      emailAddress : '@gmail.com',
-      firstName : 'Yeeter',
-      lastName : 'Yeeterson',
-      userName: 'YeetYeetYeet',
+      emailAddress : this.props.email,
+      firstName : '',
+      lastName : '',
+      warning: '',
+      isLoading: true,
     };
     this.onAccountSavePress = this.onAccountSavePress.bind(this);
+    this.loadProfile = this.loadProfile.bind(this);
+    this.loadProfile();
   }
 
   onAccountSavePress = () => {
-    this.props.navigation.navigate('Inventory');
+    if (this.state.firstName === '') {
+      this.setState({warning: "First name is required"});
+      return;
+    }
+
+    var toUpdate = {
+      firstName: this.state.firstName
+    }
+
+    if (this.state.lastName !== '') {
+      toUpdate.lastName = this.state.lastName;
+    }
+
+    editProfile(this.props.uid, toUpdate)
+      .then(() => this.setState({warning: 'Your modification is saved!'}))
+      .catch(err => {
+        this.setState({warning: 'Something is not right, please go back and try again'})
+        console.log(err);
+      })
   };
+
+  loadProfile = () => {
+    getPersonalProfile(this.props.uid)
+      .then(data => {
+        this.setState({firstName: data.firstName, lastName: data.lastName, warning: '', isLoading: false,});
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({warning: 'Something is not right, please go back and try again', isLoading: false});
+      })
+  }
 
   render(){
     return (
       <View>
         <View style = {styles.viewStyle}>
+          {this.state.warning !== '' && <Text style={styles.textStyle}>{this.state.warning}</Text>}
+          {this.state.isLoading && <ActivityIndicator animating size="large" />}
           <Text style = {styles.textStyle}> Email Address: </Text>
           <TextInput
             style = {styles.inputTextStyles}
-            underlineColorAndroid={'#65807d'}
             autoCorrect={false}
             onChangeText={input => this.setState({ emailAddress: input })}
             value={this.state.emailAddress}
+            editable={false}
           />
           <Text style = {styles.textStyle}> First Name: </Text>
           <TextInput
@@ -44,14 +79,6 @@ export default class AccountDetailsForm extends Component{
             autoCorrect={false}
             onChangeText={input => this.setState({ lastName: input })}
             value={this.state.lastName}
-          />
-          <Text style = {styles.textStyle}> Username: </Text>
-          <TextInput
-            style = {styles.inputTextStyles}
-            underlineColorAndroid={'#65807d'}
-            autoCorrect={false}
-            onChangeText={input => this.setState({ userName: input })}
-            value={this.state.userName}
           />
         </View>
         <View style = {styles.saveButtonViewStyle}>
@@ -101,3 +128,9 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
 });
+
+
+export default connect((state) => {
+  const {user} = state;
+  return {uid: user.uid, email: user.email};
+}, null)(AccountDetailsForm);

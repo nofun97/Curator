@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator, FlatList} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator, KeyboardAvoidingView} from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
 import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
@@ -32,7 +32,6 @@ export default class ItemEditPage extends Component{
       owners: [],
       isLoading: false,
       isProcessingPhotos: false,
-      images:["https://source.unsplash.com/1024x768/?nature ","https://source.unsplash.com/800x600/?water"],
       isModalVisible: false,
       currentIndex: 0
     };
@@ -150,16 +149,16 @@ export default class ItemEditPage extends Component{
 
   render(){
     return(
-      <View>
+      <View style={{flex: 1}}>
         <SliderBox
           style= {styles.sliderBoxStyle}
-          images={this.state.images}
+          images={this.state.photos}
           sliderBoxHeight={200}
           circleLoop
           onCurrentImagePressed={(index)=>this.onImagePress(index)}/>
         <Modal
           isVisible={this.state.isModalVisible}>
-          <ImageDetails items={this.state.images[this.state.currentIndex]}/>
+          <ImageDetails items={this.state.photos[this.state.currentIndex]}/>
           <TouchableOpacity
             onPress={this.toggleModal}>
             <Text style={styles.imageTextStyle}t>Cancel</Text>
@@ -303,6 +302,7 @@ const styles = StyleSheet.create({
   viewStyle:{
     backgroundColor: '#264242',
     width:'100%',
+    flex: 1,
   },
   sliderBoxStyle:{
 

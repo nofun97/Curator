@@ -16,6 +16,7 @@ export default class InventoryItems extends Component {
       logo: require('../Assets/Logo/Logo.png'), //the image
     };
     this.onPressHandler = this.onPressHandler.bind(this);
+    console.log(this.props.item.thumbnail)
   }
 
   onPressHandler(){
@@ -36,12 +37,10 @@ export default class InventoryItems extends Component {
             <Image style={styles.itemImage} source={image} />
           </View>
           <View style={styles.textContainer}>
-            <Text style={styles.textStyle}>Item ID: {this.state.id}</Text>
             <Text style={styles.textStyle}>Name: {this.state.name}</Text>
             <Text style={styles.textStyle}>Date Owned: {dateOwned}</Text>
             <Text style={styles.textStyle}>Item Description: {this.state.description}</Text>
-            {/*TODO: <Text style={styles.textStyle}>Owners: {this.state.owners}</Text> maybe not show this because fetching user names take time*/}
-            <Text style={styles.textStyle}>Categories: {this.state.categories}</Text>
+            <Text style={styles.textStyle}>Categories: {this.state.categories.join(', ')}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -60,7 +59,9 @@ const styles = StyleSheet.create({
     flexDirection:'row',
   },
   itemImageContainer:{
-    flex: 2
+    flex: 2,
+    height: 200,
+    width: 200,
   },
   textContainer:{
     flex: 2,

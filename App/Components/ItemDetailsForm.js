@@ -16,9 +16,6 @@ class ItemDetailsForm extends Component{
       isLoaded: false,
       allowEdit: false,
       categories: [],
-      images:["https://source.unsplash.com/1024x768/?nature ","https://source.unsplash.com/800x600/?water"],
-      confirmDelete: true,
-      deleteButtonText: "Delete",
       isModalVisible: false
     };
     this.itemLoad = this.itemLoad.bind(this);
@@ -27,7 +24,6 @@ class ItemDetailsForm extends Component{
     this.onDeleteItemPress = this.onDeleteItemPress.bind(this);
     this.displayDate = this.displayDate.bind(this);
     this.displayName = this.displayName.bind(this);
-    this.getImages = this.getImages.bind(this);
   }
 
   itemLoad = () => {
@@ -116,7 +112,7 @@ class ItemDetailsForm extends Component{
       <View style={styles.viewStyle}>
         <SliderBox
           style= {styles.sliderBoxStyle}
-          images={this.state.images}
+          images={this.state.photos}
           sliderBoxHeight={200}
           circleLoop
           />
@@ -134,7 +130,7 @@ class ItemDetailsForm extends Component{
           </TouchableOpacity>
         </Modal>
 
-        {this.state.warning !== '' && <Text>{this.state.warning}</Text>}
+        {this.state.warning !== '' && <Text style={styles.textStyle}>{this.state.warning}</Text>}
 
         <Text style = {styles.textStyle}>
           Details
