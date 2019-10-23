@@ -121,18 +121,24 @@ class ItemRegistrationForm extends Component{
   addItem = data => {
     const completeStorage = () => {this.setState({...this.state, isLoadingImage: false});};
 
-    registerItem(data, null, null, completeStorage)
-      .then(() => {
-        this.setState({
-        ...this.state,
-        isLoading: false,
-        showFinishedMessage: true,
-      }, () => {this.props.navigation.goBack();})
-    })
-      .catch(err => {
-        console.log(err);
-        this.setState({...this.state, isLoading: false, warning: err.toString()});
-      });
+    try {
+      registerItem(data, null, null, completeStorage)
+        .then(() => {
+          this.setState({
+          ...this.state,
+          isLoading: false,
+          showFinishedMessage: true,
+        }, () => {this.props.navigation.goBack();})
+       })
+        .catch(err => {
+          console.log(err);
+          this.setState({...this.state, isLoading: false, warning: err.message});
+        });
+    }
+    catch (err) {
+      this.setState({...this.state, isLoading: false, warning: err.message});
+    }
+
   }
 
 
