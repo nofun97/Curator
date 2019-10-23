@@ -7,8 +7,11 @@ import {
   Text,
 } from 'react-native';
 import LoginForm from '../Components/LoginForm';
+import { connect } from 'react-redux';
+import { loggedIn, loggedOut } from '../redux/reducers';
 
-export default class Login extends Component {
+
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -57,3 +60,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#264242',
   },
 });
+
+const mapDispatchToProps = { loggedIn, loggedOut };
+
+export default connect(
+  state => {
+    const { status } = state;
+    return { status: status };
+  },
+  mapDispatchToProps
+)(Login);
