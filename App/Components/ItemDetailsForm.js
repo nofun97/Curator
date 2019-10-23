@@ -4,6 +4,10 @@ import { SliderBox } from 'react-native-image-slider-box';
 import {connect} from 'react-redux';
 import {viewItem} from '../controllers/items';
 import {getProfilesOfIds} from '../controllers/authentications';
+import Modal from 'react-native-modal';
+import ImageDetails from './ImageDetails';
+import {deleteItem} from '../controllers/items';
+
 class ItemDetailsForm extends Component{
   constructor(props){
     super(props);
@@ -14,10 +18,14 @@ class ItemDetailsForm extends Component{
       isLoaded: false,
       allowEdit: false,
       categories: [],
+      isModalVisible: false,
+      owners: [],
+      isOwner: false,
     };
     this.itemLoad = this.itemLoad.bind(this);
     this.getNames = this.getNames.bind(this);
     this.onEditItemPress = this.onEditItemPress.bind(this);
+    this.onDeleteItemPress = this.onDeleteItemPress.bind(this);
     this.displayDate = this.displayDate.bind(this);
     this.displayName = this.displayName.bind(this);
   }
@@ -35,6 +43,7 @@ class ItemDetailsForm extends Component{
           name: data.name,
           photosReferences: data.photosReferences,
           warning: '',
+          isLoaded: true,
         }, () => this.getNames(data.owners));
       })
       .catch(err => {
@@ -48,6 +57,7 @@ class ItemDetailsForm extends Component{
   }
 
   displayName = (data) => {
+    console.log(data);
     if (!this.state.isLoaded) return;
     const names = data.map(profile => {
       return profile.fullName
@@ -58,7 +68,11 @@ class ItemDetailsForm extends Component{
   getNames = (ids) => {
     getProfilesOfIds(ids)
       .then(data => {
-        this.setState({...this.state, owners: data, isLoaded: true});
+        var isOwner = false;
+        for (let owner of data) {
+          if (owner.uid === this.props.uid) isOwner = true;
+        }
+        this.setState({...this.state, owners: data, isLoaded: true, isOwner: isOwner});
       })
       .catch(err => {
         console.log(err);
@@ -85,6 +99,22 @@ class ItemDetailsForm extends Component{
     });
   };
 
+  onDeletePress = ()=>{
+    this.setState({isModalVisible:true})
+  }
+
+  onDeleteItemPress = () =>{
+    deleteItem(this.state.id)
+      .then(() => {
+        this.setState({warning: 'Item deleted, please go back'}, () => {this.props.navigation.goBack()})
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({warning: 'Something is not right please go back and try again'});
+      })
+  }
+
+
   render(){
     return(
       <View style={styles.viewStyle}>
@@ -94,6 +124,20 @@ class ItemDetailsForm extends Component{
           sliderBoxHeight={200}
           circleLoop
           />
+
+        <Modal
+          isVisible={this.state.isModalVisible}>
+            <Text style={styles.titleStyle}>Are you sure you want to delete?</Text>
+
+          <TouchableOpacity
+            onPress= {this.onDeleteItemPress}>
+            <Text style={styles.titleStyle}>Confirm</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.setState({isModalVisible:false})}>
+            <Text style={styles.titleStyle}>Cancel</Text>
+          </TouchableOpacity>
+        </Modal>
 
         {this.state.warning !== '' && <Text style={styles.textStyle}>{this.state.warning}</Text>}
 
@@ -116,11 +160,20 @@ class ItemDetailsForm extends Component{
           Categories: {this.state.categories.join(', ')}
         </Text>
 
+        {this.state.isOwner &&
         <TouchableOpacity
           style={styles.editButtonStyle}
           onPress={this.onEditItemPress}>
           <Text style = {styles.buttonTextStyle}> Edit </Text>
-        </TouchableOpacity>
+        </TouchableOpacity>}
+
+        {this.state.isOwner &&
+        <TouchableOpacity
+          style={styles.editButtonStyle}
+          onPress={this.onDeletePress}>
+          <Text style = {styles.buttonTextStyle}> Delete </Text>
+        </TouchableOpacity>}
+
       </View>
     );
   }

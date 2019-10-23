@@ -10,8 +10,8 @@ import {
   ScrollView,
 } from 'react-native';
 import { login } from '../controllers/authentications';
-import { loggedIn } from '../redux/reducers';
-import { bindActionCreators } from 'redux';
+import { loggedIn, loggedOut } from '../redux/reducers';
+import {StackActions, NavigationActions} from 'react-navigation';
 
 class LoginForm extends Component {
   constructor(props) {
@@ -26,6 +26,7 @@ class LoginForm extends Component {
     this.onLoginPress = this.onLoginPress.bind(this);
     this.onRegisterPress = this.onRegisterPress.bind(this);
     this.nextStep = this.nextStep.bind(this);
+
   }
 
   onLoginPress = () => {
@@ -34,6 +35,7 @@ class LoginForm extends Component {
       this.setState({
         ...this.state,
         warning: 'Email and password can not be empty',
+
       });
       return;
     }
@@ -42,7 +44,8 @@ class LoginForm extends Component {
     this.setState({ ...this.state, isLoading: true }, () => {
       login(this.state.email, this.state.password)
         .then(data => {
-          this.setState({ ...this.state, isLoading: false, user: data });
+          this.setState({ ...this.state, isLoading: false, user: data, email: '', password: '' });
+
         })
         .catch(err => {
           console.log(err);
@@ -63,7 +66,11 @@ class LoginForm extends Component {
 
   nextStep = data => {
     this.props.loggedIn(data.user);
-    this.props.navigation.navigate('Inventory');
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'Inventory' })],
+    });
+    this.props.navigation.dispatch(resetAction);
   };
 
   onRegisterPress = () => {
@@ -172,12 +179,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapDispatchToProps = { loggedIn };
+const mapDispatchToProps = { loggedIn, loggedOut };
 
 export default connect(
   state => {
-    const { payload } = state;
-    return { user: payload };
+    const { status } = state;
+    return { status: status };
   },
   mapDispatchToProps
 )(LoginForm);

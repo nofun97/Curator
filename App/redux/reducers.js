@@ -11,7 +11,10 @@ export function loggedIn(payload) {
 export function loggedOut() {
   return {
     type: LOGGED_OUT,
-    user: null,
+    user: {
+      uid: '',
+      email: '',
+    },
   };
 }
 
@@ -21,12 +24,17 @@ export function userReducer(state = initialState, action) {
   switch (action.type) {
     case LOGGED_IN:
       return {
+        status: 'loggedIn',
         user: action.user,
       };
 
     case LOGGED_OUT:
       return {
-        user: null,
+        status: 'loggedOut',
+        user: {
+          uid: '',
+          email: '',
+        },
       };
   }
   return state;
