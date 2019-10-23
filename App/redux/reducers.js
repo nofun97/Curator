@@ -21,11 +21,13 @@ export function userReducer(state = initialState, action) {
   switch (action.type) {
     case LOGGED_IN:
       return {
+        status: 'loggedIn',
         user: action.user,
       };
 
     case LOGGED_OUT:
       return {
+        status: 'loggedOut',
         user: null,
       };
   }
