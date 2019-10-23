@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
-import {View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, Image} from 'react-native';
 import {connect} from 'react-redux';
 import {getPersonalProfile, editProfile} from '../controllers/authentications';
+import {StackActions, NavigationActions} from 'react-navigation';
+import {signOut} from '../controllers/authentications';
+import {loggedOut} from '../redux/reducers';
+
 class AccountDetailsForm extends Component{
   constructor(props){
     super(props);
@@ -50,6 +54,21 @@ class AccountDetailsForm extends Component{
       })
   }
 
+  logOut = () => {
+    this.props.loggedOut();
+    signOut()
+      .then(() => {
+        const resetAction = StackActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: 'Login' })],
+        });
+        this.props.navigation.dispatch(resetAction);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
   render(){
     return (
       <View>
@@ -81,13 +100,23 @@ class AccountDetailsForm extends Component{
             value={this.state.lastName}
           />
         </View>
+        { !this.state.isLoading &&
         <View style = {styles.saveButtonViewStyle}>
           <TouchableOpacity
             style={styles.saveButtonStyle}
             onPress={this.onAccountSavePress}>
             <Text style={styles.saveButtonTextStyle}> Save </Text>
           </TouchableOpacity>
-        </View>
+
+          <TouchableOpacity
+            style={styles.saveButtonStyle}
+            onPress={this.logOut}
+          >
+            <Image style = {styles.accountIconStyle}
+                   source = {require('../Assets/Images/LogoutIcon.png')}
+            />
+          </TouchableOpacity>
+        </View>}
       </View>
     );
   }
@@ -127,10 +156,24 @@ const styles = StyleSheet.create({
   saveButtonTextStyle: {
     color: '#ffffff',
   },
+  accountIconStyle: {
+    flex: 1,
+    backgroundColor: '#338c83',
+    resizeMode: 'contain',
+    width: 20,
+    marginLeft: 15,
+  },
+  accountButtonStyle: {
+    width: 45,
+    height: 45,
+    marginHorizontal: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 
 export default connect((state) => {
   const {user} = state;
   return {uid: user.uid, email: user.email};
-}, null)(AccountDetailsForm);
+}, {loggedOut})(AccountDetailsForm);
