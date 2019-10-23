@@ -15,7 +15,6 @@ import ImageSelection from '../Components/ImageSelection';
 export default class ItemEditPage extends Component{
   constructor(props){
     super(props);
-    console.log('HERE');
     this.state = {
       id: this.props.navigation.getParam('id'),
       name: this.props.navigation.getParam('name'),
@@ -102,7 +101,11 @@ export default class ItemEditPage extends Component{
 
     Promise.all(editPromise)
       .then(() => {
-        this.setState({isLoading: false, warning: 'You modification is saved! Please return to the previous page.'});
+        this.setState({
+          isLoading: false,
+          warning: 'You modification is saved! Please return to the previous page.'
+        });
+        this.props.navigation.navigate('Inventory');
       })
       .catch(err => {
         console.log(err);
