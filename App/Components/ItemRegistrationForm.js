@@ -29,7 +29,7 @@ class ItemRegistrationForm extends Component{
       pickedOwners: [],
       description: '',
       photos: [],
-      categories: ['antique'],
+      categories: [],
       warning: '',
       isLoadingImage: false,
       isLoading: false,
