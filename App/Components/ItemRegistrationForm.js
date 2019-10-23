@@ -28,7 +28,7 @@ class ItemRegistrationForm extends Component{
       dateOwned: moment(),
       pickedOwners: [],
       description: '',
-      photos: [], 
+      photos: [],
       categories: ['antique'],
       warning: '',
       isLoadingImage: false,
@@ -122,11 +122,13 @@ class ItemRegistrationForm extends Component{
     const completeStorage = () => {this.setState({...this.state, isLoadingImage: false});};
 
     registerItem(data, null, null, completeStorage)
-      .then(() => this.setState({
+      .then(() => {
+        this.setState({
         ...this.state,
         isLoading: false,
         showFinishedMessage: true,
-      }))
+      }, () => {this.props.navigation.goBack();})
+    })
       .catch(err => {
         console.log(err);
         this.setState({...this.state, isLoading: false, warning: err.toString()});
@@ -139,6 +141,7 @@ class ItemRegistrationForm extends Component{
     console.log(this.state.dateOwned.valueOf());
 
     return (
+      <ScrollView>
       <View>
         <SliderBox
           style= {styles.sliderBoxStyle}
@@ -146,7 +149,7 @@ class ItemRegistrationForm extends Component{
           circleLoop
           sliderBoxHeight={200}
           /*onCurrentImagePressed={index}*//>
-        
+      </View>
         <ScrollView style = {styles.scrollViewContainer}>
         {this.state.warning !== '' && <Text style={styles.textStyle}>{this.state.warning}</Text>}
         {this.state.isLoading && <ActivityIndicator animating size="large" />}
@@ -166,7 +169,7 @@ class ItemRegistrationForm extends Component{
           <Text style = {styles.textStyle}>
           Owner:
           </Text>
-        <View style={{flex: 1, marginHorizontal: 70}}>
+        <View style={styles.selectOwnersButton}>
           <PickerCheckBox
             data={this.state.owners}
             headerComponent={<Text style={{fontSize:25}} >owners</Text>}
@@ -223,7 +226,8 @@ class ItemRegistrationForm extends Component{
           <Text style = {styles.textStyle}>
           Categories:
           </Text>
-          <Text style = {styles.textStyle}>(Add up to {this.state.maxNumberOfTags}, press space after each tag to add tag, touch tag to delete tag)</Text>
+          <Text style = {styles.textStyle}>(Describe this artifact with up to {this.state.maxNumberOfTags} tags. Press
+            space after typing to add tag. Touch tag to delete it.) </Text>
           {this.renderCategoriesTag()}
           <ImagePickingComponent
             OnError={err => this.setState({...this.state, warning: err})}
@@ -243,7 +247,8 @@ class ItemRegistrationForm extends Component{
           <Text style={styles.buttonTextStyle}> Cancel </Text>
         </TouchableOpacity>
         </ScrollView>
-      </View>
+      </ScrollView>
+
     );
   }
 }
@@ -268,7 +273,8 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   inputTextStyles:{
-    marginBottom: 10,
+    marginTop: -5,
+    marginBottom: 15,
     color: '#d4d4d4',
     alignSelf: 'center',
     width: 260,
@@ -276,7 +282,7 @@ const styles = StyleSheet.create({
   datePickerStyle:{
     width: 180,
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 20,
     marginLeft: 70,
   },
   addButtonStyle: {
@@ -313,6 +319,19 @@ const styles = StyleSheet.create({
   tagContainerStyle: {
     flexWrap: 'wrap',
     backgroundColor: '#338c83',
+  },
+  wholeViewStyle: {
+    flex: 1,
+    backgroundColor: '#338c83',
+  },
+  selectOwnersButton: {
+    flex: 1,
+    marginTop: 7,
+    marginBottom: 20,
+    width: '65%',
+    marginHorizontal: '17%',
+    borderWidth: 1.5,
+    borderColor: '#6f8c89',
   },
 });
 

@@ -3,6 +3,8 @@ import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import InventoryScroll from '../Components/InventoryScroll';
 import {getPersonalProfile} from '../controllers/authentications';
 import {connect} from 'react-redux';
+import {loggedOut} from '../redux/reducers';
+
 class InventoryPage extends Component {
 
   constructor(props){
@@ -24,6 +26,7 @@ class InventoryPage extends Component {
     return (
       <View style={styles.viewContainer}>
         <View style={styles.navBarStyle}>
+
           <TouchableOpacity
             style={styles.accountButtonStyle}
             onPress={()=>this.props.navigation.navigate('AccountDetails')}
@@ -96,16 +99,19 @@ const styles = StyleSheet.create({
   navBarStyle: {
     backgroundColor: '#338c83',
     borderBottomWidth: 0.5,
+    flexDirection: 'row'
   },
   accountIconStyle: {
     flex: 1,
     backgroundColor: '#338c83',
     resizeMode: 'contain',
+    width: 20,
     marginLeft: 15,
   },
   accountButtonStyle: {
     width: 45,
     height: 45,
+    marginHorizontal: 5,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -114,4 +120,4 @@ const styles = StyleSheet.create({
 export default connect((state) => {
   const {user} = state;
   return {uid: user.uid, email: user.email};
-}, null)(InventoryPage)
+}, {loggedOut})(InventoryPage);

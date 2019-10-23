@@ -20,6 +20,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   ItemRegistrationForm:{
-
+    flex: 1
   },
 })

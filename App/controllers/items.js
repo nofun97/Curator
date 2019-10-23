@@ -18,11 +18,6 @@ export const registerItem = (
     throw new Error('Item must belong in a category');
   }
 
-  var categories = {};
-  for (let c of item.categories) {
-    categories[c] = true;
-  }
-
   if (typeof item.dateOwned === undefined || item.dateOwned <= 0) {
     throw new Error('Date must be assigned');
   }
@@ -38,7 +33,7 @@ export const registerItem = (
     description: item.description,
     dateRegistered: Date.now(),
     dateUpdated: Date.now(),
-    categories: categories,
+    categories: item.categories,
   };
   var uploadToFirestore = firebase.firestore().collection('items').add(toUpload);
   var uploadImages = [];
@@ -103,7 +98,7 @@ export const viewItem = async itemId => {
   }
   const data = itemDetails.data();
   var categoriesList = [];
-  for (let category in data.categories){
+  for (let category of data.categories){
     categoriesList.push(category);
   }
 
@@ -180,7 +175,7 @@ export const getDataList = async (
 
     // converting categories into a list
     var categoryList = [];
-    for (let category in item.categories){
+    for (let category of item.categories){
       categoryList.push(category);
     }
     item.categories = categoryList;
@@ -202,7 +197,6 @@ export const getDataList = async (
     if (!withinCategory(items[i])) {continue;}
     listOfItems.push(await dataTransform(items[i]));
   }
-  console.log(listOfItems.length);
   return listOfItems;
 };
 
@@ -213,7 +207,7 @@ export const editItem = (itemID, updated) => {
   if (updated.owners.length === 0) {
     throw new Error('Owners can not be empty');
   }
-  toUpload.owners = updated.owners;
+  toUpload.owners = updated.owners.map(data => {return data.uid});
 
 
   if (updated.dateOwned < 0) {
@@ -264,6 +258,5 @@ export const deleteItem = async (itemId) => {
   await firebase.firestore().collection('items').doc(itemId).delete();
   const picturesReferences = await firebase.storage().ref(`itemsPhotos/${itemId}/`).listAll();
   await deleteImageAsPromise(itemId, picturesReferences);
-  await firebase.storage().ref(`itemsPhotos/${itemId}}`).delete();
   return;
 };

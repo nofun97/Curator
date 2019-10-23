@@ -11,10 +11,10 @@ import PickerCheckBox from 'react-native-picker-checkbox';
 import {editItem, deleteImageAsPromise, uploadAdditionalImagesAsPromise} from '../controllers/items';
 import {getListOfProfiles} from '../controllers/authentications';
 import ImageSelection from '../Components/ImageSelection';
+
 export default class ItemEditPage extends Component{
   constructor(props){
     super(props);
-    console.log('HERE');
     this.state = {
       id: this.props.navigation.getParam('id'),
       name: this.props.navigation.getParam('name'),
@@ -42,7 +42,6 @@ export default class ItemEditPage extends Component{
     this.displayFullName = this.displayFullName.bind(this);
     this.onImagePress = this.onImagePress.bind(this);
     this.toggleModal=this.toggleModal.bind(this);
-    this.onDeletePress=this.onDeletePress.bind(this);
     this.loadOwners();
   }
 
@@ -73,10 +72,6 @@ export default class ItemEditPage extends Component{
     this.setState({isModalVisible : true});
     this.setState({currentIndex : index});
   };
-  onDeletePress = ()=>{
-    //delete item
-    this.setState({isModalVisible : false});
-  }
 
   saveModifications = () => {
     var editPromise = [];
@@ -95,8 +90,8 @@ export default class ItemEditPage extends Component{
       editPromise.push(
         uploadAdditionalImagesAsPromise(this.state.id,
             this.state.additionalPhotos
-            , null, 
-            () => {this.setState({warning: 'Image is not uploaded correctly, please try again'});}, 
+            , null,
+            () => {this.setState({warning: 'Image is not uploaded correctly, please try again'});},
             () => {this.setState({isProcessingPhotos: false});}));
     }
 
@@ -106,7 +101,11 @@ export default class ItemEditPage extends Component{
 
     Promise.all(editPromise)
       .then(() => {
-        this.setState({isLoading: false, warning: 'You modification is saved! Please return to the previous page.'});
+        this.setState({
+          isLoading: false,
+          warning: 'You modification is saved! Please return to the previous page.'
+        });
+        this.props.navigation.navigate('Inventory');
       })
       .catch(err => {
         console.log(err);
@@ -164,10 +163,6 @@ export default class ItemEditPage extends Component{
           isVisible={this.state.isModalVisible}>
           <ImageDetails items={this.state.photos[this.state.currentIndex]}/>
           <TouchableOpacity
-            onPress= {this.onDeletePress}>
-            <Text style={styles.imageTextStyle}>Delete</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
             onPress={this.toggleModal}>
             <Text style={styles.imageTextStyle}t>Cancel</Text>
           </TouchableOpacity>
@@ -192,13 +187,12 @@ export default class ItemEditPage extends Component{
           placeholderTextColor="#6f8c89"
           onChangeText={t => {this.setState({name: t, dataModified: true});}}
           />
-
         <Text style = {styles.textStyle}>
           Owners : {this.state.pickedOwners.map((d) => {
-            return this.displayFullName(d)
-          }).join(', ')}
+          return this.displayFullName(d)
+        }).join(', ')}
         </Text>
-        <View style={{flex: 1, marginHorizontal: 70}}>
+        <View style={styles.selectOwnersButton}>
           <PickerCheckBox
             data={this.state.owners}
             headerComponent={<Text style={{fontSize:25}} >owners</Text>}
@@ -275,7 +269,7 @@ export default class ItemEditPage extends Component{
         <ImagePickingComponent
           OnError={err => this.setState({...this.state, warning: err})}
           OnSucceed={uri => this.setState({...this.state, additionalPhotos: [...this.state.additionalPhotos, uri]})}
-          ButtonStyle={styles.saveButtonStyle}
+          ButtonStyle={styles.addButtonStyle}
           ButtonTextStyle={styles.buttonTextStyle}
           />
 
@@ -304,7 +298,7 @@ const styles = StyleSheet.create({
   datePickerStyle:{
     width: 280,
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 15,
     marginLeft: 58,
   },
   viewStyle:{
@@ -339,15 +333,25 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   textInputStyle:{
-    marginBottom: 10,
+    marginTop: -5,
+    marginBottom: 15,
     color: '#ffffff',
     fontFamily: 'Montserrat',
     marginLeft: 58,
     width: 280,
   },
+  addButtonStyle: {
+    width: 245,
+    marginBottom: 15,
+    height: 50,
+    backgroundColor: '#5f9999',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    alignItems: 'center',
+  },
   saveButtonStyle: {
     width: 245,
-    marginTop: 10,
+    marginTop: 50,
     marginBottom: 25,
     height: 50,
     backgroundColor: '#5f9999',
@@ -375,7 +379,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     marginHorizontal: 70,
-    marginBottom: 50,
+    marginBottom: 40,
     marginTop: 10,
+  },
+  selectOwnersButton: {
+    flex: 1,
+    marginTop: 7,
+    marginBottom: 20,
+    width: '65%',
+    marginHorizontal: '17%',
+    borderWidth: 1.5,
+    borderColor: '#6f8c89',
   },
 });
