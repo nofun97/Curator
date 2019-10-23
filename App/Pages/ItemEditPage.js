@@ -345,11 +345,6 @@ const styles = StyleSheet.create({
     marginLeft: 58,
     width: 280,
   },
-  datePickerStyle:{
-    marginBottom: 10,
-    marginLeft: 58,
-    width: 280,
-  },
   saveButtonStyle: {
     width: 245,
     marginTop: 10,
