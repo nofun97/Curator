@@ -187,7 +187,7 @@ export const getDataList = async (
     item.id = data.id;
     // getting thumbnails
     const thumbnailList = await firebase.storage()
-      .ref(`${data.id}/`)
+      .ref(`itemsPhotos/${data.id}/`)
       .list({ maxResults: 1 });
     if (thumbnailList.items.length > 0) {
       item.thumbnail = await thumbnailList.items[0].getDownloadURL();
@@ -205,7 +205,6 @@ export const getDataList = async (
   console.log(listOfItems.length);
   return listOfItems;
 };
-
 
 export const editItem = (itemID, updated) => {
   const toUpload = { dateUpdated: Date.now() };
