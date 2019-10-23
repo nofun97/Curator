@@ -95,8 +95,8 @@ export default class ItemEditPage extends Component{
       editPromise.push(
         uploadAdditionalImagesAsPromise(this.state.id,
             this.state.additionalPhotos
-            , null, 
-            () => {this.setState({warning: 'Image is not uploaded correctly, please try again'});}, 
+            , null,
+            () => {this.setState({warning: 'Image is not uploaded correctly, please try again'});},
             () => {this.setState({isProcessingPhotos: false});}));
     }
 
@@ -192,13 +192,12 @@ export default class ItemEditPage extends Component{
           placeholderTextColor="#6f8c89"
           onChangeText={t => {this.setState({name: t, dataModified: true});}}
           />
-
         <Text style = {styles.textStyle}>
           Owners : {this.state.pickedOwners.map((d) => {
-            return this.displayFullName(d)
-          }).join(', ')}
+          return this.displayFullName(d)
+        }).join(', ')}
         </Text>
-        <View style={{flex: 1, marginHorizontal: 70}}>
+        <View style={styles.selectOwnersButton}>
           <PickerCheckBox
             data={this.state.owners}
             headerComponent={<Text style={{fontSize:25}} >owners</Text>}
@@ -377,5 +376,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 70,
     marginBottom: 50,
     marginTop: 10,
+  },
+  selectOwnersButton: {
+    flex: 1,
+    marginTop: 5,
+    marginBottom: 5,
+    width: '65%',
+    marginHorizontal: '17%',
+    borderWidth: 1.5,
+    borderColor: '#6f8c89',
   },
 });
