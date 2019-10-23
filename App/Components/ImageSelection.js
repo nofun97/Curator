@@ -2,7 +2,6 @@ import React,{useState, useEffect} from 'react';
 import {TouchableOpacity, Image, FlatList, StyleSheet, View} from 'react-native';
 
 const ImageSelection = (props) => {
-  console.log('HIIIIII');
   return (
     <FlatList
       style={props.imageSelectionStyle}
