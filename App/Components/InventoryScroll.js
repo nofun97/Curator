@@ -26,7 +26,6 @@ class InventoryScroll extends Component {
       isLoading: true,
       noMoreData: false,
     };
-    // this.onRefresh = this.onRefresh.bind(this);
     this.loadItems = this.loadItems.bind(this);
     this.handleLoadMore = this.handleLoadMore.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
@@ -71,7 +70,7 @@ class InventoryScroll extends Component {
   }
 
   onRefresh = () => {
-    if (this.state.noMoreData || this.state.isLoading) {return;}
+    if (this.state.isLoading) {return;}
 
     this.setState((state, props) => {
       var nextState = {
@@ -149,9 +148,6 @@ const styles = StyleSheet.create({
   },
 });
 
-//place your functions here
-//function to update height
-//function to update the 'children'
 export default connect((state) => {
   const {user} = state;
   return {uid: user.uid, email: user.email};
