@@ -1,9 +1,25 @@
 import React, { Component } from 'react';
 import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
 import InventoryScroll from '../Components/InventoryScroll';
-import MenuButton from '../Components/MenuButton';
+import {getPersonalProfile} from '../controllers/authentications';
+import {connect} from 'react-redux';
+class InventoryPage extends Component {
 
-export default class InventoryPage extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      name: ''
+    };
+
+    getPersonalProfile(this.props.uid)
+      .then(data => {
+        var fullName = data.firstName;
+        if (data.lastName !== '') fullName += ' ' + data.lastName;
+        this.setState({name: fullName});
+      })
+      .catch(err => console.log(err));
+  }
+
   render() {
     return (
       <View style={styles.viewContainer}>
@@ -19,7 +35,7 @@ export default class InventoryPage extends Component {
         </View>
         <View style={styles.viewContainerTop}>
           <Text style = {styles.welcomeTextStyle}> Welcome to Curator, </Text>
-          <Text style = {styles.welcomeTextStyle}> (Username)! </Text>
+          {this.state.name !== '' && <Text style = {styles.welcomeTextStyle}> {this.state.name}! </Text>}
         </View>
         <View style={styles.artifactButtonViewStyle}>
           <TouchableOpacity
@@ -95,4 +111,7 @@ const styles = StyleSheet.create({
   },
 });
 
-//place your functions here
+export default connect((state) => {
+  const {user} = state;
+  return {uid: user.uid, email: user.email};
+}, null)(InventoryPage)
