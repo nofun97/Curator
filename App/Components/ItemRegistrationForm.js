@@ -122,11 +122,13 @@ class ItemRegistrationForm extends Component{
     const completeStorage = () => {this.setState({...this.state, isLoadingImage: false});};
 
     registerItem(data, null, null, completeStorage)
-      .then(() => this.setState({
+      .then(() => {
+        this.setState({
         ...this.state,
         isLoading: false,
         showFinishedMessage: true,
-      }))
+      }, () => {this.props.navigation.goBack();})
+    })
       .catch(err => {
         console.log(err);
         this.setState({...this.state, isLoading: false, warning: err.toString()});
@@ -139,14 +141,15 @@ class ItemRegistrationForm extends Component{
     console.log(this.state.dateOwned.valueOf());
 
     return (
-      <View style = {styles.wholeViewStyle}>
+      <ScrollView>
+      <View>
         <SliderBox
           style= {styles.sliderBoxStyle}
           images={this.state.photos}
           circleLoop
           sliderBoxHeight={200}
           /*onCurrentImagePressed={index}*//>
-
+      </View>
         <ScrollView style = {styles.scrollViewContainer}>
         {this.state.warning !== '' && <Text style={styles.textStyle}>{this.state.warning}</Text>}
         {this.state.isLoading && <ActivityIndicator animating size="large" />}
@@ -244,7 +247,8 @@ class ItemRegistrationForm extends Component{
           <Text style={styles.buttonTextStyle}> Cancel </Text>
         </TouchableOpacity>
         </ScrollView>
-      </View>
+      </ScrollView>
+
     );
   }
 }
