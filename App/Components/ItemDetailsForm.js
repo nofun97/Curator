@@ -19,8 +19,10 @@ class ItemDetailsForm extends Component{
       allowEdit: false,
       categories: [],
       isModalVisible: false,
+      isModalImageVisible: false,
       owners: [],
       isOwner: false,
+      currentIndex: 0,
     };
     this.itemLoad = this.itemLoad.bind(this);
     this.getNames = this.getNames.bind(this);
@@ -28,7 +30,18 @@ class ItemDetailsForm extends Component{
     this.onDeleteItemPress = this.onDeleteItemPress.bind(this);
     this.displayDate = this.displayDate.bind(this);
     this.displayName = this.displayName.bind(this);
+    this.onImagePress = this.onImagePress.bind(this);
+    this.toggleImageModal = this.toggleImageModal.bind(this);
   }
+
+  toggleImageModal = () => {
+    this.setState({isModalImageVisible:!this.state.isModalImageVisible});
+
+  }
+
+  onImagePress = (index) => {
+    this.setState({isModalImageVisible : true, currentIndex : index});
+  };
 
   itemLoad = () => {
     viewItem(this.state.id)
@@ -122,7 +135,17 @@ class ItemDetailsForm extends Component{
           images={this.state.photos}
           sliderBoxHeight={200}
           circleLoop
-          />
+          onCurrentImagePressed={(index)=>this.onImagePress(index)}/>
+          
+
+        <Modal
+          isVisible={this.state.isModalImageVisible}>
+          <ImageDetails items={this.state.photos[this.state.currentIndex]}/>
+          <TouchableOpacity
+            onPress={this.toggleImageModal}>
+            <Text style={styles.imageTextStyle}>Cancel</Text>
+          </TouchableOpacity>
+        </Modal>
 
         <Modal
           isVisible={this.state.isModalVisible}>
@@ -219,7 +242,15 @@ const styles = StyleSheet.create({
   },
   buttonTextStyle: {
     color: '#ffffff',
-  }
+  },
+  imageTextStyle:{
+    color: '#ffffff',
+    fontFamily: 'proxima-nova-semibold',
+    fontSize: 18,
+    marginBottom: 12,
+    marginTop: 7,
+    alignSelf: 'center',
+  },
 })
 
 export default connect((state) => {
