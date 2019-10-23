@@ -7,9 +7,10 @@ export default class ImageDetails extends Component{
     super(props);
     this.state = {
       url : this.props.items,
-      imageWidth : 200, // might want to update this
-      imageHeight : 200, // might want to update this
+      imageWidth : 350, // might want to update this
+      imageHeight : 350, // might want to update this
     }
+    console.log(this.state.url);
   }
   render(){
     return(
