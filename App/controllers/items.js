@@ -212,7 +212,7 @@ export const editItem = (itemID, updated) => {
 
 
   if (updated.owners.length === 0) {
-    throw new Error('Owners can not be empty')
+    throw new Error('Owners can not be empty');
   }
   toUpload.owners = updated.owners;
 
@@ -225,7 +225,7 @@ export const editItem = (itemID, updated) => {
 
 
   if (updated.description === '') {
-    throw new Error('Description can not be empty')
+    throw new Error('Description can not be empty');
   }
 
   toUpload.description = updated.description;
@@ -236,7 +236,7 @@ export const editItem = (itemID, updated) => {
   }
 
   if (updated.categories.length === 0) {
-    throw new Error('Categories can not be empty')
+    throw new Error('Categories can not be empty');
   }
 
   toUpload.categories = updated.categories;
@@ -256,10 +256,10 @@ export const deleteImageAsPromise = (itemId, photosReferences) => {
 export const uploadAdditionalImagesAsPromise = (itemId, images, progress, error, complete) => {
   var uploadPromise = [];
   for (let i = 0; i < images.length; i++) {
-    uploadPromise.push(uploadImageAsPromise(itemId, images[i], progress, error, complete))
+    uploadPromise.push(uploadImageAsPromise(itemId, images[i], progress, error, complete));
   }
   return uploadPromise;
-}
+};
 
 export const deleteItem = async (itemId) => {
   await firebase.firestore().collection('items').doc(itemId).delete();
@@ -267,4 +267,4 @@ export const deleteItem = async (itemId) => {
   await deleteImageAsPromise(itemId, picturesReferences);
   await firebase.storage().ref(`itemsPhotos/${itemId}}`).delete();
   return;
-}
+};

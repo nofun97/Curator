@@ -106,7 +106,7 @@ class ItemDetailsForm extends Component{
           circleLoop
           />
 
-        {this.state.warning !== '' && <Text>{this.state.warning}</Text>}
+        {this.state.warning !== '' && <Text style={styles.textStyle}>{this.state.warning}</Text>}
 
         <Text style = {styles.textStyle}>
           Details
