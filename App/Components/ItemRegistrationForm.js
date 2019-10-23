@@ -269,7 +269,8 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   inputTextStyles:{
-    marginBottom: 10,
+    marginTop: -5,
+    marginBottom: 15,
     color: '#d4d4d4',
     alignSelf: 'center',
     width: 260,
@@ -277,7 +278,7 @@ const styles = StyleSheet.create({
   datePickerStyle:{
     width: 180,
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 20,
     marginLeft: 70,
   },
   addButtonStyle: {
@@ -315,18 +316,19 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     backgroundColor: '#338c83',
   },
+  wholeViewStyle: {
+    flex: 1,
+    backgroundColor: '#338c83',
+  },
   selectOwnersButton: {
-    marginTop: 5,
-    marginBottom: 5,
+    flex: 1,
+    marginTop: 7,
+    marginBottom: 20,
     width: '65%',
     marginHorizontal: '17%',
     borderWidth: 1.5,
     borderColor: '#6f8c89',
   },
-  wholeViewStyle: {
-    flex: 1,
-    backgroundColor: '#338c83',
-  }
 });
 
 export default connect((state) => {
