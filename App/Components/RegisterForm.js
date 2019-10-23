@@ -12,6 +12,8 @@ import {
 import { connect } from 'react-redux';
 import { loggedIn } from '../redux/reducers';
 import { signUp, uploadProfile } from '../controllers/authentications';
+import {StackActions, NavigationActions} from 'react-navigation';
+
 
 class RegisterForm extends Component {
   constructor(props) {
@@ -37,7 +39,11 @@ class RegisterForm extends Component {
 
   nextStep = data => {
     this.props.loggedIn(data);
-    this.props.navigation.navigate('Inventory');
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'Inventory' })],
+    });
+    this.props.navigation.dispatch(resetAction);
   };
 
   componentDidUpdate() {
@@ -225,8 +231,8 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = { loggedIn };
 export default connect(
   state => {
-    const { payload } = state;
-    return { user: payload };
+    const { status } = state;
+    return { status: status };
   },
   mapDispatchToProps
 )(RegisterForm);
