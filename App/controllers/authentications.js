@@ -51,3 +51,9 @@ export const getProfilesOfIds = async (profileIds) => {
   }
   return profiles;
 }
+
+export const signOut = async () => {
+  if (firebase.auth().currentUser !== null)
+  await firebase.auth().signOut();
+  return;
+}
