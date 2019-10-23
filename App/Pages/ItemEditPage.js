@@ -11,6 +11,7 @@ import PickerCheckBox from 'react-native-picker-checkbox';
 import {editItem, deleteImageAsPromise, uploadAdditionalImagesAsPromise} from '../controllers/items';
 import {getListOfProfiles} from '../controllers/authentications';
 import ImageSelection from '../Components/ImageSelection';
+
 export default class ItemEditPage extends Component{
   constructor(props){
     super(props);
@@ -42,7 +43,6 @@ export default class ItemEditPage extends Component{
     this.displayFullName = this.displayFullName.bind(this);
     this.onImagePress = this.onImagePress.bind(this);
     this.toggleModal=this.toggleModal.bind(this);
-    this.onDeletePress=this.onDeletePress.bind(this);
     this.loadOwners();
   }
 
@@ -73,10 +73,6 @@ export default class ItemEditPage extends Component{
     this.setState({isModalVisible : true});
     this.setState({currentIndex : index});
   };
-  onDeletePress = ()=>{
-    //delete item
-    this.setState({isModalVisible : false});
-  }
 
   saveModifications = () => {
     var editPromise = [];
@@ -163,10 +159,6 @@ export default class ItemEditPage extends Component{
         <Modal
           isVisible={this.state.isModalVisible}>
           <ImageDetails items={this.state.photos[this.state.currentIndex]}/>
-          <TouchableOpacity
-            onPress= {this.onDeletePress}>
-            <Text style={styles.imageTextStyle}>Delete</Text>
-          </TouchableOpacity>
           <TouchableOpacity
             onPress={this.toggleModal}>
             <Text style={styles.imageTextStyle}t>Cancel</Text>

@@ -4,6 +4,8 @@ import { SliderBox } from 'react-native-image-slider-box';
 import {connect} from 'react-redux';
 import {viewItem} from '../controllers/items';
 import {getProfilesOfIds} from '../controllers/authentications';
+import Modal from 'react-native-modal';
+
 class ItemDetailsForm extends Component{
   constructor(props){
     super(props);
@@ -14,10 +16,15 @@ class ItemDetailsForm extends Component{
       isLoaded: false,
       allowEdit: false,
       categories: [],
+      images:["https://source.unsplash.com/1024x768/?nature ","https://source.unsplash.com/800x600/?water"],
+      confirmDelete: true,
+      deleteButtonText: "Delete",
+      isModalVisible: false
     };
     this.itemLoad = this.itemLoad.bind(this);
     this.getNames = this.getNames.bind(this);
     this.onEditItemPress = this.onEditItemPress.bind(this);
+    this.onDeleteItemPress = this.onDeleteItemPress.bind(this);
     this.displayDate = this.displayDate.bind(this);
     this.displayName = this.displayName.bind(this);
   }
@@ -85,6 +92,24 @@ class ItemDetailsForm extends Component{
     });
   };
 
+  onDeletePress = ()=>{
+    this.setState({isModalVisible:true})
+  }
+
+  onDeleteItemPress = () =>{
+    //Delete it
+    
+  }
+
+  getImages = () =>{
+    //Get id and shit
+    let image=".";
+    while(image!=null){
+      //get from backend
+    }
+  }
+
+
   render(){
     return(
       <View style={styles.viewStyle}>
@@ -95,7 +120,20 @@ class ItemDetailsForm extends Component{
           circleLoop
           />
 
-        {this.state.warning !== '' && <Text style={styles.textStyle}>{this.state.warning}</Text>}
+        <Modal
+          isVisible={this.state.isModalVisible}>
+          <ImageDetails items={this.state.images[this.state.currentIndex]}/>
+          <TouchableOpacity
+            onPress= {this.onDeleteItemPress}>
+            <Text style={styles.imageTextStyle}>Confirm</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={this.setState({isModalVisible:false})}>
+            <Text style={styles.imageTextStyle}t>Cancel</Text>
+          </TouchableOpacity>
+        </Modal>
+
+        {this.state.warning !== '' && <Text>{this.state.warning}</Text>}
 
         <Text style = {styles.titleStyle}>
           Artifact Details
@@ -121,6 +159,13 @@ class ItemDetailsForm extends Component{
           onPress={this.onEditItemPress}>
           <Text style = {styles.buttonTextStyle}> Edit </Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.editButtonStyle}
+          onPress={this.onDeletePress}>
+          <Text style = {styles.buttonTextStyle}> Delete </Text>
+        </TouchableOpacity>
+
       </View>
     );
   }
