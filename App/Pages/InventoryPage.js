@@ -26,6 +26,14 @@ class InventoryPage extends Component {
         <View style={styles.navBarStyle}>
           <TouchableOpacity
             style={styles.accountButtonStyle}
+            onPress={()=>this.props.navigation.navigate('Login')}
+          >
+            <Image style = {styles.accountIconStyle}
+                   source = {require('../Assets/Images/LogoutIcon.png')}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.accountButtonStyle}
             onPress={()=>this.props.navigation.navigate('AccountDetails')}
           >
             <Image style = {styles.accountIconStyle}
@@ -96,6 +104,7 @@ const styles = StyleSheet.create({
   navBarStyle: {
     backgroundColor: '#338c83',
     borderBottomWidth: 0.5,
+    flexDirection: 'row'
   },
   accountIconStyle: {
     flex: 1,
