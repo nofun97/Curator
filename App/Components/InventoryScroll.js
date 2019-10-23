@@ -16,7 +16,7 @@ class InventoryScroll extends Component {
     super(props);
     this.state = {
       children: [],
-      limit: 10,
+      limit: 6,
       pageStart: Number.POSITIVE_INFINITY,
       order: {
         field: 'dateOwned',
@@ -64,7 +64,7 @@ class InventoryScroll extends Component {
   handleLoadMore = () => {
     if (this.state.noMoreData || this.state.isLoading) {return;}
     this.setState({
-      ...this.state, 
+      ...this.state,
       isLoading: true,
       pageStart: this.state.children[this.state.children.length - 1].dateOwned,
     }, () => {this.loadItems();});
