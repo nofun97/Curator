@@ -27,10 +27,8 @@ class ItemRegistrationForm extends Component{
       owners: [],
       dateOwned: moment(),
       pickedOwners: [],
-      // origin: '',  Not used?
       description: '',
-      images:[/*give list of images*/''],
-      photos: [], // a list of items
+      photos: [], 
       categories: ['antique'],
       warning: '',
       isLoadingImage: false,
@@ -47,7 +45,6 @@ class ItemRegistrationForm extends Component{
     this.onHandleFinishOwner = this.onHandleFinishOwner.bind(this);
     this.renderCategoriesTag = this.renderCategoriesTag.bind(this);
     this.loadOwners();
-    this.getImages = this.getImages.bind(this);
   }
 
   renderCategoriesTag = () => (
@@ -82,14 +79,6 @@ class ItemRegistrationForm extends Component{
         console.log(err);
         this.setState({warning: 'Something is not right please refresh'});
       });
-  }
-
-  getImages = () =>{
-    //Get id and shit
-    let image = '.';
-    while (image != null){
-      //get from backend
-    }
   }
 
   goBack = () => {this.props.navigation.navigate('Inventory');};
@@ -153,7 +142,7 @@ class ItemRegistrationForm extends Component{
       <View>
         <SliderBox
           style= {styles.sliderBoxStyle}
-          images={this.state.images}
+          images={this.state.photos}
           circleLoop
           sliderBoxHeight={200}
           /*onCurrentImagePressed={index}*//>

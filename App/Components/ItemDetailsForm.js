@@ -14,14 +14,12 @@ class ItemDetailsForm extends Component{
       isLoaded: false,
       allowEdit: false,
       categories: [],
-      images:["https://source.unsplash.com/1024x768/?nature ","https://source.unsplash.com/800x600/?water"]
     };
     this.itemLoad = this.itemLoad.bind(this);
     this.getNames = this.getNames.bind(this);
     this.onEditItemPress = this.onEditItemPress.bind(this);
     this.displayDate = this.displayDate.bind(this);
     this.displayName = this.displayName.bind(this);
-    this.getImages = this.getImages.bind(this);
   }
 
   itemLoad = () => {
@@ -87,21 +85,12 @@ class ItemDetailsForm extends Component{
     });
   };
 
-  getImages = () =>{
-    //Get id and shit
-    let image=".";
-    while(image!=null){
-      //get from backend
-    }
-  }
-
-
   render(){
     return(
       <View style={styles.viewStyle}>
         <SliderBox
           style= {styles.sliderBoxStyle}
-          images={this.state.images}
+          images={this.state.photos}
           sliderBoxHeight={200}
           circleLoop
           />
