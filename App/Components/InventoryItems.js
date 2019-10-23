@@ -16,7 +16,6 @@ export default class InventoryItems extends Component {
       logo: require('../Assets/Logo/Logo.png'), //the image
     };
     this.onPressHandler = this.onPressHandler.bind(this);
-    console.log(this.props.item.thumbnail)
   }
 
   onPressHandler(){
