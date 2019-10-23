@@ -17,6 +17,7 @@ class Login extends Component {
     this.state = {
       logo: require('../Assets/Logo/Logo.png'),
     };
+    this.props.loggedOut();
   }
   render() {
     return (
