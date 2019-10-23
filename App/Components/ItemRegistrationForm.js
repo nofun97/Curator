@@ -223,7 +223,8 @@ class ItemRegistrationForm extends Component{
           <Text style = {styles.textStyle}>
           Categories:
           </Text>
-          <Text style = {styles.textStyle}>(Add up to {this.state.maxNumberOfTags}, press space after each tag to add tag, touch tag to delete tag)</Text>
+          <Text style = {styles.textStyle}>(Describe this artifact with up to {this.state.maxNumberOfTags} tags. Press
+            space after typing to add tag. Touch tag to delete it.) </Text>
           {this.renderCategoriesTag()}
           <ImagePickingComponent
             OnError={err => this.setState({...this.state, warning: err})}
