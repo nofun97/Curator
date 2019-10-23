@@ -1066,17 +1066,17 @@
   resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-12.0.12.tgz#45dd1d0638e8c8f153e87d296907659296873916"
   integrity sha512-SOhuU4wNBxhhTHxYaiG5NY4HBhDIDnJF60GU+2LqHAdKKer86//e4yg69aENCtQ04n0ovz+tq2YPME5t5yp4pw==
 
-"@unimodules/core@~4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@unimodules/core/-/core-4.0.0.tgz#898dafa5a121e7d6d7d4acd9c0c38d12f7da5b19"
-  integrity sha512-lHxRmCG9DK3/aA2lnBKPS32K95NpYE10mZQRp5dycSptgN0DIeWWHuE01SndcSUACGyEP+tDO+DnGo8mhLlt4Q==
+"@unimodules/core@~5.0.0-rc.0":
+  version "5.0.0-rc.0"
+  resolved "https://registry.yarnpkg.com/@unimodules/core/-/core-5.0.0-rc.0.tgz#c0ff2a295a052f92450f45c1013beb5c85363233"
+  integrity sha512-xiunps1piqIzBFl6PGuhU9TVgwXvVy8PZ6wYseo2C14+JcQvwWgkgriyMDlVhNxabGr77znEEXAxG5pHrC4Law==
   dependencies:
     compare-versions "^3.4.0"
 
-"@unimodules/react-native-adapter@~4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@unimodules/react-native-adapter/-/react-native-adapter-4.0.0.tgz#2e02246f6450201d6cb0720f849c7059e8a9bc6d"
-  integrity sha512-zGAyDhqAEWvshdSxc523srP6OAZaSr95Cv5EuxLJbFGcJENHhK8o/qxhwS7/LYTF3LqtOlnSlwQta3v3y6kF4A==
+"@unimodules/react-native-adapter@~5.0.0-rc.0":
+  version "5.0.0-rc.0"
+  resolved "https://registry.yarnpkg.com/@unimodules/react-native-adapter/-/react-native-adapter-5.0.0-rc.0.tgz#8e56c4e390a23652e50d2d59243546355f1efc26"
+  integrity sha512-5jzNSNdg4B1JoXm/6xxxnm3r4AVW2TS/bwUiu3wSaeO8PQRHFh1S8XpWrA6s+GqL6xzvUbm5n86ed87sH0LSKA==
   dependencies:
     invariant "^2.2.4"
     lodash "^4.5.0"
@@ -2583,17 +2583,17 @@ expo-asset@~7.0.0:
     path-browserify "^1.0.0"
     url-parse "^1.4.4"
 
-expo-constants@~7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-7.0.0.tgz#668c3ec0100e219522ffd9515ec47fadfccd443d"
-  integrity sha512-oLINuMtGcAwfHGInSVhq6xGojp3atUpSIp7KImo9rqXhWwD5FNmqA5Jflo4J0ODPq590kN5ieiYCCqwls2/u0w==
+expo-constants@~8.0.0-rc.1:
+  version "8.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-8.0.0-rc.1.tgz#9cba415309ea69e07c14ec752906ae66e6012b6d"
+  integrity sha512-IfHX4/zx+5ifnmHjjgt/izAuBz23h1Mwcf0ZFSh8ISr1mBNVg4YM9mXD3YsI42y0IxMryjOrXipeWosVi0LWlg==
   dependencies:
     ua-parser-js "^0.7.19"
 
-expo-file-system@~7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/expo-file-system/-/expo-file-system-7.0.0.tgz#ac98233b18774cce299fffd9451f08f21b116564"
-  integrity sha512-ignf5Vf5cPDYO/4HgUkgnL574wMbCNxyazlOvBgV34rLGJzBbFsn++hqC7njr2VTpIIXh2G9vp1+8g6cvsQdqA==
+expo-file-system@~8.0.0-rc.0:
+  version "8.0.0-rc.0"
+  resolved "https://registry.yarnpkg.com/expo-file-system/-/expo-file-system-8.0.0-rc.0.tgz#837066450972a917a7733da4a3771a3ebda29e14"
+  integrity sha512-KZ/zQXdT+aG08/l4ulBJUlUJAUtIyGcvjCZ9L3b165BMgFk9EWBjYwV+h278bWDrfJ3AguspDIvHxs5H3j9X2Q==
   dependencies:
     uuid-js "^0.7.5"
 
@@ -2604,10 +2604,10 @@ expo-font@^7.0.0:
   dependencies:
     fontfaceobserver "^2.1.0"
 
-expo-permissions@~7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-7.0.0.tgz#f4135c3cf8e49c673a9a714459a1eb2b40fe2092"
-  integrity sha512-C+qyVz+pdZO4YpVR2HSC3gsBZg0Qb8brCFgzmDmWcAtgrOiHClaLPdhI2XtQuGh8ubXcKPUGZp++UCEGiG0Jxg==
+expo-permissions@~8.0.0-rc.0:
+  version "8.0.0-rc.0"
+  resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-8.0.0-rc.0.tgz#4fdd764ca62c8df7156e4523f6460401d7b00ae9"
+  integrity sha512-07Ru/wgKYEtSAGZlUNb0B04/fxJrNrCC04620fdPWxkYVhnw5RFV64zOMRvRM08ElMHxX4GILGK8VEOmg7GkEw==
 
 extend-shallow@^1.1.2:
   version "1.1.4"
@@ -5550,26 +5550,26 @@ react-native-tags@^2.1.0:
   resolved "https://registry.yarnpkg.com/react-native-tags/-/react-native-tags-2.1.0.tgz#a25ee38075231f75d1ecd4f98160afe81ab2aa16"
   integrity sha512-B/sPwJedh2ECgjma9txZYPeZUWISRTITJqlRmRtYcmSNCaLim6Aa4zjqgRVrigl3JXk7faeKxds2qaqC6R3+Vg==
 
-react-native-unimodules@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/react-native-unimodules/-/react-native-unimodules-0.6.0.tgz#f62c753705f4b97ba19e2834d8ad3357e204537c"
-  integrity sha512-b563vqelTLtagFLWiI428rUTx4BxWpytlsEC1xcAQdf8chtnVr7QrkRXatiIvJmDAYLL8l+8UxdBW9e0f2rZ9Q==
+react-native-unimodules@^0.7.0-rc.1:
+  version "0.7.0-rc.4"
+  resolved "https://registry.yarnpkg.com/react-native-unimodules/-/react-native-unimodules-0.7.0-rc.4.tgz#161277fa607bae54bc57ca575a9c89fe6da301f9"
+  integrity sha512-1vgcLyOskeyVpmPsnw0n3L7y+K449BPpchLF4eDhkJ8/aXctjSNmy6NdYSzkLyBTq4NQJrlS3PIOnBn7N4eDwA==
   dependencies:
-    "@unimodules/core" "~4.0.0"
-    "@unimodules/react-native-adapter" "~4.0.0"
+    "@unimodules/core" "~5.0.0-rc.0"
+    "@unimodules/react-native-adapter" "~5.0.0-rc.0"
     chalk "^2.4.2"
     expo-app-loader-provider "~7.0.0"
     expo-asset "~7.0.0"
-    expo-constants "~7.0.0"
-    expo-file-system "~7.0.0"
-    expo-permissions "~7.0.0"
+    expo-constants "~8.0.0-rc.1"
+    expo-file-system "~8.0.0-rc.0"
+    expo-permissions "~8.0.0-rc.0"
     unimodules-barcode-scanner-interface "~4.0.0"
     unimodules-camera-interface "~4.0.0"
     unimodules-constants-interface "~4.0.0"
     unimodules-face-detector-interface "~4.0.0"
     unimodules-file-system-interface "~4.0.0"
     unimodules-font-interface "~4.0.0"
-    unimodules-image-loader-interface "~4.0.0"
+    unimodules-image-loader-interface "~5.0.0-rc.0"
     unimodules-permissions-interface "~4.0.0"
     unimodules-sensors-interface "~4.0.0"
     unimodules-task-manager-interface "~4.0.0"
@@ -6790,10 +6790,10 @@ unimodules-font-interface@~4.0.0:
   resolved "https://registry.yarnpkg.com/unimodules-font-interface/-/unimodules-font-interface-4.0.0.tgz#a72d7c75d81dface00c48f523730c15ddf10fbce"
   integrity sha512-RFD1H405kZy8oYcg7f9Krr+UTUn6EZTcqAb+wRL6Ex9TJmzmxJT6JZ0FsUMezOUEwrdvXRpArH4P1AadHlzzGA==
 
-unimodules-image-loader-interface@~4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/unimodules-image-loader-interface/-/unimodules-image-loader-interface-4.0.0.tgz#92452bfcba5e95b4fc3aba657a5863946d1ccf93"
-  integrity sha512-tv7g1YmZq9ZnG/x9l3qSlpEn93ZuMD+FuQpOZj3/oGDkBlc27vtBSEi8lTySWb9U7UK+bNlHGFqf1lGZcFU1Ug==
+unimodules-image-loader-interface@~5.0.0-rc.0:
+  version "5.0.0-rc.0"
+  resolved "https://registry.yarnpkg.com/unimodules-image-loader-interface/-/unimodules-image-loader-interface-5.0.0-rc.0.tgz#efc28e91634c1b3d4397ccba6a1c3cdbf78c137e"
+  integrity sha512-K1AupsNTghbFcUxyQ4VR5eKe0PVZAEp1YUNps3bSezRSf+AyIm1Ym5+dSgYH7rmDUAoS7oYWJahwVysS7RxRvQ==
 
 unimodules-permissions-interface@~4.0.0:
   version "4.0.0"
