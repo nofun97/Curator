@@ -164,7 +164,7 @@ export default class ItemEditPage extends Component{
           <ImageDetails items={this.state.photos[this.state.currentIndex]}/>
           <TouchableOpacity
             onPress={this.toggleModal}>
-            <Text style={styles.imageTextStyle}t>Cancel</Text>
+            <Text style={styles.imageTextStyle}>Cancel</Text>
           </TouchableOpacity>
         </Modal>
       <ScrollView style={styles.viewStyle}>
