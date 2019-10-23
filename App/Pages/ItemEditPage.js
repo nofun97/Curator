@@ -77,13 +77,20 @@ export default class ItemEditPage extends Component{
     var editPromise = [];
 
     if (this.state.dataModified){
-      editPromise.push(editItem(this.state.id, {
-        name: this.state.name,
-        owners: this.state.pickedOwners,
-        dateOwned: this.state.dateOwned.valueOf(),
-        description: this.state.description,
-        categories: this.state.categories,
-      }));
+      try {
+        editPromise.push(editItem(this.state.id, {
+          name: this.state.name,
+          owners: this.state.pickedOwners,
+          dateOwned: this.state.dateOwned.valueOf(),
+          description: this.state.description,
+          categories: this.state.categories,
+        }));
+      }
+      catch (err) {
+        this.setState({warning: err.message});
+        return;
+      }
+
     }
 
     if (this.state.additionalPhotos.length !== 0){
@@ -109,7 +116,7 @@ export default class ItemEditPage extends Component{
       })
       .catch(err => {
         console.log(err);
-        this.setState({isLoading: false, warning: err.toString()});
+        this.setState({isLoading: false, warning: err.message});
       });
   }
 
