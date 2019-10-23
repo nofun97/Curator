@@ -57,7 +57,6 @@ class ItemDetailsForm extends Component{
   }
 
   displayName = (data) => {
-    console.log(data);
     if (!this.state.isLoaded) return;
     const names = data.map(profile => {
       return profile.fullName
