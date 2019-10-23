@@ -139,7 +139,7 @@ class ItemRegistrationForm extends Component{
     console.log(this.state.dateOwned.valueOf());
 
     return (
-      <View>
+      <View style = {styles.wholeViewStyle}>
         <SliderBox
           style= {styles.sliderBoxStyle}
           images={this.state.photos}
@@ -322,6 +322,10 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: '#6f8c89',
   },
+  wholeViewStyle: {
+    flex: 1,
+    backgroundColor: '#338c83',
+  }
 });
 
 export default connect((state) => {
