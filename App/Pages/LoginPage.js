@@ -15,7 +15,7 @@ class Login extends Component {
     this.state = {
       logo: require('../Assets/Logo/Logo.png'),
     };
-    
+
     // makes sure the redux state is loggedOut
     this.props.loggedOut();
   }

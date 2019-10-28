@@ -7,7 +7,6 @@ export default class ItemRegistrationPage extends Component{
     return (
       <KeyboardAvoidingView enabled style= {styles.viewContainer}>
         <ItemRegistrationForm
-          style = {styles.itemRegistrationFormStyle}
           navigation = {this.props.navigation}/>
       </KeyboardAvoidingView>
     );

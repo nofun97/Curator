@@ -27,7 +27,6 @@ class InventoryPage extends Component {
     return (
       <View style={styles.viewContainer}>
         <View style={styles.navBarStyle}>
-
           <TouchableOpacity
             style={styles.accountButtonStyle}
             onPress={()=>this.props.navigation.navigate('AccountDetails')}
@@ -106,7 +105,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#338c83',
     resizeMode: 'contain',
-    width: 20,
+    width: 45,
     marginLeft: 15,
   },
   accountButtonStyle: {
