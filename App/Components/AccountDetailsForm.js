@@ -23,7 +23,7 @@ class AccountDetailsForm extends Component{
 
   onAccountSavePress = () => {
     if (this.state.firstName === '') {
-      this.setState({warning: "First name is required"});
+      this.setState({warning: 'First name is required'});
       return;
     }
 
@@ -38,9 +38,9 @@ class AccountDetailsForm extends Component{
     editProfile(this.props.uid, toUpdate)
       .then(() => this.setState({warning: 'Your modification is saved!'}))
       .catch(err => {
-        this.setState({warning: 'Something is not right, please go back and try again'})
+        this.setState({warning: 'Something is not right, please go back and try again'});
         console.log(err);
-      })
+      });
   };
 
   loadProfile = () => {
@@ -51,8 +51,8 @@ class AccountDetailsForm extends Component{
       .catch(err => {
         console.log(err);
         this.setState({warning: 'Something is not right, please go back and try again', isLoading: false});
-      })
-  }
+      });
+  };
 
   logOut = () => {
     this.props.loggedOut();
@@ -67,7 +67,7 @@ class AccountDetailsForm extends Component{
       .catch(err => {
         console.log(err);
       });
-  }
+  };
 
   render(){
     return (

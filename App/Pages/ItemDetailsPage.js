@@ -9,7 +9,6 @@ export default class ItemDetailsPage extends Component {
     return(
       <View style = {styles.viewContainer}>
         <ItemDetailsForm
-          style = {styles.itemDetailsForm}
           navigation={this.props.navigation}
           id= {id}
         />
@@ -22,5 +21,5 @@ const styles = StyleSheet.create({
   viewContainer:{
     flex: 1,
     backgroundColor: '#264242',
-  }
-})
+  },
+});
