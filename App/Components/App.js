@@ -7,6 +7,7 @@ import ItemDetailsPage from '../Pages/ItemDetailsPage';
 import ItemRegisterPage from '../Pages/ItemRegistrationPage';
 import ItemEditPage from '../Pages/ItemEditPage';
 
+// navigator for the whole app
 const navigator = createStackNavigator(
   {
     Login: LoginPage,
@@ -21,7 +22,6 @@ const navigator = createStackNavigator(
     initialRouteName: 'Login',
     defaultNavigationOptions: {
       title: 'Curator',
-      // change the navigation bar's styling here
       headerStyle: {
         backgroundColor: '#338c83',
       },

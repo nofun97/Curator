@@ -18,15 +18,19 @@ export default class InventoryItems extends Component {
     this.onPressHandler = this.onPressHandler.bind(this);
   }
 
+  // moving to item details when an item is pressed
   onPressHandler(){
     this.props.navigation.navigate('ItemDetails', {
       id: this.state.id,
-      navigation: this.props.navigation
+      navigation: this.props.navigation,
     });
   }
 
   render() {
-    const dateOwned = `${this.state.dateOwned.getDate()}/${this.state.dateOwned.getMonth() + 1}/${this.state.dateOwned.getFullYear()}`
+    // changing javascript Date to DD/MM/YYYY format
+    const dateOwned = `${this.state.dateOwned.getDate()}/${this.state.dateOwned.getMonth() + 1}/${this.state.dateOwned.getFullYear()}`;
+    
+    // getting thumbnail URL, if it does not exist, fall back to logo
     const image = (this.state.thumbnail === '') ? this.state.logo : {uri: this.state.thumbnail};
 
     return (
@@ -47,7 +51,6 @@ export default class InventoryItems extends Component {
   }
 }
 
-// TODO: make image size more responsive, images only appear when size is defined
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
@@ -68,15 +71,10 @@ const styles = StyleSheet.create({
     width: '40%',
   },
   itemImage: {
-    flex: 1
+    flex: 1,
   },
   textStyle: {
     marginLeft: 10,
     color: '#e8e8e8',
   },
 });
-
-//place your functions here
-//function to move to the individual items page
-//function to update Image
-//function to update texts

@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Image,
-  TextInput,
-  Text,
   View,
-  AppRegistry,
-  Button,
   StyleSheet,
 } from 'react-native';
 import AccountDetailsDisplay from '../Components/AccountDetailDisplay';
@@ -26,6 +21,5 @@ const styles = StyleSheet.create({
   Container: {
     flex: 1,
     backgroundColor: '#264242',
-    //position
   },
 });

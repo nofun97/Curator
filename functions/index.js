@@ -6,6 +6,7 @@ const path = require("path");
 const os = require("os");
 const fs = require("fs");
 
+// compress images in the cloud
 exports.compressImages = functions.storage.object().onFinalize(async object => {
   const fileBucket = object.bucket; // The Storage bucket that contains the file.
   const filePath = object.name; // File path in the bucket.
@@ -21,18 +22,6 @@ exports.compressImages = functions.storage.object().onFinalize(async object => {
   await bucket.file(filePath).download({ destination: tempFilePath });
   console.log("Image downloaded locally to", tempFilePath);
 
-  // compression command line
-  // await spawn("convert", [
-  //   "-strip",
-  //   "-interlace",
-  //   "Plane",
-  //   "-gaussian-blur",
-  //   "0.05",
-  //   "-quality",
-  //   "85%",
-  //   tempFilePath,
-  //   tempFilePath,
-  // ]);
   await spawn("convert", ["-quality", "50", "-define" ,"webp:lossless=true", tempFilePath, tempFilePath])
 
   console.log("Image is compressed");

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, DatePicker, StyleSheet, TouchableOpacity,TextInput} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
 import {connect} from 'react-redux';
 import {viewItem} from '../controllers/items';
@@ -34,15 +34,18 @@ class ItemDetailsForm extends Component{
     this.toggleImageModal = this.toggleImageModal.bind(this);
   }
 
+  // turns on screen overlay
   toggleImageModal = () => {
     this.setState({isModalImageVisible:!this.state.isModalImageVisible});
 
   }
 
+  // show image details
   onImagePress = (index) => {
     this.setState({isModalImageVisible : true, currentIndex : index});
   };
 
+  // load the item data
   itemLoad = () => {
     viewItem(this.state.id)
       .then(data => {
@@ -65,35 +68,40 @@ class ItemDetailsForm extends Component{
       });
   }
 
+  // get a better date format
   displayDate = (date) => {
     return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
   }
 
+  // get full name
   displayName = (data) => {
-    if (!this.state.isLoaded) return;
+    if (!this.state.isLoaded) {return;}
     const names = data.map(profile => {
-      return profile.fullName
+      return profile.fullName;
     });
     return names.join(', ');
   }
 
+  // get list of users
   getNames = (ids) => {
     getProfilesOfIds(ids)
       .then(data => {
         var isOwner = false;
         for (let owner of data) {
-          if (owner.uid === this.props.uid) isOwner = true;
+          if (owner.uid === this.props.uid) {isOwner = true;}
         }
         this.setState({...this.state, owners: data, isLoaded: true, isOwner: isOwner});
       })
       .catch(err => {
         console.log(err);
         this.setState({...this.state, warning: 'Something is not right, please go back'});
-      })
+      });
   }
 
+  // load items after UI loads
   componentDidMount = () => {this.itemLoad();};
 
+  // moving to the edit page
   onEditItemPress = () => {
     if (!this.state.isLoaded) {
       this.setState({warning: 'Please wait until data is loaded'});
@@ -111,32 +119,33 @@ class ItemDetailsForm extends Component{
     });
   };
 
+  // showing confirmation screen before deleting
   onDeletePress = ()=>{
-    this.setState({isModalVisible:true})
+    this.setState({isModalVisible:true});
   }
 
+  // on confirmation, item will be deleted
   onDeleteItemPress = () =>{
     deleteItem(this.state.id)
       .then(() => {
-        this.setState({warning: 'Item deleted, please go back'}, () => {this.props.navigation.goBack()})
+        this.setState({warning: 'Item deleted, please go back'}, () => {this.props.navigation.goBack();});
       })
       .catch(err => {
         console.log(err);
         this.setState({warning: 'Something is not right please go back and try again'});
-      })
+      });
   }
 
 
   render(){
-    return(
+    return (
       <View style={styles.viewStyle}>
         <SliderBox
-          style= {styles.sliderBoxStyle}
           images={this.state.photos}
           sliderBoxHeight={200}
           circleLoop
           onCurrentImagePressed={(index)=>this.onImagePress(index)}/>
-          
+
 
         <Modal
           isVisible={this.state.isModalImageVisible}>
@@ -205,10 +214,6 @@ const styles = StyleSheet.create({
   viewStyle: {
     backgroundColor: '#264242',
   },
-
-  sliderBoxStyle:{
-
-  },
   titleStyle: {
     color: '#ffffff',
     fontFamily: 'proxima-nova-semibold',
@@ -251,7 +256,7 @@ const styles = StyleSheet.create({
     marginTop: 7,
     alignSelf: 'center',
   },
-})
+});
 
 export default connect((state) => {
   const {user} = state;
