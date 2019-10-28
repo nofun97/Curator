@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  AppRegistry,
   View,
-  Button,
-  Image,
-  Text,
-  KeyboardAvoidingView,
 } from 'react-native';
 import RegisterForm from '../Components/RegisterForm';
 

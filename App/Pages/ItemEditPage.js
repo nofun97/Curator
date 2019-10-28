@@ -1,10 +1,10 @@
 import React,{Component} from 'react';
-import {View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator, KeyboardAvoidingView} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator} from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
 import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
 import Modal from 'react-native-modal';
-import ImageDetails from "../Components/ImageDetails"
+import ImageDetails from '../Components/ImageDetails';
 import Tags from 'react-native-tags';
 import ImagePickingComponent from '../Components/ImagePickingComponent';
 import PickerCheckBox from 'react-native-picker-checkbox';
@@ -32,7 +32,7 @@ export default class ItemEditPage extends Component{
       isLoading: false,
       isProcessingPhotos: false,
       isModalVisible: false,
-      currentIndex: 0
+      currentIndex: 0,
     };
     this.onItemSavePress = this.onItemSavePress.bind(this);
     this.saveModifications = this.saveModifications.bind(this);
@@ -41,10 +41,11 @@ export default class ItemEditPage extends Component{
     this.onPressImage = this.onPressImage.bind(this);
     this.displayFullName = this.displayFullName.bind(this);
     this.onImagePress = this.onImagePress.bind(this);
-    this.toggleModal=this.toggleModal.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
     this.loadOwners();
   }
 
+  // storing selections of images that are to be deleted
   onPressImage = (reference, picked) => {
     if (!picked){
       for (let i = 0; i < this.state.photosToDelete.length; i++){
@@ -59,6 +60,7 @@ export default class ItemEditPage extends Component{
     this.setState({...this.state, photosToDelete: [...this.state.photosToDelete, reference]});
   }
 
+  // setting state to loading while calling the backend to save the data
   onItemSavePress = () => {
     const isProcessingPhotos = this.state.additionalPhotos.length !== 0 || this.state.photosToDelete.length !== 0;
     this.setState({...this.state, isLoading: true, isProcessingPhotos: isProcessingPhotos}, () => this.saveModifications());
@@ -76,6 +78,7 @@ export default class ItemEditPage extends Component{
   saveModifications = () => {
     var editPromise = [];
 
+    // if there is data to modify, add the promise
     if (this.state.dataModified){
       try {
         editPromise.push(editItem(this.state.id, {
@@ -93,6 +96,7 @@ export default class ItemEditPage extends Component{
 
     }
 
+    // if there is photos to upload, call the controller and add the promise
     if (this.state.additionalPhotos.length !== 0){
       editPromise.push(
         uploadAdditionalImagesAsPromise(this.state.id,
@@ -102,15 +106,17 @@ export default class ItemEditPage extends Component{
             () => {this.setState({isProcessingPhotos: false});}));
     }
 
+    // if there is photos to delete, call the controller and add the promise
     if (this.state.photosToDelete.length !== 0) {
       editPromise.push(deleteImageAsPromise(this.state.id, this.state.photosToDelete));
     }
 
+    // calling all the promise while setting the appropriate states
     Promise.all(editPromise)
       .then(() => {
         this.setState({
           isLoading: false,
-          warning: 'You modification is saved! Please return to the previous page.'
+          warning: 'You modification is saved! Please return to the previous page.',
         });
         this.props.navigation.navigate('Inventory');
       })
@@ -120,17 +126,22 @@ export default class ItemEditPage extends Component{
       });
   }
 
+  // adding owners to the data
   onHandleFinishOwner = (data) => {
     this.setState({pickedOwners: data});
   }
 
+  // load the owners for the checklist options
   loadOwners = () => {
     getListOfProfiles()
       .then(data => {
+
+        // getting the full name of each owner
         const owners = data.map(d => {
           return {...d, fullName: this.displayFullName(d)};
         });
 
+        // showing the owners' full names
         var modifiedPickedOwners = this.state.pickedOwners.map(pickedOwners => {
           for (let i = 0; i < owners.length; i++){
             if (pickedOwners.uid === owners[i].uid) {return owners[i];}
@@ -150,15 +161,16 @@ export default class ItemEditPage extends Component{
       });
   }
 
+  // takes owner data and return the full name
   displayFullName = (name) => {
-    if (name === undefined) return;
+    if (name === undefined) {return;}
     var fullName = name.firstName;
-    if (name.lastName !== '') {fullName += ' ' + name.lastName;};
+    if (name.lastName !== '') {fullName += ' ' + name.lastName;}
     return fullName;
   }
 
   render(){
-    return(
+    return (
       <View style={{flex: 1}}>
         <SliderBox
           style= {styles.sliderBoxStyle}
@@ -196,7 +208,7 @@ export default class ItemEditPage extends Component{
           />
         <Text style = {styles.textStyle}>
           Owners : {this.state.pickedOwners.map((d) => {
-          return this.displayFullName(d)
+          return this.displayFullName(d);
         }).join(', ')}
         </Text>
         <View style={styles.selectOwnersButton}>
@@ -250,7 +262,7 @@ export default class ItemEditPage extends Component{
             },
             dateText: {
               color: '#fff',
-            }
+            },
           }}
             onDateChange={(date) => {this.setState({dateOwned: moment(date), dataModified: true});}}
         />
@@ -380,7 +392,7 @@ const styles = StyleSheet.create({
   },
   tagContainerStyle: {
     flexWrap: 'wrap',
-    backgroundColor: '#338c83'
+    backgroundColor: '#338c83',
   },
   tagSystemContainerStyle: {
     flex: 1,

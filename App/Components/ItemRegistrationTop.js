@@ -1,8 +1,10 @@
-  import React, {Component} from 'react';
+import React, {Component} from 'react';
 import {View} from 'react-native';
-import {StyleSheet,
-        Image,
-        TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 
 export default class ItemDescriptionTop extends Component{
   constructor(props){
@@ -13,7 +15,7 @@ export default class ItemDescriptionTop extends Component{
   }
   render(){
     return (
-      <View style = {styles.viewContainer}>
+      <View>
         <TouchableOpacity style = {styles.buttonContainer}>
           <Image style = {styles.textStyle} source={this.state.addImageIcon}/>
         </TouchableOpacity>
@@ -23,13 +25,7 @@ export default class ItemDescriptionTop extends Component{
 }
 
 const styles = StyleSheet.create({
-  viewContainer : {
-
-  },
   buttonContainer : {
     alignItems : 'center',
-  },
-  textStyle : {
-
   },
 });

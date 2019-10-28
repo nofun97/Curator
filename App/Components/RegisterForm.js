@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import {
-  View,
   TextInput,
-  Button,
   ScrollView,
   Text,
   StyleSheet,
@@ -23,7 +21,6 @@ class RegisterForm extends Component {
       emailInput: '',
       firstName: '',
       lastName: '',
-      userName: '',
       password: '',
       reconfirmPass: '',
       isLoading: false,
@@ -37,6 +34,7 @@ class RegisterForm extends Component {
     this.nextStep = this.nextStep.bind(this);
   }
 
+  // after register, dispatch redux actions and move to inventory page
   nextStep = data => {
     this.props.loggedIn(data);
     const resetAction = StackActions.reset({
@@ -46,19 +44,23 @@ class RegisterForm extends Component {
     this.props.navigation.dispatch(resetAction);
   };
 
+  // after user is registered and authenticated, do the next step
   componentDidUpdate() {
     if (this.state.user !== null) {
       this.nextStep(this.state.user);
     }
   }
+
+  // input sanitization and calling the controller
   onSubmitForm = () => {
+    // first name can not be empty
     if (this.state.firstName === '') {
       this.setState({ ...this.state, warning: 'First Name is required' });
       return;
     }
 
+    // checking email is of valid format
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
     if (!emailRegex.test(this.state.emailInput)) {
       this.setState({
         ...this.state,
@@ -67,6 +69,7 @@ class RegisterForm extends Component {
       return;
     }
 
+    // password must be at least of certain length
     if (this.state.password < this.MINIMUM_PASSWORD_LENGTH) {
       this.setState({
         ...this.state,
@@ -78,6 +81,7 @@ class RegisterForm extends Component {
       return;
     }
 
+    // confirm password must be the same as password
     if (this.state.password !== this.state.reconfirmPass) {
       this.setState({
         ...this.state,
@@ -86,6 +90,7 @@ class RegisterForm extends Component {
       return;
     }
 
+    // register user and profile
     const registerPromise = async () => {
       const userCredential = await signUp(
         this.state.emailInput,
@@ -99,6 +104,7 @@ class RegisterForm extends Component {
       return userCredential;
     };
 
+    // sets loading indicator and calls the promise
     this.setState({ ...this.state, isLoading: true }, () => {
       registerPromise()
         .then(data => {
@@ -126,7 +132,6 @@ class RegisterForm extends Component {
           underlineColorAndroid={'#65807d'}
           placeholderTextColor="#6f8c89"
           placeholder="Enter your email address"
-          // onSubmitEditing={input => this.setState({ emailInput: input })}
           onChangeText={input => this.setState({ emailInput: input })}
         />
         <Text style={styles.registerTextStyle}> First Name: </Text>
@@ -146,15 +151,6 @@ class RegisterForm extends Component {
           placeholderTextColor="#6f8c89"
           placeholder="Enter your last name"
           onChangeText={input => this.setState({ lastName: input })}
-        />
-        <Text style={styles.registerTextStyle}> Username: </Text>
-        <TextInput
-          style={styles.InputStyle}
-          autoCorrect={false}
-          underlineColorAndroid={'#65807d'}
-          placeholderTextColor="#6f8c89"
-          placeholder="Enter your username"
-          onChangeText={input => this.setState({ username: input })}
         />
         <Text style={styles.registerTextStyle}> Password: </Text>
         <TextInput

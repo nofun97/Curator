@@ -13,6 +13,7 @@ class InventoryPage extends Component {
       name: ''
     };
 
+    // get the name of the current user
     getPersonalProfile(this.props.uid)
       .then(data => {
         var fullName = data.firstName;
@@ -117,6 +118,7 @@ const styles = StyleSheet.create({
   },
 });
 
+// connecting page to redux store
 export default connect((state) => {
   const {user} = state;
   return {uid: user.uid, email: user.email};

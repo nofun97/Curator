@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, KeyboardAvoidingView} from 'react-native';
+import {StyleSheet, KeyboardAvoidingView} from 'react-native';
 import ItemRegistrationForm from '../Components/ItemRegistrationForm';
-import ItemRegistrationTop from '../Components/ItemRegistrationTop';
 
 export default class ItemRegistrationPage extends Component{
   render(){
@@ -20,6 +19,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   ItemRegistrationForm:{
-    flex: 1
+    flex: 1,
   },
-})
+});

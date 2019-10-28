@@ -26,8 +26,8 @@ export const getListOfProfiles = async () => {
   return snapshot.docs.map(doc => {
     return {
       uid: doc.id,
-      ...doc.data()
-    }
+      ...doc.data(),
+    };
   });
 };
 
@@ -38,22 +38,24 @@ export const getPersonalProfile = async (userID) => {
 
 export const editProfile = (profileId, newProfile) => {
   return firebase.firestore().collection('users').doc(profileId).update(newProfile);
-}
+};
 
 export const getProfilesOfIds = async (profileIds) => {
   var profiles = [];
   for (let i = 0; i < profileIds.length; i++){
     const snapshot = await firebase.firestore().collection('users').doc(profileIds[i]).get();
+
+    // adds full name
     const data = snapshot.data();
     var name = data.firstName;
-    if (data.lastName !== '') name += ' ' + data.lastName;
+    if (data.lastName !== '') {name += ' ' + data.lastName;}
     profiles.push({...data, uid: profileIds[i], fullName: name});
   }
   return profiles;
-}
+};
 
 export const signOut = async () => {
   if (firebase.auth().currentUser !== null)
-  await firebase.auth().signOut();
+  {await firebase.auth().signOut();}
   return;
-}
+};

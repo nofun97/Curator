@@ -3,8 +3,6 @@ import {
   StyleSheet,
   View,
   Image,
-  KeyboardAvoidingView,
-  Text,
 } from 'react-native';
 import LoginForm from '../Components/LoginForm';
 import { connect } from 'react-redux';
@@ -17,6 +15,8 @@ class Login extends Component {
     this.state = {
       logo: require('../Assets/Logo/Logo.png'),
     };
+    
+    // makes sure the redux state is loggedOut
     this.props.loggedOut();
   }
   render() {
@@ -24,7 +24,6 @@ class Login extends Component {
       <View style={styles.ScreensBox}>
         <View style={styles.LogoContainer}>
           <Image style={styles.LogoStyle} source={this.state.logo} />
-          {/* <Text style={styles.TitleStyle}>Curator</Text> */}
         </View>
         <View style={styles.FormContainer}>
           <LoginForm navigation={this.props.navigation} />
@@ -64,6 +63,7 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = { loggedIn, loggedOut };
 
+// connecting to redux store
 export default connect(
   state => {
     const { status } = state;

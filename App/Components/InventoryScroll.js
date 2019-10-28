@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
   SafeAreaView,
-  Dimensions,
   ActivityIndicator,
   FlatList,
 } from 'react-native';
@@ -31,6 +30,8 @@ class InventoryScroll extends Component {
     this.renderFooter = this.renderFooter.bind(this);
   }
 
+  // load the list of items from the database with pagination, only called when
+  // user is at the bottom of the list
   loadItems = () => {
     getDataList(this.state.pageStart, this.state.limit, this.state.order, this.state.categories)
       .then(data => {
@@ -38,6 +39,7 @@ class InventoryScroll extends Component {
           throw data.error;
         }
 
+        // when there is no more data to load, stop loading
         if (data.length === 0){
           this.setState((state, props) => {
             return {
@@ -49,11 +51,11 @@ class InventoryScroll extends Component {
           return;
         }
 
+        // appending the data
         this.setState((state, props) => {return {
           ...state,
           children: [...state.children, ...data],
           isLoading: false,
-          newExistingData: new Set(),
           noMoreData: data.length < state.limit,
         };});
       })
@@ -61,7 +63,10 @@ class InventoryScroll extends Component {
   }
 
   handleLoadMore = () => {
+    // not loading if is loading or there is no more data
     if (this.state.noMoreData || this.state.isLoading) {return;}
+
+    // show loading indicator while calling the controller
     this.setState({
       ...this.state,
       isLoading: true,
@@ -69,6 +74,7 @@ class InventoryScroll extends Component {
     }, () => {this.loadItems();});
   }
 
+  // resets state and load all the data again
   onRefresh = () => {
     if (this.state.isLoading) {return;}
 
@@ -78,24 +84,25 @@ class InventoryScroll extends Component {
         children: [],
         noMoreData: false,
         isLoading: true,
-      }
+      };
 
       if (state.order.direction === 'desc') {
         nextState = {
           ...nextState,
           pageStart: Number.POSITIVE_INFINITY,
-        }
+        };
       } else if (state.order.direction === 'asc') {
         nextState = {
           ...nextState,
           pageStart: 0,
-        }
+        };
       }
 
       return nextState;
     }, () => this.loadItems());
   }
 
+  // loading indicator at the foot of the list
   renderFooter = () => {
     return (
       <View>
@@ -106,6 +113,7 @@ class InventoryScroll extends Component {
     );
   };
 
+  // load the item after UI loads
   componentDidMount = () => {this.loadItems();};
 
   render() {

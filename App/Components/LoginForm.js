@@ -26,11 +26,10 @@ class LoginForm extends Component {
     this.onLoginPress = this.onLoginPress.bind(this);
     this.onRegisterPress = this.onRegisterPress.bind(this);
     this.nextStep = this.nextStep.bind(this);
-
   }
 
+  // authenticate the user
   onLoginPress = () => {
-    //TODO: left and right trim characters
     if (this.state.email === '' || this.state.password === '') {
       this.setState({
         ...this.state,
@@ -40,7 +39,7 @@ class LoginForm extends Component {
       return;
     }
 
-
+    // set loading indicator and calls the controller
     this.setState({ ...this.state, isLoading: true }, () => {
       login(this.state.email, this.state.password)
         .then(data => {
@@ -58,12 +57,14 @@ class LoginForm extends Component {
     });
   };
 
+  // if user is loggedIn call the next step
   componentDidUpdate() {
     if (this.state.user !== null) {
       this.nextStep(this.state.user);
     }
   }
 
+  // dispatch redux actions and navigate to the inventory page
   nextStep = data => {
     this.props.loggedIn(data.user);
     const resetAction = StackActions.reset({
@@ -73,6 +74,7 @@ class LoginForm extends Component {
     this.props.navigation.dispatch(resetAction);
   };
 
+  // move to register page
   onRegisterPress = () => {
     this.props.navigation.navigate('Register');
   };

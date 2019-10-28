@@ -39,7 +39,6 @@ class ItemRegistrationForm extends Component{
     };
     this.onPressHandler = this.onPressHandler.bind(this);
     this.addItem = this.addItem.bind(this);
-    this.onAddOwner = this.onAddOwner.bind(this);
     this.goBack = this.goBack.bind(this);
     this.loadOwners = this.loadOwners.bind(this);
     this.onHandleFinishOwner = this.onHandleFinishOwner.bind(this);
@@ -47,6 +46,7 @@ class ItemRegistrationForm extends Component{
     this.loadOwners();
   }
 
+  // The tag component for categories
   renderCategoriesTag = () => (
     <Tags
       textInputProps={{
@@ -83,23 +83,16 @@ class ItemRegistrationForm extends Component{
 
   goBack = () => {this.props.navigation.navigate('Inventory');};
 
-  onAddOwner = () => {
-    if (this.state.owners.length === 0) {
-      this.setState({isLoading: true, warning: 'Owner list is still being loaded, please wait and try again'});
-      return;
-    }
-    this.setState({showOwnerChecklist: true});
-  }
-
   onHandleFinishOwner = (data) => {
-    this.setState({pickedOwners: data, isLoading: false, warning: '', showOwnerChecklist: false});
+    this.setState({pickedOwners: data, isLoading: false, warning: ''});
   }
 
+  // saving the item
   onPressHandler = () => {
-
     const owners = this.state.pickedOwners.map(data => {return data.uid;});
     const dateOwned = this.state.dateOwned.valueOf();
 
+    // transformed values to upload
     const itemToUpload = {
       name: this.state.name,
       owners: owners,
@@ -109,6 +102,7 @@ class ItemRegistrationForm extends Component{
       categories: this.state.categories,
     };
 
+    // set loading and call the controller to add item
     this.setState((state, props) => {
       return {
         ...state,
@@ -118,6 +112,7 @@ class ItemRegistrationForm extends Component{
     }, () => this.addItem(itemToUpload));
   }
 
+  // calls the controller to add item
   addItem = data => {
     const completeStorage = () => {this.setState({...this.state, isLoadingImage: false});};
 
@@ -128,7 +123,7 @@ class ItemRegistrationForm extends Component{
           ...this.state,
           isLoading: false,
           showFinishedMessage: true,
-        }, () => {this.props.navigation.goBack();})
+        }, () => {this.props.navigation.goBack();});
        })
         .catch(err => {
           console.log(err);
@@ -141,8 +136,6 @@ class ItemRegistrationForm extends Component{
 
   }
 
-
-
   render(){
     console.log(this.state.dateOwned.valueOf());
 
@@ -154,7 +147,7 @@ class ItemRegistrationForm extends Component{
           images={this.state.photos}
           circleLoop
           sliderBoxHeight={200}
-          /*onCurrentImagePressed={index}*//>
+          />
       </View>
         <ScrollView style = {styles.scrollViewContainer}>
         {this.state.warning !== '' && <Text style={styles.textStyle}>{this.state.warning}</Text>}

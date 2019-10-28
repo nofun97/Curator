@@ -1,34 +1,36 @@
 import React,{useState, useEffect} from 'react';
-import {TouchableOpacity, Image, FlatList, StyleSheet, View} from 'react-native';
+import {TouchableOpacity, Image, FlatList, StyleSheet} from 'react-native';
 
+// Component for a simple horizontal image list
 const ImageSelection = (props) => {
   return (
     <FlatList
       style={props.imageSelectionStyle}
-      // ItemSeparatorComponent={(<View style={styles.separatorStyle}></View>)}
       renderItem={({item}) => {
-        return (<ImageObject reference={item} onPressImage={props.onPressImage}/>)
+        return (<ImageObject reference={item} onPressImage={props.onPressImage}/>);
       }}
       keyExtractor={item => {
-        return item.fullPath
+        return item.fullPath;
       }}
       data={props.references}
       horizontal={true}
     />
   );
-}
+};
 
 const ImageObject = (props) => {
   const [picked, setPicked] = useState(false);
-  const [image, setImage] = useState('')
+  const [image, setImage] = useState('');
 
+  // fetch all the images for an item
   useEffect(() => {
     const fetchImage = async () => {
       setImage(await props.reference.getDownloadURL());
-    }
+    };
     fetchImage();
   }, []);
 
+  // returning image data to the parent component when an image is picked
   const onPress = () => {
     props.onPressImage(props.reference, !picked);
     setPicked(!picked);
