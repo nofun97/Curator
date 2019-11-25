@@ -1,24 +1,34 @@
 package com.curator;
 
+import com.curator.generated.BasePackageList;
+
 import android.app.Application;
 import android.util.Log;
+
+import org.unimodules.adapters.react.ModuleRegistryAdapter;
+import org.unimodules.adapters.react.ReactModuleRegistryProvider;
+import org.unimodules.core.interfaces.SingletonModule;
+
 
 import com.facebook.react.PackageList;
 import com.facebook.hermes.reactexecutor.HermesExecutorFactory;
 import com.facebook.react.bridge.JavaScriptExecutorFactory;
 import com.facebook.react.ReactApplication;
-import io.invertase.firebase.RNFirebasePackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 
+import java.util.Arrays;
 import java.util.List;
 
 // Firebase
-import io.invertase.firebase.auth.RNFirebaseAuthPackage;
-import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
+// import com.google.firebase.database.FirebaseDatabase;
 
 public class MainApplication extends Application implements ReactApplication {
+
+  private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(
+    new BasePackageList().getPackageList(), 
+    Arrays.<SingletonModule>asList());
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
@@ -34,10 +44,15 @@ public class MainApplication extends Application implements ReactApplication {
       // example:
       // packages.add(new MyReactNativePackage());
 
-      // Firebase packages
-      // packages.add(new RNFirebasePackage());
-      packages.add(new RNFirebaseAuthPackage());
-      packages.add(new RNFirebaseFirestorePackage());
+      // react native worker
+      // packages.add(new WorkerPackage());
+
+      // Add unimodules
+      List<ReactPackage> unimodules = Arrays.<ReactPackage>asList(
+        new ModuleRegistryAdapter(mModuleRegistryProvider)
+      );
+      packages.addAll(unimodules);
+      
       return packages;
     }
 
@@ -56,5 +71,6 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    // FirebaseDatabase.getInstance().setPersistenceEnabled(true);
   }
 }

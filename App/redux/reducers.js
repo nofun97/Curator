@@ -1,17 +1,43 @@
-import { createReducer, createAction } from 'redux-starter-kit';
+const LOGGED_IN = 'LOGGED_IN';
+const LOGGED_OUT = 'LOGGED_OUT';
 
-// Actions and reducer for user authentications
-export const loggedIn = createAction('LOGGED_IN');
-export const loggedOut = createAction('LOGGED_OUT');
+// redux actions to disptach
+export function loggedIn(payload) {
+  return {
+    type: LOGGED_IN,
+    user: payload,
+  };
+}
 
-export const userReducer = createReducer(
-  { user: null },
-  {
-    [loggedIn]: (state, action) => {
-      return action.payload;
+export function loggedOut() {
+  return {
+    type: LOGGED_OUT,
+    user: {
+      uid: '',
+      email: '',
     },
-    [loggedOut]: state => {
-      return null;
-    },
+  };
+}
+
+const initialState = { user: null };
+
+// global state of the whole app
+export function userReducer(state = initialState, action) {
+  switch (action.type) {
+    case LOGGED_IN:
+      return {
+        status: 'loggedIn',
+        user: action.user,
+      };
+
+    case LOGGED_OUT:
+      return {
+        status: 'loggedOut',
+        user: {
+          uid: '',
+          email: '',
+        },
+      };
   }
-);
+  return state;
+}
