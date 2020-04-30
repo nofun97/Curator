@@ -170,7 +170,6 @@ class ItemDetailsForm extends Component{
           </TouchableOpacity>
         </Modal>
 
-        {this.state.warning !== '' && <Text>{this.state.warning}</Text>}
 
         <Text style = {styles.titleStyle}>
           Artifact Details
