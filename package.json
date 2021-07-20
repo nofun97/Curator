@@ -22,7 +22,7 @@
     "jetifier": "^1.6.3",
     "react": "16.9.0",
     "react-dom": "^16.9.0",
-    "react-native": "0.61.1",
+    "react-native": "0.62.3",
     "react-native-datepicker": "^1.7.2",
     "react-native-drop-down-item": "^1.0.5",
     "react-native-dropdown-menu": "^2.0.0",
